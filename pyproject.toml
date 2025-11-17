@@ -62,6 +62,16 @@ dev = [
     "mypy>=1.8.0",
 ]
 
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["packages"]
+
+[tool.setuptools.package-dir]
+"" = "."
+
 [tool.uv]
 dev-dependencies = []
 package = false  # This is an application, not a library
