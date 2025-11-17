@@ -8,7 +8,7 @@ This roadmap outlines the phases, tasks, and success criteria for building this 
 
 **Documentation Structure:** This roadmap tracks project status only. For detailed technical findings, performance metrics, and design decisions, see the [findings/](findings/) directory.
 
-Last Updated: 2025-11-10
+Last Updated: 2025-11-17
 
 ## Phase 1: Data Preparation & Exploration
 
@@ -108,8 +108,8 @@ Last Updated: 2025-11-10
 - [x] Validate similarity scoring (monotonicity, determinism, score range)
 - [x] Validate filter functionality (post-scoring, audit logging, fallback)
 - [x] Implement decision logic & thresholds (is_match, review, no_match)
+- [x] Benchmark matching latency (p95 < 50ms target) - **Achieved: 3.06 ms (105.56x improvement)**
 - [ ] Test matching accuracy (precision@top1 ≥ 95%)
-- [ ] Benchmark matching latency (p95 < 50ms target)
 - [ ] Document matching logic and edge cases
 
 **Success Criteria:**
@@ -117,7 +117,7 @@ Last Updated: 2025-11-10
 - [x] Fuzzy matching working with confidence scores
 - [x] Country/program filters implemented (date filter not applicable)
 - [x] Decision thresholds implemented (is_match ≥ 0.90, review ≥ 0.80)
-- [ ] Matching latency <50ms (pending benchmarking)
+- [x] Matching latency <50ms (achieved: 3.06 ms p95, 105.56x improvement)
 
 ## Phase 4: API Service & Infrastructure
 
@@ -192,7 +192,8 @@ Last Updated: 2025-11-10
 - [x] Fraud model PR-AUC ≥ 0.35 (achieved 0.4743)
 - [x] Probability calibration ECE < 0.10 (achieved 0.0050)
 - [x] Comprehensive model evaluation with business metrics
-- [ ] End-to-end latency ≤ 200ms p95
+- [x] Sanctions screening latency <50ms (achieved 3.06 ms p95)
+- [ ] End-to-end latency ≤ 200ms p95 (pending API integration, sanctions component ready)
 - [x] Clear documentation of methodology and limitations
 - [x] Reproducible notebooks and code
 - [ ] Working demo with all components integrated
@@ -200,7 +201,7 @@ Last Updated: 2025-11-10
 
 ## Next Steps
 
-**Current Focus:** Phase 3 (Sanctions Screening Module) - Latency Optimization & Benchmarking.
+**Current Focus:** Phase 3 (Sanctions Screening Module) - Evaluation Protocol & API Integration.
 
 **Recent Completion:**
 
@@ -208,6 +209,10 @@ Last Updated: 2025-11-10
 - Similarity scoring with RapidFuzz composite scoring (validated: monotonicity, determinism, score range)
 - Country and program filters with audit logging and fallback behavior (validated)
 - Decision logic & thresholds (is_match ≥ 0.90, review ≥ 0.80, no_match < 0.80) with comprehensive validation
+- **Latency optimization: p95 = 3.06 ms (105.56x improvement, 16x better than 50ms target)**
+  - Optimizations: candidate capping (200→100), vectorized DataFrame access, aggressive early capping, optimized metadata building
+  - Throughput: 422 queries/sec (96.24x improvement)
+  - Cache effectiveness: 4.90x speedup with 80% hit rate
 
 **Immediate Actions:**
 
@@ -219,7 +224,7 @@ Last Updated: 2025-11-10
    - [x] Similarity scoring (RapidFuzz composite scoring)
    - [x] Country and program filters
    - [x] Decision logic & thresholds (is_match ≥ 0.90, review ≥ 0.80)
-   - [ ] Latency optimization and benchmarking (p95 < 50ms target)
+   - [x] Latency optimization and benchmarking (p95 = 3.06 ms, 105.56x improvement)
    - [ ] Evaluation protocol (precision@top1 ≥ 95%)
    - [ ] Inference wrapper & API contract
 
