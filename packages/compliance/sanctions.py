@@ -2,7 +2,20 @@
 import unicodedata
 import re
 import pandas as pd
+from typing import List
 
+
+# Define stopwords for name tokenization
+# These are common business/legal terms and honorifics that add noise to matching
+STOPWORDS = {
+    # Business suffixes
+    "ltd", "inc", "llc", "co", "corp", "corporation", "company",
+    "sa", "gmbh", "ag", "nv", "bv", "plc", "limited",
+    # Honorifics
+    "mr", "mrs", "ms", "dr", "prof",
+    # Common words
+    "the", "of", "and", "for", "de", "la", "el"
+}
 
 def normalize_text(text: str) -> str:
     """
@@ -67,3 +80,37 @@ def normalize_text(text: str) -> str:
     text = text.strip()
     
     return text
+
+def tokenize(name: str) -> List[str]:
+    """
+    Tokenize a normalized name into words, filtering stopwords and short tokens.
+    
+    Splits on whitespace and hyphens, removes tokens shorter than 2 characters,
+    and filters out common business/legal terms that don't aid matching.
+    
+    Args:
+        name: Normalized name string (already lowercased and cleaned)
+        
+    Returns:
+        List of filtered tokens
+        
+    Examples:
+        >>> tokenize("john doe")
+        ['john', 'doe']
+        
+        >>> tokenize("acme corporation ltd")
+        ['acme']
+        
+        >>> tokenize("al-qaida")
+        ['al', 'qaida']
+    """
+    if not name:
+        return []
+    
+    # Split on whitespace and hyphens
+    tokens = [t for t in re.split(r'[\s-]+', name) if t]
+    
+    # Filter: length >= 2 and not in stopwords
+    filtered = [t for t in tokens if len(t) >= 2 and t not in STOPWORDS]
+    
+    return filtered
