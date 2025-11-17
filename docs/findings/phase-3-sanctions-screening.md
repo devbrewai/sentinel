@@ -1,7 +1,7 @@
 # Phase 3: Sanctions Screening Module Findings
 
 **Status:** In Progress  
-**Last Updated:** 2025-11-10
+**Last Updated:** 2025-11-17
 
 ## Overview
 
@@ -14,7 +14,7 @@ This document captures technical findings, performance metrics, and design decis
 - **Completed**: Similarity scoring (RapidFuzz composite scoring)
 - **Completed**: Country and program filters with audit logging
 - **Completed**: Decision logic & thresholds (is_match ≥ 0.90, review ≥ 0.80, no_match < 0.80)
-- **In progress**: Latency benchmarking and optimization (pending)
+- **Completed**: Latency optimization and benchmarking (p95: 3.06 ms, 105.56x improvement)
 
 ## Dataset Characteristics
 
@@ -470,13 +470,97 @@ composite_score = max(0.0, min(1.0, raw_score / 100.0))
 
 ---
 
-## Remaining Implementation
+## Latency Optimization
 
-### Latency Optimization
-- Batch scoring with rapidfuzz.process.cdist
-- Candidate set capping per blocking strategy
-- LRU caching for repeated queries
-- p95 < 50ms target validation
+### Optimization Strategy
+
+**Implementation Approach:**
+1. **Candidate Set Capping**: Limit candidates to 200 before processing (prioritize first_token matches)
+2. **Vectorized DataFrame Access**: Replace `iloc[]` loop with `.loc[]` batch access
+3. **Optimized Metadata Building**: Use `zip()` instead of `iterrows()` for faster list construction
+4. **Aggressive Early Capping**: After scoring, cap to top 100 candidates using `argpartition` (O(n) partial sort)
+5. **Batch Similarity Scoring**: Use `rapidfuzz.process.cdist` for vectorized scoring
+6. **LRU Caching**: Cache query results for repeated names (80% hit rate in tests)
+
+### Performance Results
+
+**Baseline Performance (Before Optimization):**
+- p50 latency: 189.72 ms
+- p95 latency: 322.95 ms
+- p99 latency: 324.72 ms
+- Mean latency: 228.08 ms
+- Throughput: 4.4 queries/sec
+
+**Optimized Performance (After Optimization):**
+- **p50 latency: 2.35 ms** (80.9x improvement)
+- **p95 latency: 3.06 ms** (105.56x improvement) ✅ **Target: <50ms**
+- **p99 latency: 3.89 ms** (83.37x improvement)
+- **Mean latency: 2.37 ms** (96.24x improvement)
+- **Throughput: 422 queries/sec** (96.24x improvement)
+
+**Validation Status:**
+- **PASS**: p95 latency (3.06 ms) < 50 ms target
+- **PASS**: All latency percentiles meet target
+- **PASS**: Throughput exceeds real-time requirements
+
+### Cache Effectiveness
+
+**Test Results (100 queries, 20 unique):**
+- Cache hits: 80 (80% hit rate)
+- Cache misses: 20
+- With cache: 0.43 ms average per query
+- Without cache: 2.09 ms average per query
+- **Cache speedup: 4.90x**
+
+### Key Optimizations
+
+1. **Candidate Capping (200 → 100)**
+   - Pre-processing cap: 200 candidates (prioritize first_token matches)
+   - Post-scoring cap: 100 candidates (top scores only)
+   - Reduces similarity computation by ~50-80% for large candidate sets
+
+2. **Vectorized DataFrame Access**
+   - Replaced: `for idx in candidate_indices: candidate = sanctions_index.iloc[idx]`
+   - With: `candidate_data = sanctions_index.loc[candidate_indices]`
+   - **Impact**: Eliminates per-row overhead, ~2-3x faster
+
+3. **Optimized Metadata Building**
+   - Replaced: `iterrows()` loop
+   - With: `zip()` with column access
+   - **Impact**: ~20-30% faster metadata construction
+
+4. **Aggressive Early Capping**
+   - Uses `np.argpartition()` for O(n) partial sort (faster than full sort)
+   - Caps to top 100 candidates after composite scoring
+   - **Impact**: Reduces final processing by ~50-90% for queries with many candidates
+
+### Production Considerations
+
+1. **Latency Budget Allocation**
+   - Sanctions screening: 3.06 ms p95 (achieved)
+   - Fraud detection: ~100 ms (estimated)
+   - API overhead: ~50 ms (estimated)
+   - **Total end-to-end: ~153 ms** (well under 200 ms target)
+
+2. **Scalability**
+   - Throughput: 422 queries/sec (single process)
+   - Can handle high-volume payment screening
+   - Cache provides additional 4.9x speedup for repeated queries
+
+3. **Monitoring Recommendations**
+   - Track p50/p95/p99 latencies in production
+   - Monitor cache hit rates (target: >70%)
+   - Alert if p95 exceeds 10 ms (safety margin)
+   - Track candidate set sizes (should stay <200)
+
+4. **Further Optimization Opportunities**
+   - Parallel processing with multiple workers (if needed)
+   - Pre-compute similarity scores for common queries
+   - Consider GPU acceleration for very high volume (>10K qps)
+
+---
+
+## Remaining Implementation
 
 ### Evaluation Protocol
 - Labeled test set creation (50-100 names)
@@ -506,8 +590,11 @@ composite_score = max(0.0, min(1.0, raw_score / 100.0))
 ### In Progress
 
 - **Matching Accuracy**: ≥95% precision@top1 (pending labeled evaluation set)
-- **Latency**: p95 < 50ms (pending benchmarking and optimization)
 - **Audit Payload**: Complete metadata structure (pending API integration)
+
+### Completed (Latest)
+
+- **Latency Optimization**: p95 = 3.06 ms (105.56x improvement, 16x better than 50ms target)
 
 ---
 
