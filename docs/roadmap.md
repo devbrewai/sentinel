@@ -8,7 +8,7 @@ This roadmap outlines the phases, tasks, and success criteria for building this 
 
 **Documentation Structure:** This roadmap tracks project status only. For detailed technical findings, performance metrics, and design decisions, see the [findings/](findings/) directory.
 
-Last Updated: 2025-11-17
+Last Updated: 2025-11-18
 
 ## Phase 1: Data Preparation & Exploration
 
@@ -46,7 +46,7 @@ Last Updated: 2025-11-17
 - [x] Data quality validation suite
 - [x] Comprehensive findings documentation
 
-**Detailed Findings:** See [Phase 1 Findings](findings/phase-1-data-exploration.md) for technical insights, feature engineering decisions, and production considerations.
+**Detailed Findings:** See [Phase 1 Findings](findings/data-exploration-notes.md) for technical insights, feature engineering decisions, and production considerations.
 
 ## Phase 2: Fraud Model Training
 
@@ -89,11 +89,11 @@ Last Updated: 2025-11-17
 - [x] Probability calibration (isotonic regression, ECE=0.0050, 96.8% improvement)
 - [x] SHAP explainability (TreeExplainer, 10K sample, <10ms inference overhead)
 
-**Detailed Findings:** See [Phase 2 Findings](findings/phase-2-model-training.md) for performance metrics, cost analysis, hyperparameter tuning investigation, probability calibration results, SHAP explainability analysis, and model selection rationale.
+**Detailed Findings:** See [Phase 2 Findings](findings/model-training-notes.md) for performance metrics, cost analysis, hyperparameter tuning investigation, probability calibration results, SHAP explainability analysis, and model selection rationale.
 
 ## Phase 3: Sanctions Screening Module
 
-**Status:** 🟡 In Progress
+**Status:** 🟢 Complete
 
 ### Tasks
 
@@ -109,15 +109,19 @@ Last Updated: 2025-11-17
 - [x] Validate filter functionality (post-scoring, audit logging, fallback)
 - [x] Implement decision logic & thresholds (is_match, review, no_match)
 - [x] Benchmark matching latency (p95 < 50ms target) - **Achieved: 3.06 ms (105.56x improvement)**
-- [ ] Test matching accuracy (precision@top1 ≥ 95%)
-- [ ] Document matching logic and edge cases
+- [x] Test matching accuracy (precision@top1 ≥ 95%) - **Achieved: Precision@1 = 97.5%, Recall@top3 = 98.0%**
+- [x] Implement evaluation protocol with labeled test set (250 queries)
+- [x] Two-stage adaptive scoring optimization (p95: 49.63 ms, all targets met)
+- [x] Document matching logic and edge cases
 
 **Success Criteria:**
 
 - [x] Fuzzy matching working with confidence scores
 - [x] Country/program filters implemented (date filter not applicable)
 - [x] Decision thresholds implemented (is_match ≥ 0.90, review ≥ 0.80)
-- [x] Matching latency <50ms (achieved: 3.06 ms p95, 105.56x improvement)
+- [x] Matching latency <50ms (achieved: 49.63 ms p95 with two-stage adaptive scoring)
+- [x] Matching accuracy Precision@1 ≥ 95% (achieved: 97.5%)
+- [x] Matching accuracy Recall@top3 ≥ 98% (achieved: 98.0%)
 
 ## Phase 4: API Service & Infrastructure
 
@@ -192,7 +196,9 @@ Last Updated: 2025-11-17
 - [x] Fraud model PR-AUC ≥ 0.35 (achieved 0.4743)
 - [x] Probability calibration ECE < 0.10 (achieved 0.0050)
 - [x] Comprehensive model evaluation with business metrics
-- [x] Sanctions screening latency <50ms (achieved 3.06 ms p95)
+- [x] Sanctions screening latency <50ms (achieved 49.63 ms p95 with two-stage adaptive scoring)
+- [x] Sanctions screening Precision@1 ≥ 95% (achieved 97.5%)
+- [x] Sanctions screening Recall@top3 ≥ 98% (achieved 98.0%)
 - [ ] End-to-end latency ≤ 200ms p95 (pending API integration, sanctions component ready)
 - [x] Clear documentation of methodology and limitations
 - [x] Reproducible notebooks and code
@@ -201,7 +207,7 @@ Last Updated: 2025-11-17
 
 ## Next Steps
 
-**Current Focus:** Phase 3 (Sanctions Screening Module) - Evaluation Protocol & API Integration.
+**Current Focus:** Phase 4 (API Service & Infrastructure) - FastAPI integration of fraud detection and sanctions screening modules.
 
 **Recent Completion:**
 
@@ -213,10 +219,12 @@ Last Updated: 2025-11-17
   - Optimizations: candidate capping (200→100), vectorized DataFrame access, aggressive early capping, optimized metadata building
   - Throughput: 422 queries/sec (96.24x improvement)
   - Cache effectiveness: 4.90x speedup with 80% hit rate
+- **Evaluation protocol: Precision@1 = 97.5%, Recall@top3 = 98.0% (all targets met)**
+- **Two-stage adaptive scoring: p95 = 49.63 ms (meets <50ms target), balances recall and latency**
 
 **Immediate Actions:**
 
-1. **Phase 3: Sanctions Screening** (In Progress)
+1. **Phase 3: Sanctions Screening** (Complete ✅)
 
    - [x] OFAC data loading and normalization
    - [x] Tokenization and canonical forms
@@ -224,9 +232,9 @@ Last Updated: 2025-11-17
    - [x] Similarity scoring (RapidFuzz composite scoring)
    - [x] Country and program filters
    - [x] Decision logic & thresholds (is_match ≥ 0.90, review ≥ 0.80)
-   - [x] Latency optimization and benchmarking (p95 = 3.06 ms, 105.56x improvement)
-   - [ ] Evaluation protocol (precision@top1 ≥ 95%)
-   - [ ] Inference wrapper & API contract
+   - [x] Latency optimization and benchmarking (p95 = 49.63 ms with two-stage adaptive scoring)
+   - [x] Evaluation protocol (Precision@1 = 97.5%, Recall@top3 = 98.0%)
+   - [x] Matching logic and edge cases documented
 
 2. **Phase 4: API Service** (~8-12 hours)
 
@@ -245,4 +253,4 @@ Last Updated: 2025-11-17
    - [ ] Architecture diagrams
    - [ ] Deployment guide
 
-**For detailed progress and technical insights:** See [Phase 1 Findings](findings/phase-1-data-exploration.md), [Phase 2 Findings](findings/phase-2-model-training.md), and [Phase 3 Findings](findings/phase-3-sanctions-screening.md).
+**For detailed progress and technical insights:** See [Phase 1 Findings](findings/data-exploration-notes.md), [Phase 2 Findings](findings/model-training-notes.md), and [Phase 3 Findings](findings/sanctions-screening-notes.md).
