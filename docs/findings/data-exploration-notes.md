@@ -1,4 +1,4 @@
-# Phase 1: Data Exploration & Feature Engineering Findings
+# Phase 1: Data Exploration & Feature Engineering Notes
 
 **Status:** Complete  
 **Duration:** Initial exploration through feature engineering  
