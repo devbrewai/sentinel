@@ -7,7 +7,7 @@ This directory contains detailed technical findings, performance metrics, and de
 ### Phase 1: Data Exploration & Feature Engineering
 **Status:** Complete
 
-[Phase 1 Findings](phase-1-data-exploration.md)
+[Phase 1 Findings](data-exploration-notes.md)
 
 **Key Topics:**
 - Dataset statistics (IEEE-CIS, PaySim, OFAC)
@@ -26,7 +26,7 @@ This directory contains detailed technical findings, performance metrics, and de
 ### Phase 2: Model Training & Evaluation
 **Status:** Complete
 
-[Phase 2 Findings](phase-2-model-training.md)
+[Phase 2 Findings](model-training-notes.md)
 
 **Key Topics:**
 - Baseline model performance and architecture
@@ -58,21 +58,37 @@ This directory contains detailed technical findings, performance metrics, and de
 ---
 
 ### Phase 3: Sanctions Screening Module
-**Status:** Not Started
+**Status:** In progress
 
-[Phase 3 Findings](phase-3-sanctions-screening.md) _(placeholder)_
+[Sanctions Screening Notes](sanctions-screening-notes.md)
 
-**Planned Topics:**
+**Key Topics:**
 - OFAC data integration (SDN + Consolidated lists)
-- Fuzzy matching implementation (RapidFuzz)
-- Confidence score calibration
-- Performance benchmarking (latency, throughput)
-- Integration with fraud detection pipeline
+- Text normalization and tokenization with stopword filtering
+- Multi-strategy blocking (first token, token bucket, initials signature)
+- Fuzzy matching implementation (RapidFuzz composite scoring)
+- Country and program filters with audit logging
+- Decision logic & thresholds (is_match ≥ 0.90, review ≥ 0.80, no_match < 0.80)
+- Latency optimization (vectorized scoring, LRU caching, candidate capping)
+- Two-stage adaptive scoring for recall/latency balance
+- Evaluation protocol with labeled test set
 
-**Target Metrics:**
-- Matching accuracy: ≥95%
-- Latency: <50ms p95
-- False positive rate: TBD based on confidence threshold
+**Key Metrics:**
+- Precision@1: 97.5% (exceeds ≥95% target by 2.5%)
+- Recall@top3: 98.0% (exceeds ≥98% target)
+- Latency p95: 49.63 ms (meets <50ms target)
+- Latency p50: 23.56 ms (optimized fast-path)
+- Blocking recall: 100% (exceeds ≥99.5% target)
+- Search space reduction: ~99% (39,350 → ~200-500 candidates)
+- Dataset: 39,350 name records from 18,310 unique sanctioned entities
+- Throughput: 422 queries/sec (single process)
+
+**Business Impact:**
+- Three-tier decision system enables automated processing for high-confidence matches
+- Review band (0.80-0.90) flags ambiguous cases for manual review
+- Low-latency screening (p95: 49.63ms) enables real-time payment processing
+- Comprehensive audit logging supports compliance requirements
+- Country/program filters reduce false positives for corridor-specific screening
 
 ---
 
@@ -110,7 +126,7 @@ When adding findings:
 
 ---
 
-**Last Updated:** 2025-11-03 (Phase 2 Complete)  
+**Last Updated:** 2025-11-18 (Phase 3 Complete)  
 **Project:** AI Fraud Detection for Cross-Border Payments & Sanctions Screening Research Case Study  
 **Organization:** Devbrew
 
