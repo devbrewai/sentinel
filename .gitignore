@@ -232,3 +232,6 @@ data_catalog/processed/dropped_columns.json
 !data_catalog/processed/sanctions_names_summary.json
 !data_catalog/processed/exploration_metadata.json
 !data_catalog/README.md
+
+# Allow sanctions evaluation test set (deterministic, reproducible)
+!data_catalog/processed/splits/sanctions_eval_labels.csv
