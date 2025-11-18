@@ -93,7 +93,7 @@ Last Updated: 2025-11-18
 
 ## Phase 3: Sanctions Screening Module
 
-**Status:** 🟢 Complete
+**Status:** 🟡 In progress
 
 ### Tasks
 
