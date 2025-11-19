@@ -1,6 +1,6 @@
 {
-    "evaluation_id": "eval-baseline-20251103-083232",
-    "evaluation_date": "2025-11-03T08:32:32.563293",
+    "evaluation_id": "eval-baseline-20251119-072159",
+    "evaluation_date": "2025-11-19T07:21:59.107355",
     "model_version": "fraud_baseline_v1",
     "evaluator": "Devbrew",
     "dataset_version": "ieee-cis-2019",
@@ -89,9 +89,9 @@
         }
     },
     "evaluation_artifacts": {
-        "confusion_matrices": "/Users/joekariuki/Documents/Devbrew/research/devbrew-payments-fraud-sanctions/data_catalog/processed/confusion_matrices_baseline.png",
-        "cost_optimization": "/Users/joekariuki/Documents/Devbrew/research/devbrew-payments-fraud-sanctions/data_catalog/processed/cost_sensitive_threshold_baseline.png",
-        "precision_recall_curves": "/Users/joekariuki/Documents/Devbrew/research/devbrew-payments-fraud-sanctions/data_catalog/processed/precision_recall_threshold_baseline.png",
+        "confusion_matrices": "data_catalog/processed/confusion_matrices_baseline.png",
+        "cost_optimization": "data_catalog/processed/cost_sensitive_threshold_baseline.png",
+        "precision_recall_curves": "data_catalog/processed/precision_recall_threshold_baseline.png",
         "evaluation_summary": "fraud_baseline_v1_evaluation.json"
     }
 }

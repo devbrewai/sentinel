@@ -1,10 +1,10 @@
 {
-    "model_id": "fraud-baseline-20251103-083230",
+    "model_id": "fraud-baseline-20251119-072156",
     "model_version": "baseline_v1.0",
     "model_type": "LightGBM",
     "model_owner": "Devbrew",
     "model_contact": "hello@devbrew.ai",
-    "training_date": "2025-11-03T08:32:30.171720",
+    "training_date": "2025-11-19T07:21:56.684773",
     "framework_version": "4.6.0",
     "random_state": 42,
     "hyperparameters": {
@@ -25,7 +25,7 @@
         "num_boost_round": 1000,
         "early_stopping_rounds": 50,
         "best_iteration": 295,
-        "training_duration_seconds": 9.04
+        "training_duration_seconds": 8.5
     },
     "performance_metrics": {
         "train": {
@@ -43,7 +43,7 @@
             "pr_auc": 0.4743320191557926,
             "samples": 118108
         },
-        "evaluation_date": "2025-11-03T08:32:30.171738",
+        "evaluation_date": "2025-11-19T07:21:56.684791",
         "train_val_gap": 0.055892748369962386
     },
     "data_info": {
@@ -958,7 +958,7 @@
             "numerical": 400,
             "categorical": 29
         },
-        "feature_registry_path": "/Users/joekariuki/Documents/Devbrew/research/devbrew-payments-fraud-sanctions/data_catalog/processed/feature_registry.json",
+        "feature_registry_path": "data_catalog/processed/feature_registry.json",
         "schema_version": "v1.0"
     },
     "licensing": {
@@ -1006,10 +1006,10 @@
         "model_file": "fraud_baseline_v1.txt",
         "metadata_file": "fraud_baseline_v1_metadata.json",
         "feature_importance_file": "fraud_baseline_v1_feature_importance.csv",
-        "feature_registry": "/Users/joekariuki/Documents/Devbrew/research/devbrew-payments-fraud-sanctions/data_catalog/processed/feature_registry.json",
-        "training_manifest": "/Users/joekariuki/Documents/Devbrew/research/devbrew-payments-fraud-sanctions/data_catalog/processed/training_data_manifest.json",
-        "imbalance_metadata": "/Users/joekariuki/Documents/Devbrew/research/devbrew-payments-fraud-sanctions/data_catalog/processed/imbalance_metadata.json",
-        "splits_metadata": "/Users/joekariuki/Documents/Devbrew/research/devbrew-payments-fraud-sanctions/data_catalog/processed/splits/splits_metadata.json"
+        "feature_registry": "data_catalog/processed/feature_registry.json",
+        "training_manifest": "data_catalog/processed/training_data_manifest.json",
+        "imbalance_metadata": "data_catalog/processed/imbalance_metadata.json",
+        "splits_metadata": "data_catalog/processed/splits/splits_metadata.json"
     },
     "validation": {
         "cross_validation": "temporal_split",
