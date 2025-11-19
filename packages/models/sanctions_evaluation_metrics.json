@@ -1,0 +1,12 @@
+{
+  "precision_at_1": 0.975,
+  "recall_at_top3": 0.98,
+  "fpr_at_threshold_90": 0.0,
+  "fpr_at_threshold_80": 0.0,
+  "latency_p50_ms": 22.99797534942627,
+  "latency_p95_ms": 47.51487970352173,
+  "latency_p99_ms": 96.49761915206906,
+  "num_queries": 250,
+  "num_with_ground_truth": 200,
+  "num_non_matches": 50
+}
