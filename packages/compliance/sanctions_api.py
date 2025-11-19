@@ -510,8 +510,15 @@ class SanctionsScreener:
             # Apply filters if specified
             if query.country and metadata['country'] != query.country:
                 continue
-            if query.program and metadata['program'] != query.program:
-                continue
+            # TODO: Might need to remove this filter as it's not working as expected
+            # Program filter: Check if program string contains the filter value
+            # (programs can be multi-program strings like "IRAN] [SDGT] [IFSR]")
+            if query.program:
+                program_str = str(metadata['program']) if metadata['program'] else ''
+                # Check if filter program appears in the program string
+                # Handle both exact match and substring match (for multi-program strings)
+                if query.program.upper() not in program_str.upper():
+                    continue
             
             is_match, decision = apply_decision_threshold(score)
             
