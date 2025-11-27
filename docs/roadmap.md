@@ -8,7 +8,7 @@ This roadmap outlines the phases, tasks, and success criteria for building this 
 
 **Documentation Structure:** This roadmap tracks project status only. For detailed technical findings, performance metrics, and design decisions, see the [findings/](findings/) directory.
 
-Last Updated: 2025-11-18
+Last Updated: 2025-11-27
 
 ## Phase 1: Data Preparation & Exploration
 
@@ -93,7 +93,7 @@ Last Updated: 2025-11-18
 
 ## Phase 3: Sanctions Screening Module
 
-**Status:** 🟡 In progress
+**Status:** 🟢 Complete
 
 ### Tasks
 
@@ -111,17 +111,20 @@ Last Updated: 2025-11-18
 - [x] Benchmark matching latency (p95 < 50ms target) - **Achieved: 3.06 ms (105.56x improvement)**
 - [x] Test matching accuracy (precision@top1 ≥ 95%) - **Achieved: Precision@1 = 97.5%, Recall@top3 = 98.0%**
 - [x] Implement evaluation protocol with labeled test set (250 queries)
-- [x] Two-stage adaptive scoring optimization (p95: 49.63 ms, all targets met)
+- [x] Two-stage adaptive scoring optimization (p95: 47.51 ms, all targets met)
 - [x] Document matching logic and edge cases
+- [x] Implement Inference Wrapper (SanctionsScreener)
+- [x] Save final artifacts (Screener pickle, Metadata JSON)
 
 **Success Criteria:**
 
 - [x] Fuzzy matching working with confidence scores
 - [x] Country/program filters implemented (date filter not applicable)
 - [x] Decision thresholds implemented (is_match ≥ 0.90, review ≥ 0.80)
-- [x] Matching latency <50ms (achieved: 49.63 ms p95 with two-stage adaptive scoring)
+- [x] Matching latency <50ms (achieved: 47.51 ms p95 with two-stage adaptive scoring)
 - [x] Matching accuracy Precision@1 ≥ 95% (achieved: 97.5%)
 - [x] Matching accuracy Recall@top3 ≥ 98% (achieved: 98.0%)
+- [x] Production artifacts saved and versioned
 
 ## Phase 4: API Service & Infrastructure
 
@@ -196,7 +199,7 @@ Last Updated: 2025-11-18
 - [x] Fraud model PR-AUC ≥ 0.35 (achieved 0.4743)
 - [x] Probability calibration ECE < 0.10 (achieved 0.0050)
 - [x] Comprehensive model evaluation with business metrics
-- [x] Sanctions screening latency <50ms (achieved 49.63 ms p95 with two-stage adaptive scoring)
+- [x] Sanctions screening latency <50ms (achieved 47.51 ms p95)
 - [x] Sanctions screening Precision@1 ≥ 95% (achieved 97.5%)
 - [x] Sanctions screening Recall@top3 ≥ 98% (achieved 98.0%)
 - [ ] End-to-end latency ≤ 200ms p95 (pending API integration, sanctions component ready)
@@ -211,44 +214,32 @@ Last Updated: 2025-11-18
 
 **Recent Completion:**
 
-- OFAC data loading, normalization, tokenization, and blocking (100% recall achieved)
-- Similarity scoring with RapidFuzz composite scoring (validated: monotonicity, determinism, score range)
-- Country and program filters with audit logging and fallback behavior (validated)
-- Decision logic & thresholds (is_match ≥ 0.90, review ≥ 0.80, no_match < 0.80) with comprehensive validation
-- **Latency optimization: p95 = 3.06 ms (105.56x improvement, 16x better than 50ms target)**
-  - Optimizations: candidate capping (200→100), vectorized DataFrame access, aggressive early capping, optimized metadata building
-  - Throughput: 422 queries/sec (96.24x improvement)
-  - Cache effectiveness: 4.90x speedup with 80% hit rate
-- **Evaluation protocol: Precision@1 = 97.5%, Recall@top3 = 98.0% (all targets met)**
-- **Two-stage adaptive scoring: p95 = 49.63 ms (meets <50ms target), balances recall and latency**
+- **Phase 3: Sanctions Screening** (Complete ✅)
+  - [x] OFAC data loading and normalization
+  - [x] Tokenization and canonical forms
+  - [x] Multi-strategy blocking (100% recall)
+  - [x] Similarity scoring (RapidFuzz composite)
+  - [x] Country and program filters
+  - [x] Decision logic & thresholds
+  - [x] Latency optimization (p95 = 47.51 ms)
+  - [x] Evaluation protocol (Precision@1 = 97.5%, Recall@top3 = 98.0%)
+  - [x] Production artifacts (Screener Pickle, Metadata)
 
 **Immediate Actions:**
 
-1. **Phase 3: Sanctions Screening** (Complete ✅)
-
-   - [x] OFAC data loading and normalization
-   - [x] Tokenization and canonical forms
-   - [x] Multi-strategy blocking (first token, bucket, initials)
-   - [x] Similarity scoring (RapidFuzz composite scoring)
-   - [x] Country and program filters
-   - [x] Decision logic & thresholds (is_match ≥ 0.90, review ≥ 0.80)
-   - [x] Latency optimization and benchmarking (p95 = 49.63 ms with two-stage adaptive scoring)
-   - [x] Evaluation protocol (Precision@1 = 97.5%, Recall@top3 = 98.0%)
-   - [x] Matching logic and edge cases documented
-
-2. **Phase 4: API Service** (~8-12 hours)
+1. **Phase 4: API Service** (~8-12 hours)
 
    - [ ] FastAPI service structure
    - [ ] Model inference integration
    - [ ] Redis/PostgreSQL setup
 
-3. **Phase 5: Demo UI** (~6-8 hours)
+2. **Phase 5: Demo UI** (~6-8 hours)
 
    - [ ] Next.js application
    - [ ] Real-time scoring interface
    - [ ] Deployment (Vercel)
 
-4. **Phase 6: Final Documentation** (~3-4 hours)
+3. **Phase 6: Final Documentation** (~3-4 hours)
    - [ ] Case study summary
    - [ ] Architecture diagrams
    - [ ] Deployment guide
