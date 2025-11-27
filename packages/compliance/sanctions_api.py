@@ -503,14 +503,17 @@ class SanctionsScreener:
         
         # Build match results
         matches = []
-        for i in sorted_indices[:query.top_k]:
+        for i in sorted_indices:
+            if len(matches) >= query.top_k:
+                break
+                
             score = float(composite_scores[i])
             metadata = candidate_metadata[i]
             
             # Apply filters if specified
             if query.country and metadata['country'] != query.country:
                 continue
-            # TODO: Might need to remove this filter as it's not working as expected
+            
             # Program filter: Check if program string contains the filter value
             # (programs can be multi-program strings like "IRAN] [SDGT] [IFSR]")
             if query.program:
