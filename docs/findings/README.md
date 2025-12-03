@@ -5,11 +5,13 @@ This directory contains detailed technical findings, performance metrics, and de
 ## Documentation Structure
 
 ### Phase 1: Data Exploration & Feature Engineering
+
 **Status:** Complete
 
 [Phase 1 Findings](data-exploration-notes.md)
 
 **Key Topics:**
+
 - Dataset statistics (IEEE-CIS, PaySim, OFAC)
 - Cross-dataset insights and modeling strategy
 - Feature engineering decisions and optimizations
@@ -17,6 +19,7 @@ This directory contains detailed technical findings, performance metrics, and de
 - Production state management considerations
 
 **Key Metrics:**
+
 - 590K transactions, 432 features, 1:29 class imbalance
 - 0 missing values after processing
 - 59 MB memory footprint (10.6% reduction from raw data)
@@ -24,11 +27,13 @@ This directory contains detailed technical findings, performance metrics, and de
 ---
 
 ### Phase 2: Model Training & Evaluation
+
 **Status:** Complete
 
 [Phase 2 Findings](model-training-notes.md)
 
 **Key Topics:**
+
 - Baseline model performance and architecture
 - Comprehensive evaluation suite (confusion matrices, PR curves)
 - Cost-sensitive threshold optimization
@@ -40,6 +45,7 @@ This directory contains detailed technical findings, performance metrics, and de
 - Production deployment guidelines
 
 **Key Metrics:**
+
 - Test ROC-AUC: 0.8861 (exceeds 0.85 target by 4.2%)
 - Test PR-AUC: 0.4743 (exceeds 0.35 target by 35.5%)
 - Cost savings: $225,625 (55.5% reduction at optimal threshold)
@@ -48,6 +54,7 @@ This directory contains detailed technical findings, performance metrics, and de
 - SHAP computation: <20s for 10K sample, <10ms inference overhead
 
 **Business Impact:**
+
 - Optimal threshold: 0.4205
 - Fraud capture: 70.7% (2,875/4,067 cases)
 - Review rate: 12.9% (15,250/118,205 transactions)
@@ -58,11 +65,13 @@ This directory contains detailed technical findings, performance metrics, and de
 ---
 
 ### Phase 3: Sanctions Screening Module
+
 **Status:** In progress
 
 [Sanctions Screening Notes](sanctions-screening-notes.md)
 
 **Key Topics:**
+
 - OFAC data integration (SDN + Consolidated lists)
 - Text normalization and tokenization with stopword filtering
 - Multi-strategy blocking (first token, token bucket, initials signature)
@@ -74,6 +83,7 @@ This directory contains detailed technical findings, performance metrics, and de
 - Evaluation protocol with labeled test set
 
 **Key Metrics:**
+
 - Precision@1: 97.5% (exceeds ≥95% target by 2.5%)
 - Recall@top3: 98.0% (exceeds ≥98% target)
 - Latency p95: 49.63 ms (meets <50ms target)
@@ -84,6 +94,7 @@ This directory contains detailed technical findings, performance metrics, and de
 - Throughput: 422 queries/sec (single process)
 
 **Business Impact:**
+
 - Three-tier decision system enables automated processing for high-confidence matches
 - Review band (0.80-0.90) flags ambiguous cases for manual review
 - Low-latency screening (p95: 49.63ms) enables real-time payment processing
@@ -92,17 +103,42 @@ This directory contains detailed technical findings, performance metrics, and de
 
 ---
 
+### Phase 4: API Service & Infrastructure
+
+**Status:** In Progress
+
+[API Implementation Notes](api-implementation-notes.md)
+
+**Key Topics:**
+
+- Production-grade dynamic schema generation
+- Parallel execution (AsyncIO) for low latency
+- Secure configuration (Pydantic Settings)
+- Non-blocking audit logging (Background Tasks)
+
+**Key Decisions:**
+
+- Use of `feature_registry.json` to auto-generate API validation schema
+- Parallelizing Sanctions Screening (CPU-bound) and Redis Fetch (I/O-bound)
+- Async SQLAlchemy 2.0 for audit logs
+
+---
+
 ## Document Conventions
 
 ### Audience
+
 Technical documentation for:
+
 - ML engineers and data scientists
 - Financial institution technical evaluators
 - Fintech startup engineering teams
 - Technical due diligence reviewers
 
 ### Structure Standards
+
 Each findings document includes:
+
 1. **Overview:** Phase scope and completion status
 2. **Key Findings:** Technical insights and metrics
 3. **Limitations:** Known issues and constraints
@@ -110,14 +146,15 @@ Each findings document includes:
 5. **References:** Links to notebooks, artifacts, and related docs
 
 ### Update Frequency
+
 - Findings documents are updated at phase completion
 - In-progress phases receive incremental updates as major milestones complete
 - Last updated dates tracked at document level
 
-
 ## Contributing to Findings
 
 When adding findings:
+
 1. Maintain consistent structure across phase documents
 2. Include both technical metrics and business implications
 3. Document limitations and edge cases explicitly
@@ -129,4 +166,3 @@ When adding findings:
 **Last Updated:** 2025-11-18 (Phase 3 Complete)  
 **Project:** AI Fraud Detection for Cross-Border Payments & Sanctions Screening Research Case Study  
 **Organization:** Devbrew
-
