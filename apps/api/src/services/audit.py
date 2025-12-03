@@ -1,3 +1,4 @@
+import asyncio
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy import Column, String, Float, Boolean, Integer, JSON, DateTime
@@ -25,9 +26,23 @@ class AuditService:
             self.engine, class_=AsyncSession, expire_on_commit=False
         )
 
-    async def init_db(self):
-        async with self.engine.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
+    async def init_db(self, max_retries: int = 5, retry_delay: float = 2.0):
+        """Initialize database with retry logic for Docker container startup."""
+        for attempt in range(max_retries):
+            try:
+                async with self.engine.begin() as conn:
+                    await conn.run_sync(Base.metadata.create_all)
+                print("Database connection established successfully")
+                return
+            except Exception as e:
+                if attempt < max_retries - 1:
+                    print(f"Database connection attempt {attempt + 1}/{max_retries} failed: {e}")
+                    print(f"Retrying in {retry_delay} seconds...")
+                    await asyncio.sleep(retry_delay)
+                    retry_delay *= 1.5  # Exponential backoff
+                else:
+                    print(f"Failed to connect to database after {max_retries} attempts")
+                    raise
 
     async def log_transaction(self, data: dict):
         async with self.async_session() as session:
