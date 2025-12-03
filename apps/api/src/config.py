@@ -3,8 +3,8 @@ from pydantic_settings import BaseSettings
 from pydantic import PostgresDsn, RedisDsn, Field
 
 class Settings(BaseSettings):
-    API_V1_STR: str = "/api/v1"
-    PROJECT_NAME: str = "DevBrew Fraud API"
+    API_V1_STR: str = Field("/api/v1", description="API Version string")
+    PROJECT_NAME: str = Field("Devbrew Fraud Detection API", description="Project Name")
     
     # Load required values from .env file, API will fail to start if these are missing
     # Database connection strings
