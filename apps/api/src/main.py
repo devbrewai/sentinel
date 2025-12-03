@@ -5,6 +5,8 @@ from apps.api.src.config import settings
 from apps.api.src.services.fraud_model import fraud_model_service
 from apps.api.src.services.sanctions import sanctions_service
 from apps.api.src.services.features import feature_service
+from apps.api.src.routers.v1 import router
+from apps.api.src.services.audit import audit_service
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -13,6 +15,7 @@ async def lifespan(app: FastAPI):
     fraud_model_service.load_model()
     sanctions_service.load_screener()
     await feature_service.connect()
+    await audit_service.init_db() # Initialize Audit DB Table
     yield
     # Shutdown and close connections
     print("Shutting down: Closing connections...")
@@ -32,6 +35,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(router) # Register the router
 
 @app.get("/health")
 def health_check():
