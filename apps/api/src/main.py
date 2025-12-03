@@ -36,7 +36,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(router) # Register the router
+# Register the router with the correct prefix (/api/v1)
+app.include_router(router, prefix=settings.API_V1_STR)
 
 @app.get("/health")
 def health_check():
