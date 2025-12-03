@@ -1,4 +1,30 @@
 services:
+  api:
+    build:
+      context: ../../
+      dockerfile: apps/api/Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      # Use internal container names (db, redis) strictly for Docker environment
+      # This ignores the local .env file (which points to localhost) to prevent conflicts
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=postgresql+asyncpg://user:password@db:5432/fraud_detection?ssl=disable
+
+      # Pass through other variables
+      - MODEL_PATH=${MODEL_PATH:-packages/models/fraud_baseline_v1.txt}
+      - SCREENER_PATH=${SCREENER_PATH:-packages/models/sanctions_screener.pkl}
+      - FEATURE_REGISTRY_PATH=${FEATURE_REGISTRY_PATH:-data_catalog/processed/feature_registry.json}
+      - API_V1_STR=${API_V1_STR:-/api/v1}
+      - PROJECT_NAME=${PROJECT_NAME:-Devbrew Fraud Detection API}
+    volumes:
+      - ../../packages/models:/app/packages/models
+
   redis:
     image: redis:7-alpine
     ports:
@@ -14,7 +40,6 @@ services:
   db:
     image: postgres:15-alpine
     environment:
-      # Use environment variables if set, otherwise default to these values
       POSTGRES_USER: ${POSTGRES_USER:-user}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
       POSTGRES_DB: ${POSTGRES_DB:-fraud_detection}
