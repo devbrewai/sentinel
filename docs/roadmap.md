@@ -128,7 +128,7 @@ Last Updated: 2025-12-03
 
 ## Phase 4: API Service & Infrastructure
 
-**Status:** 🟡 In Progress
+**Status:** 🟢 Complete
 
 ### Tasks
 
@@ -140,19 +140,19 @@ Last Updated: 2025-12-03
 - [x] Set up PostgreSQL for audit logging
 - [x] Implement API authentication (via Pydantic Settings/Env vars)
 - [x] Add request/response logging (Audit Service)
-- [ ] Benchmark end-to-end latency
+- [x] Benchmark end-to-end latency
 - [x] Write API tests
 
 **Success Criteria:**
 
 - [x] API returns risk_score, top_features, sanctions_match
-- [ ] End-to-end latency ≤ 200ms p95
+- [x] End-to-end latency ≤ 200ms p95 (Achieved: ~30ms)
 - [x] Audit logs stored in PostgreSQL
 - [x] Redis caching working for velocity features
 
 ## Phase 5: Demo UI
 
-**Status:** ⚪ Not Started
+**Status:** 🟡 In Progress
 
 ### Tasks
 
