@@ -21,8 +21,7 @@ This reference pipeline combines public datasets (IEEE-CIS, PaySim, OFAC) with m
 
 _This case study is in active development._
 
-> [!WARNING]
-> **For research/educational use only**
+> [!WARNING] > **For research/educational use only**
 >
 > Models trained on IEEE-CIS data are restricted to **non-commercial use**.
 > Production deployments require retraining on proprietary or licensed datasets.
@@ -117,16 +116,19 @@ npm run dev
 ## Documentation
 
 ### Project Planning
+
 - [Research Requirements](./docs/research-requirements.md) — detailed case study specifications
 - [Roadmap](./docs/roadmap.md) — project phases and success criteria
 
 ### Technical Findings
-- [Phase 1: Data Exploration](./docs/findings/phase-1-data-exploration.md) — dataset analysis, feature engineering insights
-- [Phase 2: Model Training](./docs/findings/phase-2-model-training.md) — performance metrics, cost optimization, hyperparameter tuning
-- [Phase 3: Sanctions Screening](./docs/findings/phase-3-sanctions-screening.md) — _planned_
 
-### Results
-- [Case Study Summary]: _planned_ (pending final results validation)
+- [Phase 1: Data Exploration](./docs/findings/data-exploration-notes.md) — dataset analysis, feature engineering insights
+- [Phase 2: Model Training](./docs/findings/model-training-notes.md) — performance metrics, cost optimization, hyperparameter tuning
+- [Phase 3: Sanctions Screening](./docs/findings/sanctions-screening-notes.md) — fuzzy matching implementation, blocking strategies, and performance evaluation
+
+<!-- ### Results
+
+- [Case Study Summary]: _planned_ "pending final results validation" -->
 
 ## Disclaimer
 
