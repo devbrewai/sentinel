@@ -1,6 +1,6 @@
 {
   "version_id": "2025-11-17T06:00:56.218723",
-  "build_time": "2025-11-27T16:30:13.524760",
+  "build_time": "2025-11-28T06:33:58.357713",
   "status": "production_ready",
   "dataset": {
     "source": "OFAC SDN + Consolidated Lists",
@@ -24,8 +24,8 @@
   "performance_validation": {
     "precision_at_1": 0.975,
     "recall_at_top3": 0.98,
-    "latency_p95_ms": 46.39031887054442,
-    "validated_at": "2025-11-27T16:30:13.524768"
+    "latency_p95_ms": 47.13366031646726,
+    "validated_at": "2025-11-28T06:33:58.357720"
   },
   "governance": {
     "license": "Apache 2.0",

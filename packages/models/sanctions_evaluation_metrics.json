@@ -3,9 +3,9 @@
   "recall_at_top3": 0.98,
   "fpr_at_threshold_90": 0.0,
   "fpr_at_threshold_80": 0.0,
-  "latency_p50_ms": 23.577451705932617,
-  "latency_p95_ms": 46.39031887054442,
-  "latency_p99_ms": 96.91977977752686,
+  "latency_p50_ms": 23.139119148254395,
+  "latency_p95_ms": 47.13366031646726,
+  "latency_p99_ms": 96.49137735366817,
   "num_queries": 250,
   "num_with_ground_truth": 200,
   "num_non_matches": 50
