@@ -85,6 +85,19 @@ We implemented a **Background Task** pattern using `FastAPI.BackgroundTasks` com
 - The API returns the response to the client immediately after inference.
 - The audit log is written to the DB asynchronously after the response is sent.
 
+### 2.5 Containerization & Networking
+
+**The Challenge:**
+Dockerizing a multi-service stack (API + Redis + Postgres) introduced two specific hurdles:
+
+1.  **Startup Race Conditions:** The API container starts faster than the database can initialize, causing immediate crash/restart loops.
+2.  **Environment Variable Conflicts:** Local development uses `localhost`, but Docker requires internal service names (`db`, `redis`). The local `.env` file was inadvertently overriding Docker internal defaults.
+
+**The Solution:**
+
+1.  **Retry Logic:** We implemented a custom `init_db` method with exponential backoff (retrying connections for up to 30s) to handle database startup delays gracefully.
+2.  **Network Isolation:** We configured `docker-compose.yml` to enforce internal service names (`db`, `redis`) and ignore the local `.env` file for infrastructure connection strings, ensuring consistent behavior across environments.
+
 ## 3. Performance & Metrics (Final)
 
 | Metric                 | Target      | Status   | Result           |
@@ -99,5 +112,5 @@ We implemented a **Background Task** pattern using `FastAPI.BackgroundTasks` com
 ## 4. Next Steps
 
 - [x] **Full Load Testing:** Verified latency with test script (~30ms avg).
-- [ ] **Containerization:** Finalize the Dockerfile for the API service (optional for demo).
+- [x] **Containerization:** Completed. Dockerfile optimized (multi-stage build) and docker-compose configured with retry logic.
 - [ ] **Demo UI Integration:** Connect the Next.js frontend to this API.
