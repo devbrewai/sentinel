@@ -13,10 +13,9 @@ class Settings(BaseSettings):
     # Model paths
     MODEL_PATH: str = Field(..., description="Path to the fraud model file")
     SCREENER_PATH: str = Field(..., description="Path to the sanctions screener pickle")
-    FEATURE_REGISTRY_PATH: str = Field(
-        "data_catalog/processed/feature_registry.json", 
-        description="Path to the feature registry JSON"
-    )
+
+    # Feature registry path
+    FEATURE_REGISTRY_PATH: str = Field(..., description="Path to the feature registry JSON")
     
     model_config = {
         # Load values from .env file
