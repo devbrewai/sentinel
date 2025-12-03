@@ -8,7 +8,7 @@ This roadmap outlines the phases, tasks, and success criteria for building this 
 
 **Documentation Structure:** This roadmap tracks project status only. For detailed technical findings, performance metrics, and design decisions, see the [findings/](findings/) directory.
 
-Last Updated: 2025-11-27
+Last Updated: 2025-12-03
 
 ## Phase 1: Data Preparation & Exploration
 
@@ -128,27 +128,27 @@ Last Updated: 2025-11-27
 
 ## Phase 4: API Service & Infrastructure
 
-**Status:** ⚪ Not Started
+**Status:** 🟡 In Progress
 
 ### Tasks
 
-- [ ] Build FastAPI service structure
-- [ ] Implement `/score` endpoint
-- [ ] Integrate fraud model inference
-- [ ] Integrate sanctions screening
-- [ ] Set up Redis for velocity feature caching
-- [ ] Set up PostgreSQL for audit logging
-- [ ] Implement API authentication
-- [ ] Add request/response logging
+- [x] Build FastAPI service structure
+- [x] Implement `/score` endpoint
+- [x] Integrate fraud model inference
+- [x] Integrate sanctions screening
+- [x] Set up Redis for velocity feature caching
+- [x] Set up PostgreSQL for audit logging
+- [x] Implement API authentication (via Pydantic Settings/Env vars)
+- [x] Add request/response logging (Audit Service)
 - [ ] Benchmark end-to-end latency
-- [ ] Write API tests
+- [x] Write API tests
 
 **Success Criteria:**
 
-- [ ] API returns risk_score, top_features, sanctions_match
+- [x] API returns risk_score, top_features, sanctions_match
 - [ ] End-to-end latency ≤ 200ms p95
-- [ ] Audit logs stored in PostgreSQL
-- [ ] Redis caching working for velocity features
+- [x] Audit logs stored in PostgreSQL
+- [x] Redis caching working for velocity features
 
 ## Phase 5: Demo UI
 
