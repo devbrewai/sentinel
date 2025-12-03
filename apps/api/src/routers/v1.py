@@ -12,7 +12,6 @@ router = APIRouter()
 
 # Load feature order once at startup
 REGISTRY = load_feature_registry()
-FEATURE_ORDER = REGISTRY["feature_columns"] # The exact list order the model expects
 
 @router.post("/score", response_model=ScoreResponse)
 async def score_transaction(request: TransactionRequest, background_tasks: BackgroundTasks):
@@ -28,24 +27,17 @@ async def score_transaction(request: TransactionRequest, background_tasks: Backg
     
     sanctions_result, velocity_features = await asyncio.gather(sanctions_task, features_task)
 
-    # 2. Prepare Model Input Vector
+    # 2. Prepare Model Input
     # Convert the request object to a dict (excluding system fields)
     request_data = request.model_dump(by_alias=True)
     
     # Inject calculated velocity features into the data dict
-    # ensuring we overwrite any client-provided values for these trusted fields
     request_data["card1_txn_1.0h"] = velocity_features["velocity_1h"]
     request_data["card1_txn_24.0h"] = velocity_features["velocity_24h"]
     
-    # Construct the ordered list for LightGBM
-    model_input = []
-    for feature_name in FEATURE_ORDER:
-        # Default to None (NaN) if missing
-        val = request_data.get(feature_name)
-        model_input.append(val if val is not None else float('nan'))
-    
     # 3. Run Fraud Model
-    risk_score = fraud_model_service.predict(model_input)
+    # Pass the dictionary directly; the service will convert to DataFrame
+    risk_score = fraud_model_service.predict(request_data)
     
     # 4. Decision Logic
     is_sanctions_hit = len(sanctions_result.top_matches) > 0 and sanctions_result.top_matches[0].is_match
