@@ -55,8 +55,8 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
     if (preset === "safe") {
       form.reset({
         TransactionAmt: 45.5,
-        card_id: "card_safe_01",
-        sender_name: "Alice Smith",
+        card_id: "card_valid_999",
+        sender_name: "Sarah Smith",
         sender_country: "US",
         ProductCD: "W",
       });
@@ -65,7 +65,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
         TransactionAmt: 1200.0,
         card_id: "card_reg_99",
         sender_name: "AEROCARIBBEAN AIRLINES",
-        sender_country: "CU",
+        sender_country: "Cuba", // Changed from CU to Cuba to match dataset
         ProductCD: "C",
       });
     } else if (preset === "risky") {
@@ -84,6 +84,17 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
       transaction_id: `txn_${Math.floor(Math.random() * 1000000)}`,
       ...values,
     };
+    // Inject high-risk features if it's the risky case (detected by card_id or amount)
+    if (
+      values.TransactionAmt === 9500.0 &&
+      values.card_id === "card_risk_007"
+    ) {
+      payload["V258"] = 5.0;
+      payload["V294"] = 100.0;
+      payload["C14"] = 5.0;
+      payload["C8"] = 10.0;
+    }
+
     onSubmit(payload);
   }
 
@@ -189,8 +200,11 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
                         <SelectItem value="US">United States</SelectItem>
                         <SelectItem value="CA">Canada</SelectItem>
                         <SelectItem value="GB">United Kingdom</SelectItem>
-                        <SelectItem value="CU">Cuba</SelectItem>
+                        <SelectItem value="CU">Cuba (ISO)</SelectItem>
+                        <SelectItem value="Cuba">Cuba (Full)</SelectItem>
                         <SelectItem value="MX">Mexico</SelectItem>
+                        <SelectItem value="CO">Colombia</SelectItem>
+                        <SelectItem value="XX">Unknown</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -226,7 +240,12 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
               )}
             />
 
-            <Button type="submit" className="w-full" disabled={isLoading}>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={isLoading}
+              variant="default"
+            >
               {isLoading ? "Analyzing..." : "Analyze Transaction"}
             </Button>
           </form>
