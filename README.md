@@ -4,7 +4,7 @@
 
 **Open-source research case study** from [Devbrew](https://www.devbrew.ai) demonstrating AI fraud detection and sanctions screening (using OFAC lists) for cross-border payments.
 
-**[Read the full case study →](https://www.devbrew.ai/case-studies/fraud-detection-cross-border-payments)**
+**[Read the full case study →](https://www.devbrew.ai/case-studies/fraud-detection)**
 
 This reference pipeline combines public datasets (IEEE-CIS, PaySim, OFAC) with modern ML and API tooling to:
 
