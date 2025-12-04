@@ -156,7 +156,7 @@ Last Updated: 2025-12-03
 
 ### Tasks
 
-- [ ] Set up Next.js project
+- [x] Set up Next.js project
 - [ ] Build transaction input form
 - [ ] Display fraud risk gauge
 - [ ] Display SHAP feature importance
@@ -174,7 +174,7 @@ Last Updated: 2025-12-03
 
 ## Phase 6: Documentation & Case Study Summary
 
-**Status:** ⚪ Not Started
+**Status:** 🟡 In Progress
 
 ### Tasks
 
@@ -202,7 +202,7 @@ Last Updated: 2025-12-03
 - [x] Sanctions screening latency <50ms (achieved 47.51 ms p95)
 - [x] Sanctions screening Precision@1 ≥ 95% (achieved 97.5%)
 - [x] Sanctions screening Recall@top3 ≥ 98% (achieved 98.0%)
-- [ ] End-to-end latency ≤ 200ms p95 (pending API integration, sanctions component ready)
+- [x] End-to-end latency ≤ 200ms p95 (Achieved: ~30ms)
 - [x] Clear documentation of methodology and limitations
 - [x] Reproducible notebooks and code
 - [ ] Working demo with all components integrated
@@ -210,38 +210,37 @@ Last Updated: 2025-12-03
 
 ## Next Steps
 
-**Current Focus:** Phase 4 (API Service & Infrastructure) - FastAPI integration of fraud detection and sanctions screening modules.
+**Current Focus:** Phase 5 (Demo UI) & Phase 6 (Documentation)
 
 **Recent Completion:**
 
+- **Phase 4: API Service & Infrastructure** (Complete)
+
+  - [x] FastAPI service structure
+  - [x] Model inference integration
+  - [x] Sanctions screening integration
+  - [x] Redis caching & PostgreSQL audit logging
+  - [x] End-to-end latency ~30ms
+
 - **Phase 3: Sanctions Screening** (Complete ✅)
-  - [x] OFAC data loading and normalization
-  - [x] Tokenization and canonical forms
   - [x] Multi-strategy blocking (100% recall)
   - [x] Similarity scoring (RapidFuzz composite)
-  - [x] Country and program filters
-  - [x] Decision logic & thresholds
   - [x] Latency optimization (p95 = 47.51 ms)
-  - [x] Evaluation protocol (Precision@1 = 97.5%, Recall@top3 = 98.0%)
   - [x] Production artifacts (Screener Pickle, Metadata)
 
 **Immediate Actions:**
 
-1. **Phase 4: API Service** (~8-12 hours)
+1. **Phase 5: Demo UI** (~6-8 hours)
 
-   - [ ] FastAPI service structure
-   - [ ] Model inference integration
-   - [ ] Redis/PostgreSQL setup
-
-2. **Phase 5: Demo UI** (~6-8 hours)
-
-   - [ ] Next.js application
-   - [ ] Real-time scoring interface
+   - [ ] Build transaction input form
+   - [ ] Display fraud risk gauge & SHAP values
+   - [ ] Display sanctions match results
+   - [ ] Connect to API backend
    - [ ] Deployment (Vercel)
 
-3. **Phase 6: Final Documentation** (~3-4 hours)
-   - [ ] Case study summary
+2. **Phase 6: Final Documentation** (~3-4 hours)
    - [ ] Architecture diagrams
    - [ ] Deployment guide
+   - [ ] Final README updates
 
-**For detailed progress and technical insights:** See [Phase 1 Findings](findings/data-exploration-notes.md), [Phase 2 Findings](findings/model-training-notes.md), and [Phase 3 Findings](findings/sanctions-screening-notes.md).
+**For detailed progress and technical insights:** See [Phase 1 Findings](findings/data-exploration-notes.md), [Phase 2 Findings](findings/model-training-notes.md), [Phase 3 Findings](findings/sanctions-screening-notes.md), and [Phase 4 Findings](findings/api-implementation-notes.md).
