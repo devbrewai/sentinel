@@ -42,7 +42,7 @@ export default function Dashboard() {
               FraudGuard AI
             </h1>
             <p className="text-slate-500 mt-1">
-              Real-time Payment Fraud & Sanctions Screening
+              Real-time payment fraud & sanctions screening
             </p>
           </div>
 
