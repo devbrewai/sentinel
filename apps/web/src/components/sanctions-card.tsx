@@ -70,9 +70,7 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
           <div className="text-sm space-y-2 border rounded-md p-3 bg-background">
             <div className="grid grid-cols-3 gap-1">
               <span className="text-muted-foreground">Input:</span>
-              <span className="col-span-2 font-medium">
-                {matchData?.top_matches[0].match_name}
-              </span>
+              <span className="col-span-2 font-medium">{matchData?.query}</span>
             </div>
             <div className="grid grid-cols-3 gap-1">
               <span className="text-muted-foreground">Match:</span>
