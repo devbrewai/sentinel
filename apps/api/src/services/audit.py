@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
 from sqlalchemy import Column, String, Float, Boolean, Integer, JSON, DateTime
 from datetime import datetime
-from apps.api.src.config import settings
+from ..config import settings
 
 Base = declarative_base()
 

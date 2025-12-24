@@ -33,10 +33,22 @@ cp .env.example .envThen edit `.env` with your local settings.
 
 ### 3. Run the API
 
-From the **project root**:
+From the **`apps/api` directory**:
 
 ```bash
-uvicorn apps.api.src.main:app --reload
+cd apps/api
+PYTHONPATH=../.. uvicorn src.main:app --reload
+```
+
+Or using the editable install (recommended):
+
+```bash
+# From project root, install the API package
+pip install -e ./apps/api
+
+# Then run from apps/api directory
+cd apps/api
+uvicorn src.main:app --reload
 ```
 
 ### 4. Verify

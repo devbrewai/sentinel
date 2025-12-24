@@ -1,6 +1,6 @@
 import pickle
 import os
-from apps.api.src.config import settings
+from ..config import settings
 from packages.compliance.sanctions_api import SanctionsScreener, SanctionsQuery, SanctionsResponse
 
 class SanctionsService:

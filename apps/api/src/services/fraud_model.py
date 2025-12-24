@@ -1,7 +1,7 @@
 import lightgbm as lgb
 import pandas as pd
-from apps.api.src.config import settings
-from apps.api.src.schemas.feature_factory import load_feature_registry
+from ..config import settings
+from ..schemas.feature_factory import load_feature_registry
 import os
 
 class FraudModelService:

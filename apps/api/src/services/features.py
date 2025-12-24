@@ -1,5 +1,5 @@
 import redis.asyncio as redis
-from apps.api.src.config import settings
+from ..config import settings
 
 class FeatureService:
     def __init__(self):

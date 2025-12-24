@@ -1,12 +1,12 @@
 import time
 import asyncio
 from fastapi import APIRouter, BackgroundTasks
-from apps.api.src.schemas.requests import TransactionRequest, ScoreResponse
-from apps.api.src.services.fraud_model import fraud_model_service
-from apps.api.src.services.sanctions import sanctions_service
-from apps.api.src.services.features import feature_service
-from apps.api.src.services.audit import audit_service
-from apps.api.src.schemas.feature_factory import load_feature_registry
+from ..schemas.requests import TransactionRequest, ScoreResponse
+from ..services.fraud_model import fraud_model_service
+from ..services.sanctions import sanctions_service
+from ..services.features import feature_service
+from ..services.audit import audit_service
+from ..schemas.feature_factory import load_feature_registry
 
 router = APIRouter()
 

@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Optional
-from apps.api.src.schemas.feature_factory import ModelFeatures
+from .feature_factory import ModelFeatures
 
 class TransactionRequest(ModelFeatures):
     """

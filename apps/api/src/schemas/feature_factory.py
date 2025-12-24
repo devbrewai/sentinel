@@ -2,7 +2,7 @@ import json
 import os
 from typing import Type, Dict, Any, Optional
 from pydantic import create_model, Field, BaseModel
-from apps.api.src.config import settings
+from ..config import settings
 
 def load_feature_registry() -> Dict[str, Any]:
     """Load the feature registry JSON."""
