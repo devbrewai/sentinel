@@ -19,7 +19,7 @@ class Settings(BaseSettings):
     
     model_config = {
         # Load values from .env file
-        "env_file": "apps/api/.env",
+        "env_file": (".env", "apps/api/.env"),
         "env_file_encoding": "utf-8",
         "case_sensitive": True,
         "extra": "ignore"
