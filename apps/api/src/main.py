@@ -1,12 +1,12 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from apps.api.src.config import settings
-from apps.api.src.services.fraud_model import fraud_model_service
-from apps.api.src.services.sanctions import sanctions_service
-from apps.api.src.services.features import feature_service
-from apps.api.src.routers.v1 import router
-from apps.api.src.services.audit import audit_service
+from .config import settings
+from .services.fraud_model import fraud_model_service
+from .services.sanctions import sanctions_service
+from .services.features import feature_service
+from .routers.v1 import router
+from .services.audit import audit_service
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
