@@ -21,9 +21,10 @@ RUN pip install --user --no-cache-dir . ".[dev]"
 FROM python:3.11-slim AS runtime
 
 # Environment variables
+# PYTHONPATH includes /app for packages.compliance and /app/apps/api for src package
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
-    PYTHONPATH=/app
+    PYTHONPATH=/app:/app/apps/api
 
 WORKDIR /app
 
@@ -62,4 +63,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
     CMD curl -f http://localhost:8000/health || exit 1
 
 # Run the application
-CMD ["uvicorn", "apps.api.src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
