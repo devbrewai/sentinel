@@ -6,8 +6,11 @@ import { SanctionsMatch } from "@/types";
 interface SanctionsCardProps {
   matchData:
     | {
+        query: string;
         top_matches: SanctionsMatch[];
-        screened_name: string;
+        applied_filters?: Record<string, string | null>;
+        latency_ms?: number;
+        version?: string;
       }
     | null
     | undefined;
@@ -68,13 +71,13 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
             <div className="grid grid-cols-3 gap-1">
               <span className="text-muted-foreground">Input:</span>
               <span className="col-span-2 font-medium">
-                {matchData?.screened_name}
+                {matchData?.top_matches[0].match_name}
               </span>
             </div>
             <div className="grid grid-cols-3 gap-1">
               <span className="text-muted-foreground">Match:</span>
               <span className="col-span-2 font-medium text-red-600">
-                {topMatch.candidate}
+                {topMatch.match_name}
               </span>
             </div>
             <div className="grid grid-cols-3 gap-1">

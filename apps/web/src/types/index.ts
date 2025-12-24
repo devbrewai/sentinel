@@ -9,11 +9,14 @@ export interface TransactionRequest {
 }
 
 export interface SanctionsMatch {
-  candidate: string;
+  match_name: string;
   score: number;
   is_match: boolean;
-  reason?: string;
-  // Other fields as needed from the backend response
+  decision: string;
+  country?: string;
+  program?: string;
+  source?: string;
+  uid?: string;
 }
 
 export interface ScoreResponse {
@@ -23,8 +26,11 @@ export interface ScoreResponse {
   decision: "approve" | "review" | "reject";
   sanctions_match: boolean;
   sanctions_details?: {
+    query: string;  // Changed from screened_name
     top_matches: SanctionsMatch[];
-    screened_name: string;
+    applied_filters?: Record<string, string | null>;
+    latency_ms?: number;
+    version?: string;
   } | null;
   latency_ms: number;
 }
