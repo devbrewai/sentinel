@@ -43,13 +43,16 @@ PYTHONPATH=../.. uvicorn src.main:app --reload
 Or using the editable install (recommended):
 
 ```bash
-# From project root, install the API package
-pip install -e ./apps/api
+# From project root, install both the root package (for packages.compliance) and the API package
+uv pip install -e .
+uv pip install -e ./apps/api
 
 # Then run from apps/api directory
 cd apps/api
-uvicorn src.main:app --reload
+PYTHONPATH=../.. uvicorn src.main:app --reload
 ```
+
+> **Note:** The root package install (`uv pip install -e .`) is required because the API imports `packages.compliance.sanctions_api` for sanctions screening.
 
 ### 4. Verify
 
