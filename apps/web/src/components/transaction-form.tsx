@@ -84,15 +84,30 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
       transaction_id: `txn_${Math.floor(Math.random() * 1000000)}`,
       ...values,
     };
+    // Inject medium-high risk features for sanctions case (elevated fraud risk)
+    if (values.TransactionAmt === 1200.0 && values.card_id === "card_reg_99") {
+      // Medium-high risk: sanctions entities often have unusual transaction patterns
+      payload["V258"] = 8.0; // Moderate fraud signal
+      payload["C1"] = 15.0; // Elevated count
+      payload["C14"] = 2.0; // Low but not zero
+      payload["V45"] = 12.0; // Moderate
+      payload["C13"] = 3.0; // Low value
+    }
+
     // Inject high-risk features if it's the risky case (detected by card_id or amount)
     if (
       values.TransactionAmt === 9500.0 &&
       values.card_id === "card_risk_007"
     ) {
-      payload["V258"] = 5.0;
-      payload["V294"] = 100.0;
-      payload["C14"] = 5.0;
-      payload["C8"] = 10.0;
+      // Values from notebook 99.6% fraud probability case (Sample Index 100)
+      payload["V258"] = 12.0; // SHAP +1.69
+      payload["C1"] = 22.0; // SHAP +1.08
+      payload["C14"] = 0.0; // SHAP +1.00 (low value = fraud signal)
+      payload["V45"] = 20.0; // SHAP +0.88
+      payload["V87"] = 22.0; // SHAP +0.55
+      payload["C13"] = 0.0; // SHAP +0.43 (low value = fraud signal)
+      payload["V83"] = 3.0; // SHAP +0.34
+      payload["V201"] = 19.0; // SHAP +0.27
     }
 
     onSubmit(payload);
