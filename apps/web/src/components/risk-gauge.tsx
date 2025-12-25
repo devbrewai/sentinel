@@ -4,15 +4,23 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 interface RiskGaugeProps {
   score: number; // 0 to 1
+  riskLevel?: "low" | "medium" | "high" | "critical";
 }
 
-export function RiskGauge({ score }: RiskGaugeProps) {
+export function RiskGauge({ score, riskLevel }: RiskGaugeProps) {
   const percentage = Math.round(score * 100);
 
-  // Determine color
-  let color = "#22c55e"; // Green
-  if (percentage > 80) color = "#ef4444"; // Red
-  else if (percentage > 50) color = "#eab308"; // Yellow
+  // Determine color based on risk level (priority) or score
+  let color = "#22c55e"; // Green (low)
+  if (riskLevel === "critical" || riskLevel === "high") {
+    color = "#ef4444"; // Red
+  } else if (riskLevel === "medium") {
+    color = "#eab308"; // Yellow
+  } else if (percentage > 80) {
+    color = "#ef4444"; // Red
+  } else if (percentage > 50) {
+    color = "#eab308"; // Yellow
+  }
 
   const data = [
     { name: "Score", value: percentage },

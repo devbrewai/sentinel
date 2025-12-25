@@ -103,7 +103,7 @@ export default function Dashboard() {
                       <CardTitle>Fraud Risk Score</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <RiskGauge score={result.risk_score} />
+                      <RiskGauge score={result.risk_score} riskLevel={result.risk_level} />
                       <div className="text-center mt-4">
                         <div
                           className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium uppercase tracking-wide"
