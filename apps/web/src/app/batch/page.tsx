@@ -167,7 +167,7 @@ export default function BatchPage() {
         {!results ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Upload Area */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md">
+            <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
               <div className="p-5 border-b border-slate-200 dark:border-slate-800">
                 <h2 className="font-semibold text-slate-900 dark:text-slate-100">
                   Upload Transactions
@@ -181,7 +181,7 @@ export default function BatchPage() {
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
-                  className={`border-2 border-dashed rounded-md p-10 text-center transition-colors ${
+                  className={`border-2 border-dashed rounded-lg p-10 text-center transition-colors ${
                     isDragging
                       ? "border-slate-400 bg-slate-50 dark:bg-slate-800/50"
                       : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
@@ -189,7 +189,7 @@ export default function BatchPage() {
                 >
                   {file ? (
                     <div className="space-y-4">
-                      <div className="w-12 h-12 mx-auto bg-emerald-50 dark:bg-emerald-950 rounded-md flex items-center justify-center">
+                      <div className="w-12 h-12 mx-auto bg-emerald-50 dark:bg-emerald-950 rounded-lg flex items-center justify-center">
                         <FileSpreadsheet className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
                       </div>
                       <div>
@@ -222,7 +222,7 @@ export default function BatchPage() {
                     </div>
                   ) : (
                     <div className="space-y-4">
-                      <div className="w-12 h-12 mx-auto bg-slate-100 dark:bg-slate-800 rounded-md flex items-center justify-center">
+                      <div className="w-12 h-12 mx-auto bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center">
                         <Upload className="h-6 w-6 text-slate-400" />
                       </div>
                       <div>
@@ -252,7 +252,7 @@ export default function BatchPage() {
             </div>
 
             {/* Format Info */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
               <div className="p-5 border-b border-slate-200 dark:border-slate-800">
                 <h2 className="font-semibold text-slate-900 dark:text-slate-100">
                   CSV Format
@@ -306,9 +306,9 @@ export default function BatchPage() {
           <>
             {/* Results Summary */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-md">
+                  <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
                     <ArrowRightLeft className="h-5 w-5 text-slate-600 dark:text-slate-400" />
                   </div>
                   <div>
@@ -321,9 +321,9 @@ export default function BatchPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-emerald-50 dark:bg-emerald-950 rounded-md">
+                  <div className="p-2 bg-emerald-50 dark:bg-emerald-950 rounded-lg">
                     <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
                   </div>
                   <div>
@@ -336,9 +336,9 @@ export default function BatchPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-amber-50 dark:bg-amber-950 rounded-md">
+                  <div className="p-2 bg-amber-50 dark:bg-amber-950 rounded-lg">
                     <Clock className="h-5 w-5 text-amber-600 dark:text-amber-400" />
                   </div>
                   <div>
@@ -351,9 +351,9 @@ export default function BatchPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-red-50 dark:bg-red-950 rounded-md">
+                  <div className="p-2 bg-red-50 dark:bg-red-950 rounded-lg">
                     <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
                   </div>
                   <div>
@@ -369,7 +369,7 @@ export default function BatchPage() {
             </div>
 
             {/* Results Table */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
               <div className="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
                 <div>
                   <h2 className="font-semibold text-slate-900 dark:text-slate-100">
