@@ -15,7 +15,8 @@ dependencies = [
     "lightgbm>=4.1.0",
     "pandas>=2.1.0",
     "numpy>=1.26.0",
-    "shap>=0.43.0",
+    "shap>=0.45.0",
+    "numba>=0.59.0",  # Required for Python 3.12 compatibility with shap
     # Fuzzy Matching (required by packages.compliance.sanctions_api)
     "rapidfuzz>=3.6.0",
     # Database & Cache
