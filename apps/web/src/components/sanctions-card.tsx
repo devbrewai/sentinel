@@ -30,7 +30,9 @@ function MatchRankBadge({ rank }: { rank: number }) {
   };
   return (
     <span
-      className={`text-xs font-bold px-1.5 py-0.5 rounded ${colors[rank as keyof typeof colors] || colors[3]}`}
+      className={`text-xs font-bold px-1.5 py-0.5 rounded ${
+        colors[rank as keyof typeof colors] || colors[3]
+      }`}
     >
       #{rank}
     </span>
@@ -43,8 +45,8 @@ function ScoreBar({ score }: { score: number }) {
     percentage >= 90
       ? "bg-red-500"
       : percentage >= 80
-        ? "bg-amber-500"
-        : "bg-slate-400";
+      ? "bg-amber-500"
+      : "bg-slate-400";
 
   return (
     <div className="flex items-center gap-2">
@@ -111,7 +113,9 @@ function MatchItem({
             Matched Entity
           </span>
           <span
-            className={`font-medium ${match.is_match ? "text-red-600 dark:text-red-400" : ""}`}
+            className={`font-medium ${
+              match.is_match ? "text-red-600 dark:text-red-400" : ""
+            }`}
           >
             {match.match_name}
           </span>
@@ -149,7 +153,9 @@ function MatchItem({
         {match.source && (
           <div>
             <span className="text-xs text-muted-foreground block">Source</span>
-            <span className="text-sm font-mono font-medium">{match.source}</span>
+            <span className="text-sm font-mono font-medium">
+              {match.source}
+            </span>
           </div>
         )}
       </div>
@@ -166,7 +172,7 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-base">
             <CheckCircle className="h-5 w-5 text-green-500" />
-            Sanctions Screening
+            Sanctions screening
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -185,7 +191,7 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
   return (
     <Card
       className={
-        isMatch ? "border-red-200 dark:border-red-900 bg-red-50/10 dark:bg-red-950/20" : ""
+        isMatch ? "border-red-200 dark:border-red-900 dark:bg-red-950/20" : ""
       }
     >
       <CardHeader className="pb-3">
@@ -196,7 +202,7 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
             ) : (
               <CheckCircle className="h-5 w-5 text-green-500" />
             )}
-            Sanctions Screening
+            Sanctions screening
           </span>
           {matches.length > 0 && (
             <Badge variant="secondary" className="text-xs font-normal">
@@ -207,9 +213,14 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         {isMatch ? (
-          <Alert variant="destructive">
+          <Alert
+            variant="destructive"
+            className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-900"
+          >
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Sanctions Hit Detected</AlertTitle>
+            <AlertTitle className="font-medium">
+              Sanctions hit detected
+            </AlertTitle>
             <AlertDescription>
               This entity matches a record on the OFAC sanctions list.
             </AlertDescription>
