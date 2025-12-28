@@ -19,6 +19,17 @@ export interface SanctionsMatch {
   uid?: string;
 }
 
+export interface FeatureContribution {
+  name: string;
+  value: any;
+  contribution: number;
+}
+
+export interface VelocityFeatures {
+  transactions_1h: number;
+  transactions_24h: number;
+}
+
 export interface ScoreResponse {
   transaction_id: string;
   risk_score: number;
@@ -26,12 +37,13 @@ export interface ScoreResponse {
   decision: "approve" | "review" | "reject";
   sanctions_match: boolean;
   sanctions_details?: {
-    query: string;  // Changed from screened_name
+    query: string;
     top_matches: SanctionsMatch[];
     applied_filters?: Record<string, string | null>;
     latency_ms?: number;
     version?: string;
   } | null;
+  top_features?: FeatureContribution[] | null;
+  velocity?: VelocityFeatures | null;
   latency_ms: number;
 }
-

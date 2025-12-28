@@ -13,13 +13,15 @@ import {
   TransactionHistory,
   HistoryItem,
 } from "@/components/transaction-history";
+import { FeatureImportance } from "@/components/feature-importance";
+import { VelocityCard } from "@/components/velocity-indicators";
 import { scoreTransaction } from "@/lib/api";
 import { TransactionRequest, ScoreResponse } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { ShieldCheck, ShieldAlert, Shield, Activity } from "lucide-react";
+import { ShieldCheck, ShieldAlert, Shield } from "lucide-react";
 
 const HISTORY_KEY = "fraudguard_history";
 const MAX_HISTORY = 20;
@@ -259,6 +261,9 @@ export default function Dashboard() {
                   />
                 </div>
 
+                {/* Feature Importance - SHAP Analysis */}
+                <FeatureImportance features={result.top_features} />
+
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle>Decision Logic</CardTitle>
@@ -285,28 +290,8 @@ export default function Dashboard() {
                       <Separator />
 
                       <div className="space-y-3">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-                            <Activity className="h-4 w-4 text-slate-400" />
-                            Velocity Check
-                          </span>
-                          {result.risk_level === "critical" ||
-                          result.risk_level === "high" ? (
-                            <Badge
-                              variant="outline"
-                              className="text-amber-600 bg-amber-50 border-amber-200"
-                            >
-                              Warning
-                            </Badge>
-                          ) : (
-                            <Badge
-                              variant="outline"
-                              className="text-green-600 bg-green-50 border-green-200"
-                            >
-                              Passed
-                            </Badge>
-                          )}
-                        </div>
+                        {/* Velocity indicators */}
+                        <VelocityCard velocity={result.velocity} />
 
                         <div className="flex items-center justify-between text-sm">
                           <span className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
