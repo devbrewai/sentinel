@@ -1,0 +1,11 @@
+transaction_id,sender_name,TransactionAmt,card_id,sender_country,ProductCD
+TXN-2025-001,John Smith,1500.00,CARD-001,US,W
+TXN-2025-002,Maria Garcia,25000.00,CARD-002,MX,C
+TXN-2025-003,Alex Johnson,500.00,CARD-003,US,W
+TXN-2025-004,Kim Jong Un,75000.00,CARD-004,KP,H
+TXN-2025-005,Sarah Williams,3200.00,CARD-005,US,W
+TXN-2025-006,Mohammed Al-Rashid,12000.00,CARD-006,AE,C
+TXN-2025-007,Elena Petrov,8500.00,CARD-007,RU,W
+TXN-2025-008,Carlos Rodriguez,450.00,CARD-008,ES,W
+TXN-2025-009,Aisha Khan,15000.00,CARD-009,PK,C
+TXN-2025-010,Robert Chen,2100.00,CARD-010,CN,W
