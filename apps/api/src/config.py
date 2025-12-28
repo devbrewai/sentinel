@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     # Model paths
     MODEL_PATH: str = Field(..., description="Path to the fraud model file")
     SCREENER_PATH: str = Field(..., description="Path to the sanctions screener pickle")
+    EXPLAINER_PATH: str = Field(..., description="Path to the SHAP explainer pickle")
 
     # Feature registry path
     FEATURE_REGISTRY_PATH: str = Field(..., description="Path to the feature registry JSON")
