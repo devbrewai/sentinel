@@ -6,7 +6,6 @@ import { RiskGauge } from "@/components/risk-gauge";
 import { SanctionsCard } from "@/components/sanctions-card";
 import { LatencyBadge } from "@/components/latency-badge";
 import { TransactionRoute } from "@/components/transaction-route";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { CopyButton } from "@/components/copy-button";
 import { SkeletonResults } from "@/components/skeleton-results";
 import {
@@ -21,7 +20,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { ShieldCheck, ShieldAlert, Shield } from "lucide-react";
+import { ShieldAlert, Shield } from "lucide-react";
 
 const HISTORY_KEY = "fraudguard_history";
 const MAX_HISTORY = 20;
@@ -125,41 +124,27 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-4 md:p-8 transition-colors">
+    <div className="p-4 md:p-8">
       <div className="max-w-6xl mx-auto space-y-6">
-        <header className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+        {/* Page header with latency */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-              <ShieldCheck className="h-8 w-8 text-blue-600" />
-              FraudGuard AI
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
+              Transaction Screening
             </h1>
-            <p className="text-slate-500 dark:text-slate-400 mt-1">
-              Real-time payment fraud & sanctions screening
+            <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
+              Real-time fraud detection and sanctions screening
             </p>
           </div>
-
-          <div className="flex flex-col items-end gap-3">
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 dark:bg-emerald-950 text-gray-700 dark:text-emerald-300 text-xs font-medium rounded-md">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                System Operational
-              </div>
-              <ThemeToggle />
+          {result && (
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-slate-500 dark:text-slate-400">
+                Latency:
+              </span>
+              <LatencyBadge latencyMs={result.latency_ms} />
             </div>
-
-            {result && (
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-slate-500 dark:text-slate-400">
-                  Last scan latency:
-                </span>
-                <LatencyBadge latencyMs={result.latency_ms} />
-              </div>
-            )}
-          </div>
-        </header>
+          )}
+        </div>
 
         {error && (
           <Alert variant="destructive" className="mb-6">
