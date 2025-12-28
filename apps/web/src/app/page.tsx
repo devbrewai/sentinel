@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { TransactionForm } from "@/components/transaction-form";
 import { RiskGauge } from "@/components/risk-gauge";
 import { SanctionsCard } from "@/components/sanctions-card";
@@ -22,7 +22,13 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Track current request to prevent race conditions with out-of-order responses
+  const currentRequestIdRef = useRef<string | null>(null);
+
   const handleScore = async (data: TransactionRequest) => {
+    const requestId = data.transaction_id;
+    currentRequestIdRef.current = requestId;
+
     setIsLoading(true);
     setError(null);
     setResult(null);
@@ -30,11 +36,17 @@ export default function Dashboard() {
 
     try {
       const response = await scoreTransaction(data);
-      setResult(response);
+      // Only update state if this response matches the current request
+      if (currentRequestIdRef.current === requestId) {
+        setResult(response);
+        setIsLoading(false);
+      }
     } catch (err: any) {
-      setError(err.message || "Failed to score transaction");
-    } finally {
-      setIsLoading(false);
+      // Only update error state if this is still the current request
+      if (currentRequestIdRef.current === requestId) {
+        setError(err.message || "Failed to score transaction");
+        setIsLoading(false);
+      }
     }
   };
 
