@@ -9,7 +9,8 @@ export function TransactionRoute({
   originCountry = "Unknown",
   destinationCountry = "US",
 }: TransactionRouteProps) {
-  const isCrossBorder = originCountry !== destinationCountry;
+  const origin = originCountry || "Unknown";
+  const isCrossBorder = origin !== destinationCountry;
 
   return (
     <div className="flex items-center justify-between p-4 bg-white rounded-lg border mb-6 shadow-sm">
@@ -21,7 +22,7 @@ export function TransactionRoute({
           <p className="text-xs text-slate-500 uppercase font-semibold tracking-wider">
             Origin
           </p>
-          <p className="font-medium text-slate-900">{originCountry}</p>
+          <p className="font-medium text-slate-900">{origin}</p>
         </div>
       </div>
 
