@@ -26,7 +26,7 @@ import { TransactionRequest } from "@/types";
 const formSchema = z.object({
   TransactionAmt: z.coerce.number().min(0.01, "Amount must be greater than 0"),
   card_id: z.string().min(1, "Card ID is required"),
-  sender_name: z.string().min(1, "Sender Name is required"),
+  sender_name: z.string().min(1, "Sender name is required"),
   sender_country: z.string().optional(),
   ProductCD: z.string().optional(),
 });
@@ -72,7 +72,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
       form.reset({
         TransactionAmt: 9500.0,
         card_id: "card_risk_007",
-        sender_name: "Suspicious User",
+        sender_name: "Suspicious user",
         sender_country: "XX",
         ProductCD: "H",
       });
@@ -116,7 +116,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Submit Transaction</CardTitle>
+        <CardTitle>Submit transaction</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="flex gap-2 mb-6">
@@ -134,7 +134,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
             size="sm"
             onClick={() => fillPreset("sanctions")}
           >
-            Sanctions Hit
+            Sanctions hit
           </Button>
           <Button
             type="button"
@@ -142,7 +142,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
             size="sm"
             onClick={() => fillPreset("risky")}
           >
-            High Risk
+            High risk
           </Button>
         </div>
 
@@ -175,9 +175,9 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
               name="sender_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Sender Name</FormLabel>
+                  <FormLabel>Sender name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Full Name" {...field} />
+                    <Input placeholder="Full name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -233,7 +233,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
               name="ProductCD"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Product Code</FormLabel>
+                  <FormLabel>Product code</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -261,7 +261,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
               disabled={isLoading}
               variant="default"
             >
-              {isLoading ? "Analyzing..." : "Analyze Transaction"}
+              {isLoading ? "Analyzing..." : "Analyze transaction"}
             </Button>
           </form>
         </Form>
