@@ -121,7 +121,7 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
   }
 
   return (
-    <Card>
+    <Card className="shadow-none">
       <CardHeader className="pb-3">
         <CardTitle className="text-base flex items-center justify-between">
           <span>Top fraud risk factors</span>
