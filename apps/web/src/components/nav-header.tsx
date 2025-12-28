@@ -2,7 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ShieldCheck, LayoutDashboard, FileStack, BarChart3, BookOpen } from "lucide-react";
+import {
+  ShieldCheck,
+  LayoutDashboard,
+  FileStack,
+  BarChart3,
+  BookOpen,
+} from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +28,7 @@ export function NavHeader() {
         <div className="flex h-14 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5">
-            <div className="flex items-center justify-center w-8 h-8 bg-slate-900 dark:bg-white rounded-lg">
+            <div className="flex items-center justify-center w-8 h-8 bg-slate-900 dark:bg-white rounded-sm">
               <ShieldCheck className="h-5 w-5 text-white dark:text-slate-900" />
             </div>
             <span className="font-semibold text-slate-900 dark:text-slate-100">
@@ -62,7 +68,9 @@ export function NavHeader() {
               <span className="flex h-2 w-2">
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
               </span>
-              <span className="text-slate-600 dark:text-slate-400">All systems operational</span>
+              <span className="text-slate-600 dark:text-slate-400">
+                All systems operational
+              </span>
             </div>
             <div className="h-4 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block" />
             <ThemeToggle />
@@ -79,7 +87,7 @@ export function NavHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors rounded-full",
+                  "flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors rounded-md",
                   isActive
                     ? "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-slate-100"
                     : "text-slate-500 dark:text-slate-400"
