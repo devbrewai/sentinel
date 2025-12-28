@@ -73,23 +73,23 @@ export function TransactionHistory({
   }
 
   return (
-    <Card>
+    <Card className="shadow-none">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <CardTitle className="text-sm font-medium flex items-center gap-2">
             <History className="h-4 w-4" />
-            Recent Transactions
+            Recent transactions
             <Badge variant="secondary" className="text-xs font-normal">
               {history.length}
             </Badge>
           </CardTitle>
           <Button
             variant="ghost"
-            size="sm"
-            className="h-7 text-xs text-muted-foreground hover:text-destructive"
+            size="default"
+            className="h-7 px-2 text-xs text-muted-foreground hover:text-destructive"
             onClick={onClear}
           >
-            <X className="h-3 w-3 mr-1" />
+            <X className="h-2 w-2" />
             Clear
           </Button>
         </div>
@@ -100,9 +100,9 @@ export function TransactionHistory({
             <button
               key={item.id}
               onClick={() => onSelect(item)}
-              className={`w-full text-left p-2.5 rounded-md transition-colors ${
+              className={`w-full text-left p-2.5 rounded-md transition-colors cursor-pointer ${
                 selectedId === item.id
-                  ? "bg-primary/10 dark:bg-primary/20 border border-primary/30"
+                  ? "bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800"
                   : "hover:bg-slate-100 dark:hover:bg-slate-800"
               }`}
             >
