@@ -114,7 +114,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
   }
 
   return (
-    <Card className="w-full">
+    <Card className="w-full border-none shadow-none">
       <CardHeader>
         <CardTitle>Submit transaction</CardTitle>
       </CardHeader>
