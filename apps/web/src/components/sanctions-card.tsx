@@ -84,6 +84,23 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
                 {(topMatch.score * 100).toFixed(1)}%
               </span>
             </div>
+
+            <div className="grid grid-cols-2 gap-4 mt-2 pt-2 border-t">
+              <div>
+                <span className="text-xs text-muted-foreground block">
+                  Program
+                </span>
+                <span className="text-sm font-mono font-medium">
+                  {topMatch.program || "SDN"}
+                </span>
+              </div>
+              <div>
+                <span className="text-xs text-muted-foreground block">UID</span>
+                <span className="text-sm font-mono font-medium">
+                  {topMatch.uid || "N/A"}
+                </span>
+              </div>
+            </div>
           </div>
         )}
       </CardContent>
