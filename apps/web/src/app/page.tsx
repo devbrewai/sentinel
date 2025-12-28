@@ -5,15 +5,20 @@ import { TransactionForm } from "@/components/transaction-form";
 import { RiskGauge } from "@/components/risk-gauge";
 import { SanctionsCard } from "@/components/sanctions-card";
 import { LatencyBadge } from "@/components/latency-badge";
+import { TransactionRoute } from "@/components/transaction-route";
 import { scoreTransaction } from "@/lib/api";
 import { TransactionRequest, ScoreResponse } from "@/types";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
-import { ShieldCheck, ShieldAlert, Shield } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { ShieldCheck, ShieldAlert, Shield, Activity } from "lucide-react";
 
 export default function Dashboard() {
   const [result, setResult] = useState<ScoreResponse | null>(null);
+  const [lastRequest, setLastRequest] = useState<TransactionRequest | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,6 +26,7 @@ export default function Dashboard() {
     setIsLoading(true);
     setError(null);
     setResult(null);
+    setLastRequest(data);
 
     try {
       const response = await scoreTransaction(data);
@@ -46,12 +52,24 @@ export default function Dashboard() {
             </p>
           </div>
 
-          {result && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-slate-500">Last scan latency:</span>
-              <LatencyBadge latencyMs={result.latency_ms} />
+          <div className="flex flex-col items-end gap-2">
+            <div className="flex items-center gap-2 px-3 py-1 bg-emerald-50 text-gray-700 text-xs font-medium">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </span>
+              System Operational
             </div>
-          )}
+
+            {result && (
+              <div className="flex items-center gap-2">
+                <span className="text-sm text-slate-500">
+                  Last scan latency:
+                </span>
+                <LatencyBadge latencyMs={result.latency_ms} />
+              </div>
+            )}
+          </div>
         </header>
 
         {error && (
@@ -97,13 +115,21 @@ export default function Dashboard() {
               </Card>
             ) : (
               <>
+                <TransactionRoute
+                  originCountry={lastRequest?.sender_country}
+                  destinationCountry="US"
+                />
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <Card>
                     <CardHeader>
                       <CardTitle>Fraud Risk Score</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <RiskGauge score={result.risk_score} riskLevel={result.risk_level} />
+                      <RiskGauge
+                        score={result.risk_score}
+                        riskLevel={result.risk_level}
+                      />
                       <div className="text-center mt-4">
                         <div
                           className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium uppercase tracking-wide"
@@ -139,9 +165,11 @@ export default function Dashboard() {
                     <CardTitle>Decision Logic</CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       <div className="flex justify-between items-center">
-                        <span className="text-slate-600">Recommendation</span>
+                        <span className="text-slate-600 font-medium">
+                          Recommendation
+                        </span>
                         <span
                           className={`font-bold px-3 py-1 rounded-md uppercase text-sm ${
                             result.decision === "approve"
@@ -154,6 +182,60 @@ export default function Dashboard() {
                           {result.decision}
                         </span>
                       </div>
+                      <Separator />
+
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="flex items-center gap-2 text-slate-700">
+                            <Activity className="h-4 w-4 text-slate-400" />
+                            Velocity Check
+                          </span>
+                          {result.risk_level === "critical" ||
+                          result.risk_level === "high" ? (
+                            <Badge
+                              variant="outline"
+                              className="text-amber-600 bg-amber-50 border-amber-200"
+                            >
+                              Warning
+                            </Badge>
+                          ) : (
+                            <Badge
+                              variant="outline"
+                              className="text-green-600 bg-green-50 border-green-200"
+                            >
+                              Passed
+                            </Badge>
+                          )}
+                        </div>
+
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="flex items-center gap-2 text-slate-700">
+                            <ShieldAlert className="h-4 w-4 text-slate-400" />
+                            Sanctions List
+                          </span>
+                          {result.sanctions_match ? (
+                            <Badge variant="destructive">HIT FOUND</Badge>
+                          ) : (
+                            <Badge
+                              variant="outline"
+                              className="text-green-600 bg-green-50 border-green-200"
+                            >
+                              Clean
+                            </Badge>
+                          )}
+                        </div>
+
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="flex items-center gap-2 text-slate-700">
+                            <Shield className="h-4 w-4 text-slate-400" />
+                            Model Confidence
+                          </span>
+                          <span className="font-mono text-slate-600">
+                            {(result.risk_score * 100).toFixed(1)}%
+                          </span>
+                        </div>
+                      </div>
+
                       <Separator />
                       <div className="grid grid-cols-2 gap-4 text-sm">
                         <div>
