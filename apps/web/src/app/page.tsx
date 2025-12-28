@@ -4,8 +4,6 @@ import { useState, useRef, useEffect } from "react";
 import { TransactionForm } from "@/components/transaction-form";
 import { RiskGauge } from "@/components/risk-gauge";
 import { SanctionsCard } from "@/components/sanctions-card";
-import { LatencyBadge } from "@/components/latency-badge";
-import { TransactionRoute } from "@/components/transaction-route";
 import { CopyButton } from "@/components/copy-button";
 import { SkeletonResults } from "@/components/skeleton-results";
 import {
@@ -13,23 +11,25 @@ import {
   HistoryItem,
 } from "@/components/transaction-history";
 import { FeatureImportance } from "@/components/feature-importance";
-import { VelocityCard } from "@/components/velocity-indicators";
 import { scoreTransaction } from "@/lib/api";
 import { TransactionRequest, ScoreResponse } from "@/types";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Separator } from "@/components/ui/separator";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
-import { ShieldAlert, Shield } from "lucide-react";
+import {
+  ShieldAlert,
+  Shield,
+  ArrowRightLeft,
+  CheckCircle2,
+  AlertTriangle,
+  Clock,
+  ChevronRight,
+} from "lucide-react";
 
 const HISTORY_KEY = "fraudguard_history";
 const MAX_HISTORY = 20;
 
 export default function Dashboard() {
   const [result, setResult] = useState<ScoreResponse | null>(null);
-  const [lastRequest, setLastRequest] = useState<TransactionRequest | null>(
-    null
-  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
@@ -37,16 +37,13 @@ export default function Dashboard() {
     string | undefined
   >();
 
-  // Track current request to prevent race conditions with out-of-order responses
   const currentRequestIdRef = useRef<string | null>(null);
 
-  // Load history from sessionStorage on mount
   useEffect(() => {
     try {
       const saved = sessionStorage.getItem(HISTORY_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Convert string timestamps back to Date objects
         const items = parsed.map((item: any) => ({
           ...item,
           timestamp: new Date(item.timestamp),
@@ -58,7 +55,6 @@ export default function Dashboard() {
     }
   }, []);
 
-  // Save history to sessionStorage when it changes
   useEffect(() => {
     if (history.length > 0) {
       try {
@@ -85,7 +81,6 @@ export default function Dashboard() {
 
   const handleHistorySelect = (item: HistoryItem) => {
     setResult(item.response);
-    setLastRequest(item.request);
     setSelectedHistoryId(item.id);
     setError(null);
   };
@@ -103,19 +98,16 @@ export default function Dashboard() {
     setIsLoading(true);
     setError(null);
     setResult(null);
-    setLastRequest(data);
     setSelectedHistoryId(undefined);
 
     try {
       const response = await scoreTransaction(data);
-      // Only update state if this response matches the current request
       if (currentRequestIdRef.current === requestId) {
         setResult(response);
         setIsLoading(false);
         addToHistory(data, response);
       }
     } catch (err: any) {
-      // Only update error state if this is still the current request
       if (currentRequestIdRef.current === requestId) {
         setError(err.message || "Failed to score transaction");
         setIsLoading(false);
@@ -123,69 +115,120 @@ export default function Dashboard() {
     }
   };
 
+  const totalScreened = history.length;
+  const approvedCount = history.filter(h => h.response.decision === "approve").length;
+  const flaggedCount = history.filter(h => h.response.decision !== "approve").length;
+
   return (
-    <div className="p-4 md:p-8">
-      <div className="max-w-6xl mx-auto space-y-6">
-        {/* Page header with latency */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <div>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">
-              Transaction Screening
-            </h1>
-            <p className="text-slate-500 dark:text-slate-400 text-sm mt-1">
-              Real-time fraud detection and sanctions screening
-            </p>
-          </div>
-          {result && (
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-slate-500 dark:text-slate-400">
-                Latency:
-              </span>
-              <LatencyBadge latencyMs={result.latency_ms} />
+    <div className="py-8 px-6">
+      <div className="max-w-7xl mx-auto space-y-8">
+        {/* Welcome Header */}
+        <div>
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+            Transaction Screening
+          </h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-1">
+            Real-time fraud detection and sanctions screening for cross-border payments
+          </p>
+        </div>
+
+        {/* Key Metrics Row */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
+                <ArrowRightLeft className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+              </div>
+              <div>
+                <p className="text-sm text-slate-500 dark:text-slate-400">Screened</p>
+                <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                  {totalScreened.toLocaleString()}
+                </p>
+              </div>
             </div>
-          )}
+          </div>
+
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-emerald-50 dark:bg-emerald-950 rounded-lg">
+                <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+              </div>
+              <div>
+                <p className="text-sm text-slate-500 dark:text-slate-400">Approved</p>
+                <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                  {approvedCount.toLocaleString()}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-red-50 dark:bg-red-950 rounded-lg">
+                <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
+              </div>
+              <div>
+                <p className="text-sm text-slate-500 dark:text-slate-400">Flagged</p>
+                <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                  {flaggedCount.toLocaleString()}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {error && (
-          <Alert variant="destructive" className="mb-6">
+          <Alert variant="destructive">
             <ShieldAlert className="h-4 w-4" />
-            <AlertTitle>Error</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Left Column: Input Form */}
-          <div className="lg:col-span-5">
-            <TransactionForm onSubmit={handleScore} isLoading={isLoading} />
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          {/* Left Column: Form & History */}
+          <div className="lg:col-span-5 space-y-6">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl">
+              <div className="p-5 border-b border-slate-200 dark:border-slate-800">
+                <h2 className="font-semibold text-slate-900 dark:text-slate-100">
+                  New Transaction
+                </h2>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                  Enter transaction details to screen
+                </p>
+              </div>
+              <div className="p-5">
+                <TransactionForm onSubmit={handleScore} isLoading={isLoading} />
+              </div>
+            </div>
 
-            <div className="mt-6 p-4 bg-white dark:bg-slate-900 rounded-lg border dark:border-slate-800 text-sm text-slate-500 dark:text-slate-400">
-              <h3 className="font-semibold mb-2 text-slate-700 dark:text-slate-200">
+            {/* How it works */}
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+              <h3 className="font-medium text-slate-900 dark:text-slate-100 mb-3">
                 How it works
               </h3>
-              <ul className="list-disc pl-4 space-y-1">
-                <li>
-                  Scores transactions in <strong>&lt;200ms</strong>.
-                </li>
-                <li>
-                  Checks <strong>velocity features</strong> (Redis).
-                </li>
-                <li>
-                  Screens against <strong>OFAC Sanctions</strong>.
-                </li>
-                <li>Returns risk score & explainability.</li>
-              </ul>
+              <div className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-slate-400" />
+                  <span>Scores transactions in &lt;200ms</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <ArrowRightLeft className="h-4 w-4 text-slate-400" />
+                  <span>Checks velocity features via Redis</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Shield className="h-4 w-4 text-slate-400" />
+                  <span>Screens against OFAC sanctions list</span>
+                </div>
+              </div>
             </div>
 
             {/* Transaction History */}
-            <div className="mt-6">
-              <TransactionHistory
-                history={history}
-                onSelect={handleHistorySelect}
-                onClear={handleHistoryClear}
-                selectedId={selectedHistoryId}
-              />
-            </div>
+            <TransactionHistory
+              history={history}
+              onSelect={handleHistorySelect}
+              onClear={handleHistoryClear}
+              selectedId={selectedHistoryId}
+            />
           </div>
 
           {/* Right Column: Results */}
@@ -193,141 +236,124 @@ export default function Dashboard() {
             {isLoading ? (
               <SkeletonResults />
             ) : !result ? (
-              <Card className="h-full min-h-[400px] flex items-center justify-center bg-slate-50/50 dark:bg-slate-900/50 border-dashed">
-                <div className="text-center text-slate-400 dark:text-slate-500">
-                  <Shield className="h-16 w-16 mx-auto mb-4 opacity-20" />
-                  <p>Submit a transaction to see risk analysis</p>
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl h-full min-h-[400px] flex items-center justify-center">
+                <div className="text-center">
+                  <Shield className="h-12 w-12 mx-auto mb-3 text-slate-300 dark:text-slate-700" />
+                  <p className="text-slate-500 dark:text-slate-400">
+                    Submit a transaction to see risk analysis
+                  </p>
                 </div>
-              </Card>
+              </div>
             ) : (
               <>
-                <TransactionRoute
-                  originCountry={lastRequest?.sender_country}
-                  destinationCountry="US"
-                />
+                {/* Decision Card */}
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">Decision</p>
+                      <div className="flex items-center gap-3 mt-1">
+                        <span className={`text-2xl font-semibold uppercase ${
+                          result.decision === "approve"
+                            ? "text-emerald-600"
+                            : result.decision === "reject"
+                            ? "text-red-600"
+                            : "text-amber-600"
+                        }`}>
+                          {result.decision}
+                        </span>
+                        {result.latency_ms && (
+                          <Badge variant="outline" className="text-xs font-mono">
+                            {result.latency_ms.toFixed(0)}ms
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                    <CopyButton value={JSON.stringify(result, null, 2)} />
+                  </div>
+                </div>
 
+                {/* Risk Score & Sanctions */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Fraud Risk Score</CardTitle>
-                    </CardHeader>
-                    <CardContent>
+                  {/* Risk Score */}
+                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl">
+                    <div className="p-4 border-b border-slate-200 dark:border-slate-800">
+                      <h3 className="font-medium text-slate-900 dark:text-slate-100">
+                        Fraud Risk
+                      </h3>
+                    </div>
+                    <div className="p-5">
                       <RiskGauge
                         score={result.risk_score}
                         riskLevel={result.risk_level}
                       />
                       <div className="text-center mt-4">
-                        <div
-                          className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium uppercase tracking-wide"
-                          style={{
-                            backgroundColor:
-                              result.risk_level === "low"
-                                ? "#dcfce7"
-                                : result.risk_level === "medium"
-                                ? "#fef9c3"
-                                : "#fee2e2",
-                            color:
-                              result.risk_level === "low"
-                                ? "#166534"
-                                : result.risk_level === "medium"
-                                ? "#854d0e"
-                                : "#991b1b",
-                          }}
+                        <Badge
+                          variant="outline"
+                          className={`uppercase text-xs font-medium ${
+                            result.risk_level === "low"
+                              ? "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-800"
+                              : result.risk_level === "medium"
+                              ? "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-400 dark:border-amber-800"
+                              : "bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-400 dark:border-red-800"
+                          }`}
                         >
                           {result.risk_level} Risk
-                        </div>
+                        </Badge>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </div>
 
+                  {/* Sanctions */}
                   <SanctionsCard
                     matchData={result.sanctions_details}
                     isMatch={result.sanctions_match}
                   />
                 </div>
 
-                {/* Feature Importance - SHAP Analysis */}
+                {/* Feature Importance */}
                 <FeatureImportance features={result.top_features} />
 
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle>Decision Logic</CardTitle>
-                    <CopyButton value={JSON.stringify(result, null, 2)} />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-6">
-                      <div className="flex justify-between items-center">
-                        <span className="text-slate-600 dark:text-slate-300 font-medium">
-                          Recommendation
-                        </span>
-                        <span
-                          className={`font-bold px-3 py-1 rounded-md uppercase text-sm ${
-                            result.decision === "approve"
-                              ? "bg-green-100 text-green-700"
-                              : result.decision === "reject"
-                              ? "bg-red-100 text-red-700"
-                              : "bg-yellow-100 text-yellow-700"
-                          }`}
-                        >
-                          {result.decision}
-                        </span>
-                      </div>
-                      <Separator />
-
-                      <div className="space-y-3">
-                        {/* Velocity indicators */}
-                        <VelocityCard velocity={result.velocity} />
-
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-                            <ShieldAlert className="h-4 w-4 text-slate-400" />
-                            Sanctions List
-                          </span>
-                          {result.sanctions_match ? (
-                            <Badge variant="destructive">HIT FOUND</Badge>
-                          ) : (
-                            <Badge
-                              variant="outline"
-                              className="text-green-600 bg-green-50 border-green-200"
-                            >
-                              Clean
-                            </Badge>
-                          )}
-                        </div>
-
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-                            <Shield className="h-4 w-4 text-slate-400" />
-                            Model Confidence
-                          </span>
-                          <span className="font-mono text-slate-600 dark:text-slate-400">
-                            {(result.risk_score * 100).toFixed(1)}%
-                          </span>
-                        </div>
-                      </div>
-
-                      <Separator />
-                      <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
-                          <span className="block text-muted-foreground">
-                            Transaction ID
-                          </span>
-                          <span className="font-mono text-slate-700 dark:text-slate-300">
-                            {result.transaction_id}
-                          </span>
-                        </div>
-                        <div>
-                          <span className="block text-muted-foreground">
-                            Processing Time
-                          </span>
-                          <span className="font-mono text-slate-700 dark:text-slate-300">
-                            {result.latency_ms.toFixed(2)} ms
-                          </span>
-                        </div>
-                      </div>
+                {/* Details */}
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl">
+                  <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                    <h3 className="font-medium text-slate-900 dark:text-slate-100">
+                      Details
+                    </h3>
+                    <button className="text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 flex items-center gap-1">
+                      View all <ChevronRight className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <div className="divide-y divide-slate-200 dark:divide-slate-800">
+                    <div className="p-4 flex items-center justify-between">
+                      <span className="text-sm text-slate-600 dark:text-slate-400">Transaction ID</span>
+                      <span className="text-sm font-mono text-slate-900 dark:text-slate-100">
+                        {result.transaction_id}
+                      </span>
                     </div>
-                  </CardContent>
-                </Card>
+                    <div className="p-4 flex items-center justify-between">
+                      <span className="text-sm text-slate-600 dark:text-slate-400">Velocity (1h / 24h)</span>
+                      <span className="text-sm font-mono text-slate-900 dark:text-slate-100">
+                        {result.velocity?.transactions_1h ?? 0} / {result.velocity?.transactions_24h ?? 0}
+                      </span>
+                    </div>
+                    <div className="p-4 flex items-center justify-between">
+                      <span className="text-sm text-slate-600 dark:text-slate-400">Sanctions Status</span>
+                      {result.sanctions_match ? (
+                        <Badge variant="destructive" className="text-xs">Match Found</Badge>
+                      ) : (
+                        <Badge variant="outline" className="text-xs bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-800">
+                          Clear
+                        </Badge>
+                      )}
+                    </div>
+                    <div className="p-4 flex items-center justify-between">
+                      <span className="text-sm text-slate-600 dark:text-slate-400">Processing Time</span>
+                      <span className="text-sm font-mono text-slate-900 dark:text-slate-100">
+                        {result.latency_ms.toFixed(2)}ms
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </>
             )}
           </div>
