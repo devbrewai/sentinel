@@ -109,7 +109,7 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
     return (
       <Card>
         <CardHeader className="pb-3">
-          <CardTitle className="text-base">Risk Factors</CardTitle>
+          <CardTitle className="text-base">Risk factors</CardTitle>
         </CardHeader>
         <CardContent>
           <p className="text-sm text-muted-foreground">
@@ -124,9 +124,9 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
     <Card>
       <CardHeader className="pb-3">
         <CardTitle className="text-base flex items-center justify-between">
-          <span>Top Risk Factors</span>
+          <span>Top fraud risk factors</span>
           <span className="text-xs font-normal text-muted-foreground">
-            SHAP Analysis
+            SHAP analysis
           </span>
         </CardTitle>
       </CardHeader>
@@ -135,11 +135,11 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
         <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground pb-2 border-b">
           <span className="flex items-center gap-1">
             <span className="w-3 h-2 bg-green-500 rounded" />
-            Reduces Risk
+            Reduces risk
           </span>
           <span className="flex items-center gap-1">
             <span className="w-3 h-2 bg-red-500 rounded" />
-            Increases Risk
+            Increases risk
           </span>
         </div>
 
