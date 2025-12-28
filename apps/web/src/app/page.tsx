@@ -32,7 +32,9 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
-  const [selectedHistoryId, setSelectedHistoryId] = useState<string | undefined>();
+  const [selectedHistoryId, setSelectedHistoryId] = useState<
+    string | undefined
+  >();
 
   // Track current request to prevent race conditions with out-of-order responses
   const currentRequestIdRef = useRef<string | null>(null);
@@ -66,7 +68,10 @@ export default function Dashboard() {
     }
   }, [history]);
 
-  const addToHistory = (request: TransactionRequest, response: ScoreResponse) => {
+  const addToHistory = (
+    request: TransactionRequest,
+    response: ScoreResponse
+  ) => {
     const newItem: HistoryItem = {
       id: response.transaction_id,
       request,
