@@ -103,8 +103,17 @@ class FraudModelService:
                 # Compute SHAP values for this instance
                 shap_values = self.explainer.shap_values(df)
 
-                # shap_values is a 2D array [1, num_features]
-                values = shap_values[0] if len(shap_values.shape) == 2 else shap_values
+                # Handle SHAP output format (varies by version and model type):
+                # - Binary classifier (SHAP 0.45+): list of 2 arrays [class_0, class_1]
+                # - Binary classifier (older): 2D array [n_samples, n_features]
+                # - Single output: 1D or 2D array
+                if isinstance(shap_values, list):
+                    # Binary classifier returns list; use class 1 (fraud) values
+                    values = shap_values[1][0]  # [class_1][first_sample]
+                elif hasattr(shap_values, 'shape') and len(shap_values.shape) == 2:
+                    values = shap_values[0]  # First sample from 2D array
+                else:
+                    values = shap_values  # Already 1D
 
                 # Get feature names
                 feature_names = self.feature_columns
