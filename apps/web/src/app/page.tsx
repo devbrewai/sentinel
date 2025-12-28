@@ -116,8 +116,12 @@ export default function Dashboard() {
   };
 
   const totalScreened = history.length;
-  const approvedCount = history.filter(h => h.response.decision === "approve").length;
-  const flaggedCount = history.filter(h => h.response.decision !== "approve").length;
+  const approvedCount = history.filter(
+    (h) => h.response.decision === "approve"
+  ).length;
+  const flaggedCount = history.filter(
+    (h) => h.response.decision !== "approve"
+  ).length;
 
   return (
     <div className="py-8 px-6">
@@ -128,19 +132,22 @@ export default function Dashboard() {
             Transaction Screening
           </h1>
           <p className="text-slate-500 dark:text-slate-400 mt-1">
-            Real-time fraud detection and sanctions screening for cross-border payments
+            Real-time fraud detection and sanctions screening for cross-border
+            payments
           </p>
         </div>
 
         {/* Key Metrics Row */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
                 <ArrowRightLeft className="h-5 w-5 text-slate-600 dark:text-slate-400" />
               </div>
               <div>
-                <p className="text-sm text-slate-500 dark:text-slate-400">Screened</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Screened
+                </p>
                 <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
                   {totalScreened.toLocaleString()}
                 </p>
@@ -148,13 +155,15 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-emerald-50 dark:bg-emerald-950 rounded-lg">
+              <div className="p-2 bg-emerald-50 dark:bg-emerald-950 rounded-md">
                 <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
               </div>
               <div>
-                <p className="text-sm text-slate-500 dark:text-slate-400">Approved</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Approved
+                </p>
                 <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
                   {approvedCount.toLocaleString()}
                 </p>
@@ -162,13 +171,15 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-red-50 dark:bg-red-950 rounded-lg">
+              <div className="p-2 bg-red-50 dark:bg-red-950 rounded-md">
                 <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
               </div>
               <div>
-                <p className="text-sm text-slate-500 dark:text-slate-400">Flagged</p>
+                <p className="text-sm text-slate-500 dark:text-slate-400">
+                  Flagged
+                </p>
                 <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
                   {flaggedCount.toLocaleString()}
                 </p>
@@ -187,10 +198,10 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Left Column: Form & History */}
           <div className="lg:col-span-5 space-y-6">
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md">
               <div className="p-5 border-b border-slate-200 dark:border-slate-800">
                 <h2 className="font-semibold text-slate-900 dark:text-slate-100">
-                  New Transaction
+                  New transaction
                 </h2>
                 <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
                   Enter transaction details to screen
@@ -202,7 +213,7 @@ export default function Dashboard() {
             </div>
 
             {/* How it works */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
               <h3 className="font-medium text-slate-900 dark:text-slate-100 mb-3">
                 How it works
               </h3>
@@ -236,7 +247,7 @@ export default function Dashboard() {
             {isLoading ? (
               <SkeletonResults />
             ) : !result ? (
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl h-full min-h-[400px] flex items-center justify-center">
+              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md h-full min-h-[400px] flex items-center justify-center">
                 <div className="text-center">
                   <Shield className="h-12 w-12 mx-auto mb-3 text-slate-300 dark:text-slate-700" />
                   <p className="text-slate-500 dark:text-slate-400">
@@ -247,22 +258,29 @@ export default function Dashboard() {
             ) : (
               <>
                 {/* Decision Card */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-5">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">Decision</p>
+                      <p className="text-sm text-slate-500 dark:text-slate-400">
+                        Decision
+                      </p>
                       <div className="flex items-center gap-3 mt-1">
-                        <span className={`text-2xl font-semibold uppercase ${
-                          result.decision === "approve"
-                            ? "text-emerald-600"
-                            : result.decision === "reject"
-                            ? "text-red-600"
-                            : "text-amber-600"
-                        }`}>
+                        <span
+                          className={`text-xl font-semibold uppercase ${
+                            result.decision === "approve"
+                              ? "text-emerald-600"
+                              : result.decision === "reject"
+                              ? "text-red-600"
+                              : "text-amber-600"
+                          }`}
+                        >
                           {result.decision}
                         </span>
                         {result.latency_ms && (
-                          <Badge variant="outline" className="text-xs font-mono">
+                          <Badge
+                            variant="outline"
+                            className="text-xs font-mono"
+                          >
                             {result.latency_ms.toFixed(0)}ms
                           </Badge>
                         )}
@@ -275,10 +293,10 @@ export default function Dashboard() {
                 {/* Risk Score & Sanctions */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Risk Score */}
-                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl">
+                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md">
                     <div className="p-4 border-b border-slate-200 dark:border-slate-800">
                       <h3 className="font-medium text-slate-900 dark:text-slate-100">
-                        Fraud Risk
+                        Fraud risk
                       </h3>
                     </div>
                     <div className="p-5">
@@ -314,7 +332,7 @@ export default function Dashboard() {
                 <FeatureImportance features={result.top_features} />
 
                 {/* Details */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl">
+                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md">
                   <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
                     <h3 className="font-medium text-slate-900 dark:text-slate-100">
                       Details
@@ -325,29 +343,43 @@ export default function Dashboard() {
                   </div>
                   <div className="divide-y divide-slate-200 dark:divide-slate-800">
                     <div className="p-4 flex items-center justify-between">
-                      <span className="text-sm text-slate-600 dark:text-slate-400">Transaction ID</span>
+                      <span className="text-sm text-slate-600 dark:text-slate-400">
+                        Transaction ID
+                      </span>
                       <span className="text-sm font-mono text-slate-900 dark:text-slate-100">
                         {result.transaction_id}
                       </span>
                     </div>
                     <div className="p-4 flex items-center justify-between">
-                      <span className="text-sm text-slate-600 dark:text-slate-400">Velocity (1h / 24h)</span>
+                      <span className="text-sm text-slate-600 dark:text-slate-400">
+                        Velocity (1h / 24h)
+                      </span>
                       <span className="text-sm font-mono text-slate-900 dark:text-slate-100">
-                        {result.velocity?.transactions_1h ?? 0} / {result.velocity?.transactions_24h ?? 0}
+                        {result.velocity?.transactions_1h ?? 0} /{" "}
+                        {result.velocity?.transactions_24h ?? 0}
                       </span>
                     </div>
                     <div className="p-4 flex items-center justify-between">
-                      <span className="text-sm text-slate-600 dark:text-slate-400">Sanctions Status</span>
+                      <span className="text-sm text-slate-600 dark:text-slate-400">
+                        Sanctions Status
+                      </span>
                       {result.sanctions_match ? (
-                        <Badge variant="destructive" className="text-xs">Match Found</Badge>
+                        <Badge variant="destructive" className="text-xs">
+                          Match Found
+                        </Badge>
                       ) : (
-                        <Badge variant="outline" className="text-xs bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-800">
+                        <Badge
+                          variant="outline"
+                          className="text-xs bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-800"
+                        >
                           Clear
                         </Badge>
                       )}
                     </div>
                     <div className="p-4 flex items-center justify-between">
-                      <span className="text-sm text-slate-600 dark:text-slate-400">Processing Time</span>
+                      <span className="text-sm text-slate-600 dark:text-slate-400">
+                        Processing Time
+                      </span>
                       <span className="text-sm font-mono text-slate-900 dark:text-slate-100">
                         {result.latency_ms.toFixed(2)}ms
                       </span>
