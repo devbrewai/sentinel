@@ -21,71 +21,81 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { scoreBatchTransactions } from "@/lib/api";
+import { BatchResultItem, BatchTransactionItem } from "@/types";
 
-interface BatchResult {
-  transaction_id: string;
-  sender_name: string;
-  amount: number;
-  risk_score: number;
-  risk_level: "low" | "medium" | "high" | "critical";
-  decision: "approve" | "review" | "reject";
-  sanctions_match: boolean;
+function parseCSV(text: string): BatchTransactionItem[] {
+  const lines = text.trim().split("\n");
+  if (lines.length < 2) {
+    throw new Error("CSV must have a header row and at least one data row");
+  }
+
+  const headers = lines[0].split(",").map((h) => h.trim().toLowerCase());
+
+  // Map expected column names to their indices
+  const colMap: Record<string, number> = {};
+  const columnMappings: Record<string, string[]> = {
+    transaction_id: ["transaction_id", "txn_id", "id"],
+    sender_name: ["sender_name", "name", "sender"],
+    transaction_amt: ["transactionamt", "amount", "transaction_amt", "amt"],
+    card_id: ["card_id", "cardid", "card"],
+    sender_country: ["sender_country", "country"],
+    product_cd: ["productcd", "product_cd", "product"],
+  };
+
+  for (const [field, aliases] of Object.entries(columnMappings)) {
+    const idx = headers.findIndex((h) => aliases.includes(h));
+    if (idx !== -1) colMap[field] = idx;
+  }
+
+  // Validate required columns
+  const required = ["transaction_id", "sender_name", "transaction_amt", "card_id"];
+  const missing = required.filter((f) => colMap[f] === undefined);
+  if (missing.length > 0) {
+    throw new Error(`Missing required columns: ${missing.join(", ")}`);
+  }
+
+  const transactions: BatchTransactionItem[] = [];
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) continue;
+
+    // Simple CSV parsing (handles basic cases)
+    const values = line.split(",").map((v) => v.trim().replace(/^"|"$/g, ""));
+
+    const amt = parseFloat(values[colMap.transaction_amt]);
+    if (isNaN(amt) || amt <= 0) {
+      throw new Error(`Invalid amount on row ${i + 1}: ${values[colMap.transaction_amt]}`);
+    }
+
+    transactions.push({
+      transaction_id: values[colMap.transaction_id],
+      sender_name: values[colMap.sender_name],
+      TransactionAmt: amt,
+      card_id: values[colMap.card_id],
+      sender_country: colMap.sender_country !== undefined ? values[colMap.sender_country] : undefined,
+      ProductCD: colMap.product_cd !== undefined ? values[colMap.product_cd] : undefined,
+    });
+  }
+
+  if (transactions.length === 0) {
+    throw new Error("No valid transactions found in CSV");
+  }
+
+  if (transactions.length > 100) {
+    throw new Error("Maximum 100 transactions per batch. Please split your file.");
+  }
+
+  return transactions;
 }
-
-// Demo data for UI showcase
-const DEMO_RESULTS: BatchResult[] = [
-  {
-    transaction_id: "TXN-001",
-    sender_name: "John Smith",
-    amount: 1500.0,
-    risk_score: 0.12,
-    risk_level: "low",
-    decision: "approve",
-    sanctions_match: false,
-  },
-  {
-    transaction_id: "TXN-002",
-    sender_name: "Maria Garcia",
-    amount: 25000.0,
-    risk_score: 0.45,
-    risk_level: "medium",
-    decision: "review",
-    sanctions_match: false,
-  },
-  {
-    transaction_id: "TXN-003",
-    sender_name: "Alex Johnson",
-    amount: 500.0,
-    risk_score: 0.08,
-    risk_level: "low",
-    decision: "approve",
-    sanctions_match: false,
-  },
-  {
-    transaction_id: "TXN-004",
-    sender_name: "Kim Jong",
-    amount: 75000.0,
-    risk_score: 0.89,
-    risk_level: "critical",
-    decision: "reject",
-    sanctions_match: true,
-  },
-  {
-    transaction_id: "TXN-005",
-    sender_name: "Sarah Williams",
-    amount: 3200.0,
-    risk_score: 0.22,
-    risk_level: "low",
-    decision: "approve",
-    sanctions_match: false,
-  },
-];
 
 export default function BatchPage() {
   const [isDragging, setIsDragging] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [results, setResults] = useState<BatchResult[] | null>(null);
+  const [results, setResults] = useState<BatchResultItem[] | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
@@ -99,6 +109,7 @@ export default function BatchPage() {
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragging(false);
+    setError(null);
     const droppedFile = e.dataTransfer.files[0];
     if (
       droppedFile?.type === "text/csv" ||
@@ -111,6 +122,7 @@ export default function BatchPage() {
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0];
     if (selectedFile) {
+      setError(null);
       setFile(selectedFile);
     }
   };
@@ -118,14 +130,24 @@ export default function BatchPage() {
   const handleProcess = async () => {
     if (!file) return;
     setIsProcessing(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setResults(DEMO_RESULTS);
-    setIsProcessing(false);
+    setError(null);
+
+    try {
+      const text = await file.text();
+      const transactions = parseCSV(text);
+      const response = await scoreBatchTransactions({ transactions });
+      setResults(response.results);
+    } catch (err: any) {
+      setError(err.message || "Failed to process batch");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   const handleReset = () => {
     setFile(null);
     setResults(null);
+    setError(null);
   };
 
   const handleExportCSV = () => {
@@ -206,6 +228,13 @@ export default function BatchPage() {
             Upload a CSV file to screen multiple transactions at once
           </p>
         </div>
+
+        {error && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertDescription>{error}</AlertDescription>
+          </Alert>
+        )}
 
         {!results ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
