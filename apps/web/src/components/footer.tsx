@@ -1,5 +1,3 @@
-import { Mail } from "lucide-react";
-
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
