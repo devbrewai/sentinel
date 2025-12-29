@@ -15,6 +15,7 @@ from ..services.sanctions import sanctions_service
 from ..services.features import feature_service
 from ..services.audit import audit_service
 from ..schemas.feature_factory import load_feature_registry
+from ..utils.countries import iso_to_country_name
 
 router = APIRouter()
 
@@ -30,7 +31,7 @@ async def score_transaction(request: TransactionRequest, background_tasks: Backg
     sanctions_task = asyncio.to_thread(
         sanctions_service.screen_name,
         request.sender_name,
-        request.sender_country
+        iso_to_country_name(request.sender_country)
     )
     features_task = feature_service.get_velocity_features(request.card_id)
 
@@ -115,7 +116,7 @@ async def _process_batch_item(item) -> BatchResultItem:
     sanctions_task = asyncio.to_thread(
         sanctions_service.screen_name,
         item.sender_name,
-        item.sender_country
+        iso_to_country_name(item.sender_country)
     )
     features_task = feature_service.get_velocity_features(item.card_id)
 
