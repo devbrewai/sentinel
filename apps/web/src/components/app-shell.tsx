@@ -8,7 +8,7 @@ interface AppShellProps {
 
 export function AppShell({ children }: AppShellProps) {
   return (
-    <div className="min-h-screen bg-slate-50/50 dark:bg-slate-950 transition-colors">
+    <div className="min-h-screen bg-gray-50 transition-colors">
       <NavHeader />
       <main>{children}</main>
     </div>
