@@ -80,22 +80,22 @@ function ContributionBar({ contribution }: { contribution: number }) {
 
   return (
     <div className="flex items-center gap-2 w-full">
-      {/* Negative side */}
+      {/* Negative side (Green - reduces risk) */}
       <div className="flex-1 flex justify-end">
         {!isPositive && (
           <div
-            className="h-2 bg-green-500 dark:bg-green-600 rounded-l transition-all duration-500"
+            className="h-2 bg-green-500 rounded-l-sm transition-all duration-500"
             style={{ width: `${maxWidth}%` }}
           />
         )}
       </div>
       {/* Center line */}
-      <div className="w-px h-4 bg-slate-300 dark:bg-slate-600" />
-      {/* Positive side */}
+      <div className="w-px h-4 bg-gray-200" />
+      {/* Positive side (Red - increases risk) */}
       <div className="flex-1">
         {isPositive && (
           <div
-            className="h-2 bg-red-500 dark:bg-red-600 rounded-r transition-all duration-500"
+            className="h-2 bg-red-500 rounded-r-sm transition-all duration-500"
             style={{ width: `${maxWidth}%` }}
           />
         )}
@@ -107,12 +107,14 @@ function ContributionBar({ contribution }: { contribution: number }) {
 export function FeatureImportance({ features }: FeatureImportanceProps) {
   if (!features || features.length === 0) {
     return (
-      <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base">Risk factors</CardTitle>
+      <Card className="bg-white rounded-lg border border-gray-200 shadow-none">
+        <CardHeader className="pb-3 border-b border-gray-100">
+          <CardTitle className="text-lg font-semibold text-gray-900">
+            Risk factors
+          </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">
+        <CardContent className="p-6">
+          <p className="text-sm text-gray-500">
             No feature importance data available.
           </p>
         </CardContent>
@@ -121,62 +123,58 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
   }
 
   return (
-    <Card className="shadow-none">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-base flex items-center justify-between">
-          <span>Top fraud risk factors</span>
-          <span className="text-xs font-normal text-muted-foreground">
+    <Card className="bg-white rounded-lg border border-gray-200 shadow-none">
+      <CardHeader className="pb-4 border-b border-gray-100">
+        <div className="flex items-center justify-between">
+          <CardTitle className="text-lg font-semibold text-gray-900">
+            Top fraud risk factors
+          </CardTitle>
+          <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">
             SHAP analysis
           </span>
-        </CardTitle>
+        </div>
       </CardHeader>
-      <CardContent className="space-y-3">
+      <CardContent className="p-0">
         {/* Legend */}
-        <div className="flex items-center justify-center gap-6 text-xs text-muted-foreground pb-2 border-b">
-          <span className="flex items-center gap-1">
-            <span className="w-3 h-2 bg-green-500 rounded" />
+        <div className="flex items-center justify-center gap-6 text-xs text-gray-500 py-3 bg-gray-50/50 border-b border-gray-100">
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 bg-green-500 rounded-full" />
             Reduces risk
           </span>
-          <span className="flex items-center gap-1">
-            <span className="w-3 h-2 bg-red-500 rounded" />
+          <span className="flex items-center gap-1.5">
+            <span className="w-2.5 h-2.5 bg-red-500 rounded-full" />
             Increases risk
           </span>
         </div>
 
         {/* Feature list */}
-        <div className="space-y-3">
+        <div className="divide-y divide-gray-100">
           {features.map((feature, idx) => {
             const isPositive = feature.contribution > 0;
             return (
-              <div key={feature.name} className="space-y-1">
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs font-mono text-muted-foreground w-4">
+              <div
+                key={feature.name}
+                className="group p-4 hover:bg-gray-50 transition-colors"
+              >
+                <div className="flex items-center justify-between text-sm mb-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs font-mono text-gray-400 w-4">
                       {idx + 1}.
                     </span>
-                    <span className="font-medium">
+                    <span className="font-medium text-gray-900">
                       {getFeatureLabel(feature.name)}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground font-mono">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs text-gray-500 font-mono bg-gray-100 px-1.5 py-0.5 rounded">
                       {formatValue(feature.value)}
                     </span>
                     <span
-                      className={`flex items-center gap-0.5 text-xs font-medium ${
-                        isPositive
-                          ? "text-red-600 dark:text-red-400"
-                          : "text-green-600 dark:text-green-400"
+                      className={`flex items-center gap-0.5 text-xs font-bold w-12 justify-end ${
+                        isPositive ? "text-red-600" : "text-green-600"
                       }`}
                     >
-                      {isPositive ? (
-                        <TrendingUp className="h-3 w-3" />
-                      ) : feature.contribution < 0 ? (
-                        <TrendingDown className="h-3 w-3" />
-                      ) : (
-                        <Minus className="h-3 w-3" />
-                      )}
-                      {feature.contribution > 0 ? "+" : ""}
+                      {isPositive ? "+" : ""}
                       {feature.contribution.toFixed(2)}
                     </span>
                   </div>
@@ -188,10 +186,12 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
         </div>
 
         {/* Explanation */}
-        <p className="text-xs text-muted-foreground pt-2 border-t">
-          SHAP values show each feature&apos;s contribution to the risk score.
-          Positive values increase fraud likelihood.
-        </p>
+        <div className="p-4 bg-gray-50 border-t border-gray-100 rounded-b-lg">
+          <p className="text-xs text-gray-500">
+            SHAP values show each feature&apos;s contribution to the risk score.
+            Positive values increase fraud likelihood.
+          </p>
+        </div>
       </CardContent>
     </Card>
   );
