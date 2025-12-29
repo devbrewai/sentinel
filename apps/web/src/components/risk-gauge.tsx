@@ -67,9 +67,9 @@ export function RiskGauge({ score, riskLevel }: RiskGaugeProps) {
       };
     }
     return {
-      primary: "#00C853", // Success green
-      secondary: "#bbf7d0", // green-200 (approx)
-      glow: "rgba(0, 200, 83, 0.15)",
+      primary: "#22c55e", // green-500
+      secondary: "#86efac", // green-300
+      glow: "rgba(34, 197, 94, 0.15)",
     };
   };
 
