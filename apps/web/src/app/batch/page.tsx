@@ -9,6 +9,7 @@ import {
   Clock,
   ArrowRightLeft,
   Loader2,
+  Download,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -125,6 +126,53 @@ export default function BatchPage() {
   const handleReset = () => {
     setFile(null);
     setResults(null);
+  };
+
+  const handleExportCSV = () => {
+    if (!results) return;
+
+    // CSV headers
+    const headers = [
+      "Transaction ID",
+      "Sender Name",
+      "Amount (USD)",
+      "Risk Score (%)",
+      "Risk Level",
+      "Decision",
+      "Sanctions Match",
+      "Screened At",
+    ];
+
+    // CSV rows
+    const rows = results.map((row) => [
+      row.transaction_id,
+      `"${row.sender_name}"`, // Quote names to handle commas
+      row.amount.toFixed(2),
+      (row.risk_score * 100).toFixed(1),
+      row.risk_level.toUpperCase(),
+      row.decision.toUpperCase(),
+      row.sanctions_match ? "YES" : "NO",
+      new Date().toISOString(),
+    ]);
+
+    // Combine headers and rows
+    const csvContent = [
+      headers.join(","),
+      ...rows.map((row) => row.join(",")),
+    ].join("\n");
+
+    // Create and download file
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `batch-screening-results-${
+      new Date().toISOString().split("T")[0]
+    }.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   const getRiskBadgeClass = (level: string) => {
@@ -360,9 +408,15 @@ export default function BatchPage() {
                     {results.length} transactions processed
                   </p>
                 </div>
-                <Button variant="outline" onClick={handleReset}>
-                  New Batch
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" onClick={handleExportCSV}>
+                    <Download className="h-4 w-4 mr-1.5" />
+                    Export CSV
+                  </Button>
+                  <Button variant="outline" onClick={handleReset}>
+                    New Batch
+                  </Button>
+                </div>
               </div>
               <div className="overflow-x-auto">
                 <Table>
