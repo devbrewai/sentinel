@@ -6,6 +6,9 @@ from ..schemas.requests import (
     ScoreResponse,
     FeatureContribution,
     VelocityFeatures,
+    BatchRequest,
+    BatchResponse,
+    BatchResultItem,
 )
 from ..services.fraud_model import fraud_model_service
 from ..services.sanctions import sanctions_service
@@ -101,4 +104,84 @@ async def score_transaction(request: TransactionRequest, background_tasks: Backg
             transactions_24h=velocity_features["velocity_24h"]
         ),
         latency_ms=latency
+    )
+
+
+async def _process_batch_item(item) -> BatchResultItem:
+    """Process a single transaction in a batch (simplified version without SHAP)."""
+    start_time = time.time()
+
+    # Run sanctions screening and feature fetching concurrently
+    sanctions_task = asyncio.to_thread(
+        sanctions_service.screen_name,
+        item.sender_name,
+        item.sender_country
+    )
+    features_task = feature_service.get_velocity_features(item.card_id)
+
+    sanctions_result, velocity_features = await asyncio.gather(sanctions_task, features_task)
+
+    # Prepare model input
+    request_data = {
+        "TransactionAmt": item.transaction_amt,
+        "card1_txn_1.0h": velocity_features["velocity_1h"],
+        "card1_txn_24.0h": velocity_features["velocity_24h"],
+    }
+    if item.product_cd:
+        request_data["ProductCD"] = item.product_cd
+
+    # Run fraud model (without SHAP for batch speed)
+    risk_score = fraud_model_service.predict(request_data)
+
+    # Decision logic
+    is_sanctions_hit = (
+        len(sanctions_result.top_matches) > 0
+        and sanctions_result.top_matches[0].is_match
+    )
+
+    risk_level = "low"
+    decision = "approve"
+
+    if is_sanctions_hit:
+        risk_level = "critical"
+        decision = "reject"
+    elif risk_score > 0.8:
+        risk_level = "high"
+        decision = "reject"
+    elif risk_score > 0.5:
+        risk_level = "medium"
+        decision = "review"
+
+    latency = (time.time() - start_time) * 1000
+
+    return BatchResultItem(
+        transaction_id=item.transaction_id,
+        sender_name=item.sender_name,
+        amount=item.transaction_amt,
+        risk_score=risk_score,
+        risk_level=risk_level,
+        decision=decision,
+        sanctions_match=is_sanctions_hit,
+        latency_ms=latency
+    )
+
+
+@router.post("/batch", response_model=BatchResponse)
+async def batch_score_transactions(request: BatchRequest):
+    """
+    Screen multiple transactions in a single request.
+    Processes up to 100 transactions concurrently.
+    """
+    start_time = time.time()
+
+    # Process all transactions concurrently
+    tasks = [_process_batch_item(item) for item in request.transactions]
+    results = await asyncio.gather(*tasks)
+
+    total_latency = (time.time() - start_time) * 1000
+
+    return BatchResponse(
+        results=list(results),
+        total_processed=len(results),
+        total_latency_ms=total_latency
     )

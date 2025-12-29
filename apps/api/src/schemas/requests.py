@@ -57,3 +57,41 @@ class ScoreResponse(BaseModel):
 
     # Performance
     latency_ms: float
+
+
+class BatchTransactionItem(BaseModel):
+    """Simplified transaction item for batch processing."""
+    transaction_id: str = Field(..., description="Unique ID for the transaction")
+    sender_name: str = Field(..., description="Full name of the sender")
+    transaction_amt: float = Field(..., gt=0, alias="TransactionAmt", description="Transaction amount")
+    card_id: str = Field(..., description="Card identifier for velocity tracking")
+    sender_country: Optional[str] = Field(None, description="ISO country code of sender")
+    product_cd: Optional[str] = Field(None, alias="ProductCD", description="Product code")
+
+    model_config = {"populate_by_name": True}
+
+
+class BatchRequest(BaseModel):
+    """Request schema for batch transaction screening."""
+    transactions: List[BatchTransactionItem] = Field(
+        ..., min_length=1, max_length=100, description="List of transactions to screen (max 100)"
+    )
+
+
+class BatchResultItem(BaseModel):
+    """Result for a single transaction in batch processing."""
+    transaction_id: str
+    sender_name: str
+    amount: float
+    risk_score: float
+    risk_level: str
+    decision: str
+    sanctions_match: bool
+    latency_ms: float
+
+
+class BatchResponse(BaseModel):
+    """Response schema for batch transaction screening."""
+    results: List[BatchResultItem]
+    total_processed: int
+    total_latency_ms: float
