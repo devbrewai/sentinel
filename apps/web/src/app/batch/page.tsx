@@ -146,7 +146,7 @@ export default function BatchPage() {
     // CSV rows
     const rows = results.map((row) => [
       row.transaction_id,
-      `"${row.sender_name}"`, // Quote names to handle commas
+      `"${row.sender_name.replace(/"/g, '""')}"`, // Quote names and escape double quotes per RFC 4180
       row.amount.toFixed(2),
       (row.risk_score * 100).toFixed(1),
       row.risk_level.toUpperCase(),
