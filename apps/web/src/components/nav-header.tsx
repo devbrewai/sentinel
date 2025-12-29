@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -8,7 +9,9 @@ import {
   FileStack,
   BarChart3,
 } from "lucide-react";
+import { SiGithub } from "@icons-pack/react-simple-icons";
 import { cn } from "@/lib/utils";
+import { checkHealth } from "@/lib/api";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -16,8 +19,39 @@ const navItems = [
   { href: "/analytics", label: "Analytics", icon: BarChart3 },
 ];
 
+type SystemStatus = "operational" | "degraded" | "down" | "loading";
+
 export function NavHeader() {
   const pathname = usePathname();
+  const [status, setStatus] = useState<SystemStatus>("loading");
+
+  useEffect(() => {
+    const fetchHealth = async () => {
+      try {
+        const health = await checkHealth();
+        if (health.status === "healthy" && health.model_loaded && health.screener_loaded) {
+          setStatus("operational");
+        } else {
+          setStatus("degraded");
+        }
+      } catch {
+        setStatus("down");
+      }
+    };
+
+    fetchHealth();
+    const interval = setInterval(fetchHealth, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const statusConfig = {
+    loading: { color: "bg-gray-400", label: "Checking..." },
+    operational: { color: "bg-green-500", pingColor: "bg-green-400", label: "All systems operational" },
+    degraded: { color: "bg-yellow-500", pingColor: "bg-yellow-400", label: "Degraded performance" },
+    down: { color: "bg-red-500", pingColor: "bg-red-400", label: "System unavailable" },
+  };
+
+  const currentStatus = statusConfig[status];
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200">
@@ -65,13 +99,24 @@ export function NavHeader() {
           <div className="flex items-center gap-4">
             <div className="hidden sm:flex items-center gap-2 text-sm px-3 py-1.5 rounded-full">
               <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                {status !== "loading" && "pingColor" in currentStatus && (
+                  <span className={cn("animate-ping absolute inline-flex h-full w-full rounded-full opacity-75", currentStatus.pingColor)}></span>
+                )}
+                <span className={cn("relative inline-flex rounded-full h-2 w-2", currentStatus.color)}></span>
               </span>
               <span className="text-gray-600 font-medium text-xs">
-                All systems operational
+                {currentStatus.label}
               </span>
             </div>
+            <a
+              href="https://github.com/devbrewai/ai-fraud-detection-cross-border-payments"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-500 hover:text-gray-900 transition-colors"
+              aria-label="View on GitHub"
+            >
+              <SiGithub className="h-5 w-5" />
+            </a>
           </div>
         </div>
 

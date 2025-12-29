@@ -7,6 +7,22 @@ import {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
+export interface HealthResponse {
+  status: string;
+  project: string;
+  version: string;
+  model_loaded: boolean;
+  screener_loaded: boolean;
+}
+
+export async function checkHealth(): Promise<HealthResponse> {
+  const response = await fetch(`${API_URL}/health`);
+  if (!response.ok) {
+    throw new Error(`Health check failed: ${response.status}`);
+  }
+  return await response.json();
+}
+
 export interface ScoreTransactionOptions {
   signal?: AbortSignal;
 }
