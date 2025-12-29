@@ -29,7 +29,7 @@ function RiskDot({ level }: { level: string }) {
   };
   return (
     <span
-      className={`inline-block h-2.5 w-2.5 rounded-full ${
+      className={`inline-block h-2 w-2 rounded-full ${
         colors[level as keyof typeof colors] || colors.low
       }`}
     />
@@ -61,10 +61,10 @@ export function TransactionHistory({
 }: TransactionHistoryProps) {
   if (history.length === 0) {
     return (
-      <Card className="bg-slate-50/50 dark:bg-slate-900/50 border-dashed">
+      <Card className="bg-white border border-gray-200 shadow-sm border-dashed">
         <CardContent className="py-8 text-center">
-          <History className="h-8 w-8 mx-auto mb-2 text-muted-foreground opacity-40" />
-          <p className="text-sm text-muted-foreground">
+          <History className="h-8 w-8 mx-auto mb-2 text-gray-300" />
+          <p className="text-sm text-gray-500">
             Transaction history will appear here
           </p>
         </CardContent>
@@ -73,43 +73,42 @@ export function TransactionHistory({
   }
 
   return (
-    <Card className="shadow-none">
-      <CardHeader className="pb-3">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-sm font-medium flex items-center gap-2">
-            <History className="h-4 w-4" />
-            Recent transactions
-            <Badge variant="secondary" className="text-xs font-normal">
-              {history.length}
-            </Badge>
-          </CardTitle>
-          <Button
-            variant="ghost"
-            size="default"
-            className="h-7 px-2 text-xs text-muted-foreground hover:text-destructive"
-            onClick={onClear}
+    <Card className="bg-white border border-gray-200 shadow-none">
+      <CardHeader className="p-4 border-b border-gray-100 flex flex-row items-center justify-between space-y-0">
+        <CardTitle className="text-sm font-semibold text-gray-900 flex items-center gap-2">
+          <History className="h-4 w-4 text-gray-500" />
+          Recent transactions
+          <Badge
+            variant="secondary"
+            className="text-xs font-normal bg-gray-100 text-gray-600"
           >
-            <X className="h-2 w-2" />
-            Clear
-          </Button>
-        </div>
+            {history.length}
+          </Badge>
+        </CardTitle>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="h-7 px-2 text-xs text-gray-500 hover:text-red-600 hover:bg-red-50"
+          onClick={onClear}
+        >
+          <X className="h-3 w-3 mr-1" />
+          Clear
+        </Button>
       </CardHeader>
-      <CardContent className="pt-0">
-        <div className="space-y-1 max-h-[320px] overflow-y-auto pr-1">
+      <CardContent className="p-0">
+        <div className="max-h-[320px] overflow-y-auto">
           {history.map((item) => (
             <button
               key={item.id}
               onClick={() => onSelect(item)}
-              className={`w-full text-left p-2.5 rounded-md transition-colors cursor-pointer ${
-                selectedId === item.id
-                  ? "bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800"
-                  : "hover:bg-slate-100 dark:hover:bg-slate-800"
+              className={`w-full text-left p-4 border-b border-gray-100 transition-colors cursor-pointer last:border-0 ${
+                selectedId === item.id ? "bg-gray-100" : "hover:bg-gray-50"
               }`}
             >
-              <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center justify-between gap-2 mb-1">
                 <div className="flex items-center gap-2 min-w-0">
                   <RiskDot level={item.response.risk_level} />
-                  <span className="text-sm font-medium truncate">
+                  <span className="text-sm font-semibold text-gray-900 truncate">
                     {formatCurrency(item.request.TransactionAmt)}
                   </span>
                 </div>
@@ -117,22 +116,22 @@ export function TransactionHistory({
                   {item.response.sanctions_match && (
                     <AlertTriangle className="h-3.5 w-3.5 text-red-500" />
                   )}
-                  <span className="text-xs text-muted-foreground font-mono">
+                  <span className="text-xs text-gray-400 font-mono">
                     {formatTime(item.timestamp)}
                   </span>
                 </div>
               </div>
-              <div className="flex items-center justify-between mt-1">
-                <span className="text-xs text-muted-foreground truncate max-w-[140px]">
+              <div className="flex items-center justify-between">
+                <span className="text-xs text-gray-500 truncate max-w-[140px]">
                   {item.request.sender_name}
                 </span>
                 <span
-                  className={`text-xs font-medium uppercase ${
+                  className={`text-xs font-semibold uppercase tracking-wide ${
                     item.response.decision === "approve"
-                      ? "text-green-600 dark:text-green-400"
+                      ? "text-green-600"
                       : item.response.decision === "reject"
-                      ? "text-red-600 dark:text-red-400"
-                      : "text-amber-600 dark:text-amber-400"
+                      ? "text-red-600"
+                      : "text-amber-600"
                   }`}
                 >
                   {item.response.decision}
