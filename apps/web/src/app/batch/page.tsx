@@ -95,6 +95,7 @@ export default function BatchPage() {
   const [file, setFile] = useState<File | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [results, setResults] = useState<BatchResultItem[] | null>(null);
+  const [screenedAt, setScreenedAt] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -136,6 +137,7 @@ export default function BatchPage() {
       const text = await file.text();
       const transactions = parseCSV(text);
       const response = await scoreBatchTransactions({ transactions });
+      setScreenedAt(new Date().toISOString());
       setResults(response.results);
     } catch (err: any) {
       setError(err.message || "Failed to process batch");
@@ -147,6 +149,7 @@ export default function BatchPage() {
   const handleReset = () => {
     setFile(null);
     setResults(null);
+    setScreenedAt(null);
     setError(null);
   };
 
@@ -174,7 +177,7 @@ export default function BatchPage() {
       row.risk_level.toUpperCase(),
       row.decision.toUpperCase(),
       row.sanctions_match ? "YES" : "NO",
-      new Date().toISOString(),
+      screenedAt ?? new Date().toISOString(),
     ]);
 
     // Combine headers and rows
