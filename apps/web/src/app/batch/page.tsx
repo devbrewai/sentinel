@@ -152,7 +152,7 @@ export default function BatchPage() {
         {/* Page header */}
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">
-            Batch Screening
+            Batch screening
           </h1>
           <p className="text-gray-500 mt-1">
             Upload a CSV file to screen multiple transactions at once
