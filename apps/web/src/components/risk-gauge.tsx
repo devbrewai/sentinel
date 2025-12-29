@@ -47,29 +47,29 @@ export function RiskGauge({ score, riskLevel }: RiskGaugeProps) {
   const getColors = () => {
     if (riskLevel === "critical") {
       return {
-        primary: "#dc2626", // red-600
-        secondary: "#fca5a5", // red-300
-        glow: "rgba(220, 38, 38, 0.3)",
+        primary: "#EF4444", // red-500
+        secondary: "#FECACA", // red-200
+        glow: "rgba(239, 68, 68, 0.3)",
       };
     }
     if (riskLevel === "high") {
       return {
-        primary: "#ef4444", // red-500
-        secondary: "#fecaca", // red-200
+        primary: "#EF4444", // red-500
+        secondary: "#FECACA", // red-200
         glow: "rgba(239, 68, 68, 0.25)",
       };
     }
     if (riskLevel === "medium" || percentage > 50) {
       return {
-        primary: "#f59e0b", // amber-500
-        secondary: "#fde68a", // amber-200
+        primary: "#F59E0B", // amber-500
+        secondary: "#FDE68A", // amber-200
         glow: "rgba(245, 158, 11, 0.2)",
       };
     }
     return {
-      primary: "#22c55e", // green-500
-      secondary: "#86efac", // green-300
-      glow: "rgba(34, 197, 94, 0.15)",
+      primary: "#00C853", // Success green
+      secondary: "#bbf7d0", // green-200 (approx)
+      glow: "rgba(0, 200, 83, 0.15)",
     };
   };
 
@@ -92,22 +92,22 @@ export function RiskGauge({ score, riskLevel }: RiskGaugeProps) {
       )}
 
       {/* Score Display */}
-      <div className="relative z-10">
+      <div className="relative z-10 text-center">
         <div
-          className={`text-5xl font-bold transition-all duration-300 ${
+          className={`text-6xl font-bold transition-all duration-300 ${
             isHighRisk ? "animate-pulse" : ""
           } ${isAnimating ? "scale-105" : "scale-100"}`}
           style={{ color: colors.primary }}
         >
           {percentage}%
         </div>
-        <div className="text-sm text-muted-foreground uppercase tracking-wider mt-1 font-semibold text-center">
+        <div className="text-xs text-gray-500 uppercase tracking-wide mt-2 font-medium text-center">
           Risk Score
         </div>
       </div>
 
       {/* Gauge Chart */}
-      <div className="w-full h-40 mt-4 -mb-20 relative z-10">
+      <div className="w-full h-40 mt-6 -mb-20 relative z-10">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             {/* Background track */}
@@ -123,10 +123,7 @@ export function RiskGauge({ score, riskLevel }: RiskGaugeProps) {
               dataKey="value"
               stroke="none"
             >
-              <Cell
-                fill="currentColor"
-                className="text-slate-200 dark:text-slate-700"
-              />
+              <Cell fill="currentColor" className="text-gray-100" />
             </Pie>
 
             {/* Score arc */}
@@ -170,7 +167,7 @@ export function RiskGauge({ score, riskLevel }: RiskGaugeProps) {
       </div>
 
       {/* Risk level indicators */}
-      <div className="flex justify-between w-full max-w-[240px] mt-2 text-xs font-medium text-muted-foreground">
+      <div className="flex justify-between w-full max-w-[240px] mt-2 text-xs font-medium text-gray-400">
         <span>0%</span>
         <span>50%</span>
         <span>100%</span>
