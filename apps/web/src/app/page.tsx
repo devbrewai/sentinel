@@ -6,23 +6,20 @@ import { RiskGauge } from "@/components/risk-gauge";
 import { SanctionsCard } from "@/components/sanctions-card";
 import { CopyButton } from "@/components/copy-button";
 import { SkeletonResults } from "@/components/skeleton-results";
+import { FeatureImportance } from "@/components/feature-importance";
 import {
   TransactionHistory,
   HistoryItem,
 } from "@/components/transaction-history";
-import { FeatureImportance } from "@/components/feature-importance";
 import { scoreTransaction } from "@/lib/api";
 import { TransactionRequest, ScoreResponse } from "@/types";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
 import {
   ShieldAlert,
-  Shield,
-  ArrowRightLeft,
   CheckCircle2,
   AlertTriangle,
-  Clock,
-  ChevronRight,
+  RefreshCw,
+  Activity,
 } from "lucide-react";
 
 const HISTORY_KEY = "fraudguard_history";
@@ -83,6 +80,7 @@ export default function Dashboard() {
     setResult(item.response);
     setSelectedHistoryId(item.id);
     setError(null);
+    // Scroll to top or results on mobile if needed
   };
 
   const handleHistoryClear = () => {
@@ -124,67 +122,58 @@ export default function Dashboard() {
   ).length;
 
   return (
-    <div className="py-8 px-6">
+    <div className="py-8 px-6 lg:px-8">
       <div className="max-w-7xl mx-auto space-y-8">
-        {/* Welcome Header */}
+        {/* Page Header */}
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-            Transaction Screening
+          <h1 className="text-3xl font-semibold text-gray-900">
+            Transaction screening
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-base text-gray-600 mt-1">
             Real-time fraud detection and sanctions screening for cross-border
             payments
           </p>
         </div>
 
-        {/* Key Metrics Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <ArrowRightLeft className="h-5 w-5 text-slate-600 dark:text-slate-400" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Screened
-                </p>
-                <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-                  {totalScreened.toLocaleString()}
-                </p>
-              </div>
+        {/* Stats Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          {/* Screened Card */}
+          <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-none flex flex-col">
+            <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mb-4">
+              <RefreshCw className="h-5 w-5 text-blue-600" />
             </div>
+            <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
+              Screened
+            </p>
+            <p className="text-3xl font-bold text-gray-900 mt-2">
+              {totalScreened}
+            </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-emerald-50 dark:bg-emerald-950 rounded-md">
-                <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Approved
-                </p>
-                <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-                  {approvedCount.toLocaleString()}
-                </p>
-              </div>
+          {/* Approved Card */}
+          <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-none flex flex-col">
+            <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center mb-4">
+              <CheckCircle2 className="h-5 w-5 text-green-600" />
             </div>
+            <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
+              Approved
+            </p>
+            <p className="text-3xl font-bold text-gray-900 mt-2">
+              {approvedCount}
+            </p>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-red-50 dark:bg-red-950 rounded-md">
-                <AlertTriangle className="h-5 w-5 text-red-600 dark:text-red-400" />
-              </div>
-              <div>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Flagged
-                </p>
-                <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-                  {flaggedCount.toLocaleString()}
-                </p>
-              </div>
+          {/* Flagged Card */}
+          <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-none flex flex-col">
+            <div className="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center mb-4">
+              <AlertTriangle className="h-5 w-5 text-red-600" />
             </div>
+            <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
+              Flagged
+            </p>
+            <p className="text-3xl font-bold text-gray-900 mt-2">
+              {flaggedCount}
+            </p>
           </div>
         </div>
 
@@ -195,45 +184,13 @@ export default function Dashboard() {
           </Alert>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Column: Form & History */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md">
-              <div className="p-5 border-b border-slate-200 dark:border-slate-800">
-                <h2 className="font-semibold text-slate-900 dark:text-slate-100">
-                  New transaction
-                </h2>
-                <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
-                  Enter transaction details to screen
-                </p>
-              </div>
-              <div className="p-5">
-                <TransactionForm onSubmit={handleScore} isLoading={isLoading} />
-              </div>
-            </div>
+        {/* Main Content Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          {/* Left Column: Form (~40%) */}
+          <div className="lg:col-span-2 space-y-6">
+            <TransactionForm onSubmit={handleScore} isLoading={isLoading} />
 
-            {/* How it works */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
-              <h3 className="font-medium text-slate-900 dark:text-slate-100 mb-3">
-                How it works
-              </h3>
-              <div className="space-y-2 text-sm text-slate-600 dark:text-slate-400">
-                <div className="flex items-center gap-2">
-                  <Clock className="h-4 w-4 text-slate-400" />
-                  <span>Scores transactions in &lt;200ms</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <ArrowRightLeft className="h-4 w-4 text-slate-400" />
-                  <span>Checks velocity features via Redis</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-slate-400" />
-                  <span>Screens against OFAC sanctions list</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Transaction History */}
+            {/* Transaction History (Restored) */}
             <TransactionHistory
               history={history}
               onSelect={handleHistorySelect}
@@ -242,150 +199,90 @@ export default function Dashboard() {
             />
           </div>
 
-          {/* Right Column: Results */}
-          <div className="lg:col-span-7 space-y-6">
+          {/* Right Column: Results (~60%) */}
+          <div className="lg:col-span-3 space-y-6">
             {isLoading ? (
               <SkeletonResults />
             ) : !result ? (
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md h-full min-h-[400px] flex items-center justify-center">
+              <div className="bg-white border border-gray-200 rounded-lg h-full min-h-[400px] flex items-center justify-center shadow-none">
                 <div className="text-center">
-                  <Shield className="h-12 w-12 mx-auto mb-3 text-slate-300 dark:text-slate-700" />
-                  <p className="text-slate-500 dark:text-slate-400">
-                    Submit a transaction to see risk analysis
+                  <div className="h-16 w-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Activity className="h-8 w-8 text-gray-400" />
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-1">
+                    Ready to analyze
+                  </h3>
+                  <p className="text-sm text-gray-500 max-w-xs mx-auto">
+                    Fill out the transaction details on the left to screen for
+                    fraud and sanctions.
                   </p>
                 </div>
               </div>
             ) : (
               <>
-                {/* Decision Card */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md p-5">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm text-slate-500 dark:text-slate-400">
-                        Decision
-                      </p>
-                      <div className="flex items-center gap-3 mt-1">
-                        <span
-                          className={`text-xl font-semibold uppercase ${
-                            result.decision === "approve"
-                              ? "text-emerald-600"
-                              : result.decision === "reject"
-                              ? "text-red-600"
-                              : "text-amber-600"
-                          }`}
-                        >
-                          {result.decision}
+                {/* Decision Display Card */}
+                <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-none flex items-center justify-between">
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-2">
+                      Decision
+                    </p>
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`text-lg font-bold uppercase tracking-tight ${
+                          result.decision === "approve"
+                            ? "text-green-600"
+                            : result.decision === "reject"
+                            ? "text-red-600"
+                            : "text-amber-600"
+                        }`}
+                      >
+                        {result.decision}
+                      </span>
+                      {result.latency_ms && (
+                        <span className="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full font-medium ml-2">
+                          {result.latency_ms.toFixed(0)}ms
                         </span>
-                        {result.latency_ms && (
-                          <Badge
-                            variant="outline"
-                            className="text-xs font-mono"
-                          >
-                            {result.latency_ms.toFixed(0)}ms
-                          </Badge>
-                        )}
-                      </div>
+                      )}
                     </div>
-                    <CopyButton value={JSON.stringify(result, null, 2)} />
                   </div>
+                  <CopyButton value={JSON.stringify(result, null, 2)} />
                 </div>
 
-                {/* Risk Score & Sanctions */}
+                {/* Fraud Risk & Sanctions Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Risk Score */}
-                  <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md">
-                    <div className="p-4 border-b border-slate-200 dark:border-slate-800">
-                      <h3 className="font-medium text-slate-900 dark:text-slate-100">
-                        Fraud risk
-                      </h3>
-                    </div>
-                    <div className="p-5">
-                      <RiskGauge
-                        score={result.risk_score}
-                        riskLevel={result.risk_level}
-                      />
-                      <div className="text-center mt-4">
-                        <Badge
-                          variant="outline"
-                          className={`uppercase text-xs font-medium ${
-                            result.risk_level === "low"
-                              ? "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-800"
-                              : result.risk_level === "medium"
-                              ? "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-400 dark:border-amber-800"
-                              : "bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-400 dark:border-red-800"
-                          }`}
-                        >
-                          {result.risk_level} Risk
-                        </Badge>
-                      </div>
+                  {/* Fraud Risk Card */}
+                  <div className="bg-white rounded-lg border border-gray-200 shadow-none p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-6">
+                      Fraud risk
+                    </h3>
+                    <RiskGauge
+                      score={result.risk_score}
+                      riskLevel={result.risk_level}
+                    />
+                    <div className="text-center mt-6">
+                      <span
+                        className={`px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wide ${
+                          result.risk_level === "low"
+                            ? "bg-green-100 text-green-700"
+                            : result.risk_level === "medium"
+                            ? "bg-amber-100 text-amber-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {result.risk_level} Risk
+                      </span>
                     </div>
                   </div>
 
-                  {/* Sanctions */}
+                  {/* Sanctions Card */}
                   <SanctionsCard
                     matchData={result.sanctions_details}
                     isMatch={result.sanctions_match}
                   />
                 </div>
 
-                {/* Feature Importance */}
+                {/* Top Fraud Risk Factors */}
                 <FeatureImportance features={result.top_features} />
-
-                {/* Details */}
-                <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-md">
-                  <div className="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-                    <h3 className="font-medium text-slate-900 dark:text-slate-100">
-                      Details
-                    </h3>
-                    <button className="text-sm text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 flex items-center gap-1">
-                      View all <ChevronRight className="h-4 w-4" />
-                    </button>
-                  </div>
-                  <div className="divide-y divide-slate-200 dark:divide-slate-800">
-                    <div className="p-4 flex items-center justify-between">
-                      <span className="text-sm text-slate-600 dark:text-slate-400">
-                        Transaction ID
-                      </span>
-                      <span className="text-sm font-mono text-slate-900 dark:text-slate-100">
-                        {result.transaction_id}
-                      </span>
-                    </div>
-                    <div className="p-4 flex items-center justify-between">
-                      <span className="text-sm text-slate-600 dark:text-slate-400">
-                        Velocity (1h / 24h)
-                      </span>
-                      <span className="text-sm font-mono text-slate-900 dark:text-slate-100">
-                        {result.velocity?.transactions_1h ?? 0} /{" "}
-                        {result.velocity?.transactions_24h ?? 0}
-                      </span>
-                    </div>
-                    <div className="p-4 flex items-center justify-between">
-                      <span className="text-sm text-slate-600 dark:text-slate-400">
-                        Sanctions Status
-                      </span>
-                      {result.sanctions_match ? (
-                        <Badge variant="destructive" className="text-xs">
-                          Match Found
-                        </Badge>
-                      ) : (
-                        <Badge
-                          variant="outline"
-                          className="text-xs bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-800"
-                        >
-                          Clear
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="p-4 flex items-center justify-between">
-                      <span className="text-sm text-slate-600 dark:text-slate-400">
-                        Processing Time
-                      </span>
-                      <span className="text-sm font-mono text-slate-900 dark:text-slate-100">
-                        {result.latency_ms.toFixed(2)}ms
-                      </span>
-                    </div>
-                  </div>
-                </div>
               </>
             )}
           </div>
