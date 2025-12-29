@@ -14,8 +14,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FraudGuard AI",
-  description: "Real-time payment fraud & sanctions screening",
+  title:
+    "Sentinel: AI Fraud Detection & Sanctions Screening for Cross-Border Payments",
+  description:
+    "Sentinel is a real-time payment fraud & sanctions screening platform that uses AI to detect and prevent fraud and sanctions violations.",
 };
 
 export default function RootLayout({

@@ -65,7 +65,7 @@ export function ComplianceReport({
       // Header
       doc.setFontSize(20);
       doc.setFont("helvetica", "bold");
-      doc.text("FraudGuard AI", 20, yPos);
+      doc.text("Sentinel AI", 20, yPos);
 
       doc.setFontSize(10);
       doc.setFont("helvetica", "normal");
@@ -286,7 +286,7 @@ export function ComplianceReport({
       doc.setFontSize(8);
       doc.setTextColor(120);
       doc.text(
-        "This report is generated automatically by FraudGuard AI for compliance and audit purposes.",
+        "This report is generated automatically by Sentinel AI for compliance and audit purposes.",
         20,
         yPos
       );

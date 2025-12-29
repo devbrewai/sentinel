@@ -63,7 +63,7 @@ export function NavHeader() {
               <ShieldCheck className="h-5 w-5 text-white" />
             </div>
             <span className="font-semibold text-gray-900 text-lg tracking-tight">
-              FraudGuard
+              Sentinel
             </span>
           </Link>
 
