@@ -7,6 +7,7 @@ import { SanctionsCard } from "@/components/sanctions-card";
 import { CopyButton } from "@/components/copy-button";
 import { SkeletonResults } from "@/components/skeleton-results";
 import { FeatureImportance } from "@/components/feature-importance";
+import { ComplianceReport } from "@/components/compliance-report";
 import {
   TransactionHistory,
   HistoryItem,
@@ -27,6 +28,8 @@ const MAX_HISTORY = 20;
 
 export default function Dashboard() {
   const [result, setResult] = useState<ScoreResponse | null>(null);
+  const [currentRequest, setCurrentRequest] =
+    useState<TransactionRequest | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
@@ -78,9 +81,9 @@ export default function Dashboard() {
 
   const handleHistorySelect = (item: HistoryItem) => {
     setResult(item.response);
+    setCurrentRequest(item.request);
     setSelectedHistoryId(item.id);
     setError(null);
-    // Scroll to top or results on mobile if needed
   };
 
   const handleHistoryClear = () => {
@@ -96,12 +99,14 @@ export default function Dashboard() {
     setIsLoading(true);
     setError(null);
     setResult(null);
+    setCurrentRequest(null);
     setSelectedHistoryId(undefined);
 
     try {
       const response = await scoreTransaction(data);
       if (currentRequestIdRef.current === requestId) {
         setResult(response);
+        setCurrentRequest(data);
         setIsLoading(false);
         addToHistory(data, response);
       }
@@ -126,10 +131,10 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Page Header */}
         <div>
-          <h1 className="text-3xl font-semibold text-gray-900">
+          <h1 className="text-2xl font-semibold text-gray-900">
             Transaction screening
           </h1>
-          <p className="text-base text-gray-600 mt-1">
+          <p className="text-gray-500 mt-1">
             Real-time fraud detection and sanctions screening for cross-border
             payments
           </p>
@@ -245,7 +250,15 @@ export default function Dashboard() {
                       )}
                     </div>
                   </div>
-                  <CopyButton value={JSON.stringify(result, null, 2)} />
+                  <div className="flex items-center gap-2">
+                    {currentRequest && (
+                      <ComplianceReport
+                        request={currentRequest}
+                        response={result}
+                      />
+                    )}
+                    <CopyButton value={JSON.stringify(result, null, 2)} />
+                  </div>
                 </div>
 
                 {/* Fraud Risk & Sanctions Grid */}
