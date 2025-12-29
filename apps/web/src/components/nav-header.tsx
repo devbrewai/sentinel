@@ -7,7 +7,6 @@ import {
   LayoutDashboard,
   FileStack,
   BarChart3,
-  BookOpen,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -15,7 +14,6 @@ const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/batch", label: "Batch", icon: FileStack },
   { href: "/analytics", label: "Analytics", icon: BarChart3 },
-  { href: "/docs", label: "API Docs", icon: BookOpen },
 ];
 
 export function NavHeader() {
