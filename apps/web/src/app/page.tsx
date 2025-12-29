@@ -8,6 +8,7 @@ import { CopyButton } from "@/components/copy-button";
 import { SkeletonResults } from "@/components/skeleton-results";
 import { FeatureImportance } from "@/components/feature-importance";
 import { ComplianceReport } from "@/components/compliance-report";
+import { VelocityIndicators } from "@/components/velocity-indicators";
 import {
   TransactionHistory,
   HistoryItem,
@@ -226,39 +227,49 @@ export default function Dashboard() {
             ) : (
               <>
                 {/* Decision Display Card */}
-                <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-none flex items-center justify-between">
-                  <div>
-                    <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-2">
-                      Decision
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <span
-                        className={`text-lg font-bold uppercase tracking-tight ${
-                          result.decision === "approve"
-                            ? "text-green-600"
-                            : result.decision === "reject"
-                            ? "text-red-600"
-                            : "text-amber-600"
-                        }`}
-                      >
-                        {result.decision}
-                      </span>
-                      {result.latency_ms && (
-                        <span className="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full font-medium ml-2">
-                          {result.latency_ms.toFixed(0)}ms
+                <div className="bg-white rounded-lg p-6 border border-gray-200 shadow-none">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-2">
+                        Decision
+                      </p>
+                      <div className="flex items-center gap-2">
+                        <span
+                          className={`text-lg font-bold uppercase tracking-tight ${
+                            result.decision === "approve"
+                              ? "text-green-600"
+                              : result.decision === "reject"
+                              ? "text-red-600"
+                              : "text-amber-600"
+                          }`}
+                        >
+                          {result.decision}
                         </span>
+                        {result.latency_ms && (
+                          <span className="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full font-medium ml-2">
+                            {result.latency_ms.toFixed(0)}ms
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {currentRequest && (
+                        <ComplianceReport
+                          request={currentRequest}
+                          response={result}
+                        />
                       )}
+                      <CopyButton value={JSON.stringify(result, null, 2)} />
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    {currentRequest && (
-                      <ComplianceReport
-                        request={currentRequest}
-                        response={result}
-                      />
-                    )}
-                    <CopyButton value={JSON.stringify(result, null, 2)} />
-                  </div>
+                  {result.velocity && (
+                    <div className="mt-4 pt-4 border-t border-gray-100">
+                      <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-2">
+                        Card velocity
+                      </p>
+                      <VelocityIndicators velocity={result.velocity} />
+                    </div>
+                  )}
                 </div>
 
                 {/* Fraud Risk & Sanctions Grid */}
