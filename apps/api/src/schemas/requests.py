@@ -95,3 +95,59 @@ class BatchResponse(BaseModel):
     results: List[BatchResultItem]
     total_processed: int
     total_latency_ms: float
+
+
+# Analytics schemas
+class AnalyticsSummary(BaseModel):
+    """Summary metrics for analytics."""
+    total_screened: int
+    avg_latency_ms: float
+    fraud_detected: int
+    sanctions_hits: int
+    fraud_rate: float
+    sanctions_rate: float
+
+
+class DailyVolumeItem(BaseModel):
+    """Daily transaction volume data point."""
+    day: str
+    transactions: int
+    flagged: int
+
+
+class RiskDistributionItem(BaseModel):
+    """Risk distribution data point."""
+    name: str
+    value: int
+    color: str
+
+
+class LatencyTrendItem(BaseModel):
+    """Latency trend data point."""
+    hour: str
+    p50: float
+    p95: float
+
+
+class ModelMetrics(BaseModel):
+    """Fraud model performance metrics."""
+    roc_auc: float
+    precision: float
+    recall: float
+    f1_score: float
+
+
+class SanctionsMetrics(BaseModel):
+    """Sanctions screening performance metrics."""
+    precision_at_1: float
+    avg_latency_ms: float
+
+
+class AnalyticsResponse(BaseModel):
+    """Complete analytics response."""
+    summary: AnalyticsSummary
+    daily_volume: List[DailyVolumeItem]
+    risk_distribution: List[RiskDistributionItem]
+    latency_trend: List[LatencyTrendItem]
+    model_metrics: ModelMetrics
+    sanctions_metrics: SanctionsMetrics
