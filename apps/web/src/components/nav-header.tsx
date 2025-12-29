@@ -9,7 +9,6 @@ import {
   BarChart3,
   BookOpen,
 } from "lucide-react";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -65,7 +64,7 @@ export function NavHeader() {
           </nav>
 
           {/* Right side */}
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
             <div className="hidden sm:flex items-center gap-2 text-sm px-3 py-1.5 rounded-full">
               <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
@@ -75,8 +74,6 @@ export function NavHeader() {
                 All systems operational
               </span>
             </div>
-            <div className="h-6 w-px bg-gray-200 hidden sm:block" />
-            <ThemeToggle />
           </div>
         </div>
 

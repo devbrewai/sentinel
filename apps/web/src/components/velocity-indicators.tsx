@@ -26,9 +26,9 @@ export function VelocityIndicators({ velocity }: VelocityIndicatorsProps) {
   const dailyStatus = getVelocityStatus(velocity.transactions_24h, 20);
 
   const statusColors = {
-    normal: "text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/50",
-    elevated: "text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/50",
-    high: "text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-950/50",
+    normal: "text-green-600 bg-green-50",
+    elevated: "text-amber-600 bg-amber-50",
+    high: "text-red-600 bg-red-50",
   };
 
   const StatusIcon = ({ status }: { status: "normal" | "elevated" | "high" }) => {
@@ -68,8 +68,8 @@ export function VelocityCard({ velocity }: VelocityIndicatorsProps) {
 
   return (
     <div className="flex items-center justify-between text-sm">
-      <span className="flex items-center gap-2 text-slate-700 dark:text-slate-300">
-        <Clock className="h-4 w-4 text-slate-400" />
+      <span className="flex items-center gap-2 text-gray-700">
+        <Clock className="h-4 w-4 text-gray-400" />
         Card Velocity
       </span>
       <div className="flex items-center gap-2">
@@ -77,10 +77,10 @@ export function VelocityCard({ velocity }: VelocityIndicatorsProps) {
           variant="outline"
           className={
             hourlyStatus === "high"
-              ? "text-red-600 bg-red-50 border-red-200 dark:bg-red-950/50"
+              ? "text-red-600 bg-red-50 border-red-200"
               : hourlyStatus === "elevated"
-                ? "text-amber-600 bg-amber-50 border-amber-200 dark:bg-amber-950/50"
-                : "text-green-600 bg-green-50 border-green-200 dark:bg-green-950/50"
+                ? "text-amber-600 bg-amber-50 border-amber-200"
+                : "text-green-600 bg-green-50 border-green-200"
           }
         >
           {velocity.transactions_1h}/hr
@@ -89,10 +89,10 @@ export function VelocityCard({ velocity }: VelocityIndicatorsProps) {
           variant="outline"
           className={
             dailyStatus === "high"
-              ? "text-red-600 bg-red-50 border-red-200 dark:bg-red-950/50"
+              ? "text-red-600 bg-red-50 border-red-200"
               : dailyStatus === "elevated"
-                ? "text-amber-600 bg-amber-50 border-amber-200 dark:bg-amber-950/50"
-                : "text-green-600 bg-green-50 border-green-200 dark:bg-green-950/50"
+                ? "text-amber-600 bg-amber-50 border-amber-200"
+                : "text-green-600 bg-green-50 border-green-200"
           }
         >
           {velocity.transactions_24h}/day

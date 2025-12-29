@@ -129,24 +129,19 @@ export default function BatchPage() {
 
   const getRiskBadgeClass = (level: string) => {
     const styles = {
-      low: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-800",
-      medium:
-        "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-400 dark:border-amber-800",
-      high: "bg-orange-50 text-orange-700 border-orange-200 dark:bg-orange-950 dark:text-orange-400 dark:border-orange-800",
-      critical:
-        "bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-400 dark:border-red-800",
+      low: "bg-emerald-50 text-emerald-700 border-emerald-200",
+      medium: "bg-amber-50 text-amber-700 border-amber-200",
+      high: "bg-orange-50 text-orange-700 border-orange-200",
+      critical: "bg-red-50 text-red-700 border-red-200",
     };
     return styles[level as keyof typeof styles] || styles.low;
   };
 
   const getDecisionBadgeClass = (decision: string) => {
     const styles = {
-      approve:
-        "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950 dark:text-emerald-400 dark:border-emerald-800",
-      review:
-        "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950 dark:text-amber-400 dark:border-amber-800",
-      reject:
-        "bg-red-50 text-red-700 border-red-200 dark:bg-red-950 dark:text-red-400 dark:border-red-800",
+      approve: "bg-emerald-50 text-emerald-700 border-emerald-200",
+      review: "bg-amber-50 text-amber-700 border-amber-200",
+      reject: "bg-red-50 text-red-700 border-red-200",
     };
     return styles[decision as keyof typeof styles] || styles.review;
   };
@@ -156,10 +151,10 @@ export default function BatchPage() {
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Page header */}
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+          <h1 className="text-2xl font-semibold text-gray-900">
             Batch Screening
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-gray-500 mt-1">
             Upload a CSV file to screen multiple transactions at once
           </p>
         </div>
@@ -167,12 +162,12 @@ export default function BatchPage() {
         {!results ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Upload Area */}
-            <div className="lg:col-span-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
-              <div className="p-5 border-b border-slate-200 dark:border-slate-800">
-                <h2 className="font-semibold text-slate-900 dark:text-slate-100">
+            <div className="lg:col-span-2 bg-white border border-gray-200 rounded-lg">
+              <div className="p-5 border-b border-gray-200">
+                <h2 className="font-semibold text-gray-900">
                   Upload Transactions
                 </h2>
-                <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                <p className="text-sm text-gray-500 mt-0.5">
                   Drag and drop a CSV file or click to browse
                 </p>
               </div>
@@ -183,20 +178,18 @@ export default function BatchPage() {
                   onDrop={handleDrop}
                   className={`border-2 border-dashed rounded-lg p-10 text-center transition-colors ${
                     isDragging
-                      ? "border-slate-400 bg-slate-50 dark:bg-slate-800/50"
-                      : "border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600"
+                      ? "border-gray-400 bg-gray-50"
+                      : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
                   {file ? (
                     <div className="space-y-4">
-                      <div className="w-12 h-12 mx-auto bg-emerald-50 dark:bg-emerald-950 rounded-lg flex items-center justify-center">
-                        <FileSpreadsheet className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                      <div className="w-12 h-12 mx-auto bg-emerald-50 rounded-lg flex items-center justify-center">
+                        <FileSpreadsheet className="h-6 w-6 text-emerald-600" />
                       </div>
                       <div>
-                        <p className="font-medium text-slate-900 dark:text-slate-100">
-                          {file.name}
-                        </p>
-                        <p className="text-sm text-slate-500 dark:text-slate-400">
+                        <p className="font-medium text-gray-900">{file.name}</p>
+                        <p className="text-sm text-gray-500">
                           {(file.size / 1024).toFixed(1)} KB
                         </p>
                       </div>
@@ -222,14 +215,14 @@ export default function BatchPage() {
                     </div>
                   ) : (
                     <div className="space-y-4">
-                      <div className="w-12 h-12 mx-auto bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center">
-                        <Upload className="h-6 w-6 text-slate-400" />
+                      <div className="w-12 h-12 mx-auto bg-gray-100 rounded-lg flex items-center justify-center">
+                        <Upload className="h-6 w-6 text-gray-400" />
                       </div>
                       <div>
-                        <p className="font-medium text-slate-900 dark:text-slate-100">
+                        <p className="font-medium text-gray-900">
                           Drop your CSV file here
                         </p>
-                        <p className="text-sm text-slate-500 dark:text-slate-400">
+                        <p className="text-sm text-gray-500">
                           or click to browse
                         </p>
                       </div>
@@ -252,41 +245,39 @@ export default function BatchPage() {
             </div>
 
             {/* Format Info */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
-              <div className="p-5 border-b border-slate-200 dark:border-slate-800">
-                <h2 className="font-semibold text-slate-900 dark:text-slate-100">
-                  CSV Format
-                </h2>
+            <div className="bg-white border border-gray-200 rounded-lg">
+              <div className="p-5 border-b border-gray-200">
+                <h2 className="font-semibold text-gray-900">CSV Format</h2>
               </div>
               <div className="p-5 space-y-4">
                 <div>
-                  <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  <p className="text-sm font-medium text-gray-700 mb-2">
                     Required columns:
                   </p>
-                  <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-1">
-                    <li className="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
                       transaction_id
                     </li>
-                    <li className="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
                       sender_name
                     </li>
-                    <li className="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
                       TransactionAmt
                     </li>
-                    <li className="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
                       card_id
                     </li>
                   </ul>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                  <p className="text-sm font-medium text-gray-700 mb-2">
                     Optional columns:
                   </p>
-                  <ul className="text-sm text-slate-600 dark:text-slate-400 space-y-1">
-                    <li className="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
+                  <ul className="text-sm text-gray-600 space-y-1">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
                       sender_country
                     </li>
-                    <li className="font-mono text-xs bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
                       ProductCD
                     </li>
                   </ul>
@@ -294,7 +285,7 @@ export default function BatchPage() {
                 <a
                   href="/assets/sample-transactions.csv"
                   download
-                  className="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
+                  className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900"
                 >
                   <FileSpreadsheet className="h-4 w-4" />
                   Download sample CSV
@@ -306,61 +297,53 @@ export default function BatchPage() {
           <>
             {/* Results Summary */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
+              <div className="bg-white border border-gray-200 rounded-lg p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                    <ArrowRightLeft className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+                  <div className="p-2 bg-gray-100 rounded-lg">
+                    <ArrowRightLeft className="h-5 w-5 text-gray-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">
-                      Processed
-                    </p>
-                    <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                    <p className="text-sm text-gray-500">Processed</p>
+                    <p className="text-2xl font-semibold text-gray-900">
                       {results.length}
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
+              <div className="bg-white border border-gray-200 rounded-lg p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-emerald-50 dark:bg-emerald-950 rounded-lg">
-                    <CheckCircle2 className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                  <div className="p-2 bg-emerald-50 rounded-lg">
+                    <CheckCircle2 className="h-5 w-5 text-emerald-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">
-                      Approved
-                    </p>
-                    <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                    <p className="text-sm text-gray-500">Approved</p>
+                    <p className="text-2xl font-semibold text-gray-900">
                       {results.filter((r) => r.decision === "approve").length}
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
+              <div className="bg-white border border-gray-200 rounded-lg p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-amber-50 dark:bg-amber-950 rounded-lg">
-                    <Clock className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+                  <div className="p-2 bg-amber-50 rounded-lg">
+                    <Clock className="h-5 w-5 text-amber-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">
-                      Review
-                    </p>
-                    <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                    <p className="text-sm text-gray-500">Review</p>
+                    <p className="text-2xl font-semibold text-gray-900">
                       {results.filter((r) => r.decision === "review").length}
                     </p>
                   </div>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
+              <div className="bg-white border border-gray-200 rounded-lg p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-red-50 dark:bg-red-950 rounded-lg">
-                    <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
+                  <div className="p-2 bg-red-50 rounded-lg">
+                    <AlertCircle className="h-5 w-5 text-red-600" />
                   </div>
                   <div>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">
-                      Rejected
-                    </p>
-                    <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                    <p className="text-sm text-gray-500">Rejected</p>
+                    <p className="text-2xl font-semibold text-gray-900">
                       {results.filter((r) => r.decision === "reject").length}
                     </p>
                   </div>
@@ -369,13 +352,11 @@ export default function BatchPage() {
             </div>
 
             {/* Results Table */}
-            <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
-              <div className="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <div className="bg-white border border-gray-200 rounded-lg">
+              <div className="p-5 border-b border-gray-200 flex items-center justify-between">
                 <div>
-                  <h2 className="font-semibold text-slate-900 dark:text-slate-100">
-                    Results
-                  </h2>
-                  <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+                  <h2 className="font-semibold text-gray-900">Results</h2>
+                  <p className="text-sm text-gray-500 mt-0.5">
                     {results.length} transactions processed
                   </p>
                 </div>
@@ -386,26 +367,26 @@ export default function BatchPage() {
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
-                    <TableRow className="border-slate-200 dark:border-slate-800">
-                      <TableHead className="text-slate-600 dark:text-slate-400 font-medium">
+                    <TableRow className="border-gray-200">
+                      <TableHead className="text-gray-600 font-medium">
                         Transaction ID
                       </TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400 font-medium">
+                      <TableHead className="text-gray-600 font-medium">
                         Sender
                       </TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400 font-medium text-right">
+                      <TableHead className="text-gray-600 font-medium text-right">
                         Amount
                       </TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400 font-medium text-right">
+                      <TableHead className="text-gray-600 font-medium text-right">
                         Risk Score
                       </TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400 font-medium">
+                      <TableHead className="text-gray-600 font-medium">
                         Risk Level
                       </TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400 font-medium">
+                      <TableHead className="text-gray-600 font-medium">
                         Decision
                       </TableHead>
-                      <TableHead className="text-slate-600 dark:text-slate-400 font-medium">
+                      <TableHead className="text-gray-600 font-medium">
                         Sanctions
                       </TableHead>
                     </TableRow>
@@ -414,18 +395,18 @@ export default function BatchPage() {
                     {results.map((row) => (
                       <TableRow
                         key={row.transaction_id}
-                        className="border-slate-200 dark:border-slate-800"
+                        className="border-gray-200"
                       >
-                        <TableCell className="font-mono text-sm text-slate-900 dark:text-slate-100">
+                        <TableCell className="font-mono text-sm text-gray-900">
                           {row.transaction_id}
                         </TableCell>
-                        <TableCell className="text-slate-700 dark:text-slate-300">
+                        <TableCell className="text-gray-700">
                           {row.sender_name}
                         </TableCell>
-                        <TableCell className="text-right font-mono text-slate-900 dark:text-slate-100">
+                        <TableCell className="text-right font-mono text-gray-900">
                           ${row.amount.toLocaleString()}
                         </TableCell>
-                        <TableCell className="text-right font-mono text-slate-900 dark:text-slate-100">
+                        <TableCell className="text-right font-mono text-gray-900">
                           {(row.risk_score * 100).toFixed(1)}%
                         </TableCell>
                         <TableCell>
@@ -450,12 +431,12 @@ export default function BatchPage() {
                         </TableCell>
                         <TableCell>
                           {row.sanctions_match ? (
-                            <span className="flex items-center gap-1.5 text-red-600 dark:text-red-400 text-sm">
+                            <span className="flex items-center gap-1.5 text-red-600 text-sm">
                               <AlertCircle className="h-4 w-4" />
                               Match
                             </span>
                           ) : (
-                            <span className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400 text-sm">
+                            <span className="flex items-center gap-1.5 text-emerald-600 text-sm">
                               <CheckCircle2 className="h-4 w-4" />
                               Clear
                             </span>

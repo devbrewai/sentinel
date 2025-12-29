@@ -3,18 +3,14 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
 function Skeleton({ className }: { className?: string }) {
-  return (
-    <div
-      className={`animate-pulse bg-slate-200 dark:bg-slate-700 rounded ${className}`}
-    />
-  );
+  return <div className={`animate-pulse bg-gray-200 rounded ${className}`} />;
 }
 
 export function SkeletonResults() {
   return (
     <div className="space-y-6">
       {/* Transaction Route Skeleton */}
-      <div className="flex items-center justify-between p-4 bg-white dark:bg-slate-900 rounded-md border dark:border-slate-800">
+      <div className="flex items-center justify-between p-4 bg-white rounded-md border border-gray-200">
         <div className="flex items-center gap-3">
           <Skeleton className="h-10 w-10 rounded-full" />
           <div className="space-y-2">

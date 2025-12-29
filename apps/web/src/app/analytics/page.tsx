@@ -73,90 +73,90 @@ export default function AnalyticsPage() {
       <div className="max-w-7xl mx-auto space-y-8">
         {/* Page header */}
         <div>
-          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+          <h1 className="text-2xl font-semibold text-gray-900">
             Analytics
           </h1>
-          <p className="text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-gray-500 mt-1">
             System performance metrics and model analytics
           </p>
         </div>
 
         {/* Key Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
+          <div className="bg-white border border-gray-200 rounded-lg p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-slate-100 dark:bg-slate-800 rounded-lg">
-                <Activity className="h-5 w-5 text-slate-600 dark:text-slate-400" />
+              <div className="p-2 bg-gray-100 rounded-lg">
+                <Activity className="h-5 w-5 text-gray-600" />
               </div>
               <div>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-sm text-gray-500">
                   Total screened
                 </p>
-                <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                <p className="text-2xl font-semibold text-gray-900">
                   9,068
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-1 mt-3 text-sm text-emerald-600 dark:text-emerald-400">
+            <div className="flex items-center gap-1 mt-3 text-sm text-emerald-600">
               <TrendingUp className="h-3.5 w-3.5" />
               <span>+12.5% vs last week</span>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
+          <div className="bg-white border border-gray-200 rounded-lg p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-emerald-50 dark:bg-emerald-950 rounded-lg">
-                <Clock className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+              <div className="p-2 bg-emerald-50 rounded-lg">
+                <Clock className="h-5 w-5 text-emerald-600" />
               </div>
               <div>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-sm text-gray-500">
                   Average latency
                 </p>
-                <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                <p className="text-2xl font-semibold text-gray-900">
                   32ms
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-1 mt-3 text-sm text-emerald-600 dark:text-emerald-400">
+            <div className="flex items-center gap-1 mt-3 text-sm text-emerald-600">
               <TrendingDown className="h-3.5 w-3.5" />
               <span>-8ms vs target</span>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
+          <div className="bg-white border border-gray-200 rounded-lg p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-red-50 dark:bg-red-950 rounded-lg">
-                <ShieldAlert className="h-5 w-5 text-red-600 dark:text-red-400" />
+              <div className="p-2 bg-red-50 rounded-lg">
+                <ShieldAlert className="h-5 w-5 text-red-600" />
               </div>
               <div>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-sm text-gray-500">
                   Fraud detected
                 </p>
-                <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                <p className="text-2xl font-semibold text-gray-900">
                   169
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-1 mt-3 text-sm text-slate-500 dark:text-slate-400">
+            <div className="flex items-center gap-1 mt-3 text-sm text-gray-500">
               <span>1.86% detection rate</span>
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-5">
+          <div className="bg-white border border-gray-200 rounded-lg p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-50 dark:bg-amber-950 rounded-lg">
-                <ShieldCheck className="h-5 w-5 text-amber-600 dark:text-amber-400" />
+              <div className="p-2 bg-amber-50 rounded-lg">
+                <ShieldCheck className="h-5 w-5 text-amber-600" />
               </div>
               <div>
-                <p className="text-sm text-slate-500 dark:text-slate-400">
+                <p className="text-sm text-gray-500">
                   Sanctions hits
                 </p>
-                <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+                <p className="text-2xl font-semibold text-gray-900">
                   23
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-1 mt-3 text-sm text-slate-500 dark:text-slate-400">
+            <div className="flex items-center gap-1 mt-3 text-sm text-gray-500">
               <span>0.25% match rate</span>
             </div>
           </div>
@@ -165,12 +165,12 @@ export default function AnalyticsPage() {
         {/* Charts Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Daily Volume */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
-            <div className="p-5 border-b border-slate-200 dark:border-slate-800">
-              <h2 className="font-semibold text-slate-900 dark:text-slate-100">
+          <div className="bg-white border border-gray-200 rounded-lg">
+            <div className="p-5 border-b border-gray-200">
+              <h2 className="font-semibold text-gray-900">
                 Daily transaction volume
               </h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              <p className="text-sm text-gray-500 mt-0.5">
                 Transactions processed per day (last 7 days)
               </p>
             </div>
@@ -205,7 +205,7 @@ export default function AnalyticsPage() {
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-              <div className="flex justify-center gap-6 mt-4 text-sm text-slate-600 dark:text-slate-400">
+              <div className="flex justify-center gap-6 mt-4 text-sm text-gray-600">
                 <span className="flex items-center gap-2">
                   <span className="w-3 h-3 bg-emerald-500 rounded" />
                   Total
@@ -219,12 +219,12 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Risk Distribution */}
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
-            <div className="p-5 border-b border-slate-200 dark:border-slate-800">
-              <h2 className="font-semibold text-slate-900 dark:text-slate-100">
+          <div className="bg-white border border-gray-200 rounded-lg">
+            <div className="p-5 border-b border-gray-200">
+              <h2 className="font-semibold text-gray-900">
                 Risk level distribution
               </h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              <p className="text-sm text-gray-500 mt-0.5">
                 Breakdown of transactions by risk level
               </p>
             </div>
@@ -256,7 +256,7 @@ export default function AnalyticsPage() {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              <div className="flex justify-center gap-4 mt-4 text-sm text-slate-600 dark:text-slate-400 flex-wrap">
+              <div className="flex justify-center gap-4 mt-4 text-sm text-gray-600 flex-wrap">
                 {riskDistribution.map((item) => (
                   <span key={item.name} className="flex items-center gap-2">
                     <span
@@ -272,12 +272,12 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Latency Trend */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
-          <div className="p-5 border-b border-slate-200 dark:border-slate-800">
-            <h2 className="font-semibold text-slate-900 dark:text-slate-100">
+        <div className="bg-white border border-gray-200 rounded-lg">
+          <div className="p-5 border-b border-gray-200">
+            <h2 className="font-semibold text-gray-900">
               Latency trend (24h)
             </h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+            <p className="text-sm text-gray-500 mt-0.5">
               P50 and P95 response times in milliseconds
             </p>
           </div>
@@ -316,7 +316,7 @@ export default function AnalyticsPage() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-            <div className="flex justify-center gap-6 mt-4 text-sm text-slate-600 dark:text-slate-400">
+            <div className="flex justify-center gap-6 mt-4 text-sm text-gray-600">
               <span className="flex items-center gap-2">
                 <span className="w-3 h-3 bg-emerald-500 rounded" />
                 P50
@@ -331,46 +331,46 @@ export default function AnalyticsPage() {
 
         {/* Model Performance */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
-            <div className="p-5 border-b border-slate-200 dark:border-slate-800">
-              <h2 className="font-semibold text-slate-900 dark:text-slate-100">
+          <div className="bg-white border border-gray-200 rounded-lg">
+            <div className="p-5 border-b border-gray-200">
+              <h2 className="font-semibold text-gray-900">
                 Fraud model performance
               </h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              <p className="text-sm text-gray-500 mt-0.5">
                 LightGBM classifier metrics
               </p>
             </div>
             <div className="p-5">
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <p className="text-sm text-gray-500">
                     ROC-AUC
                   </p>
-                  <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mt-1">
+                  <p className="text-2xl font-semibold text-gray-900 mt-1">
                     {modelMetrics.rocAuc}
                   </p>
                 </div>
-                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <p className="text-sm text-gray-500">
                     Precision
                   </p>
-                  <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mt-1">
+                  <p className="text-2xl font-semibold text-gray-900 mt-1">
                     {(modelMetrics.precision * 100).toFixed(0)}%
                   </p>
                 </div>
-                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <p className="text-sm text-gray-500">
                     Recall
                   </p>
-                  <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mt-1">
+                  <p className="text-2xl font-semibold text-gray-900 mt-1">
                     {(modelMetrics.recall * 100).toFixed(0)}%
                   </p>
                 </div>
-                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <p className="text-sm text-gray-500">
                     F1 Score
                   </p>
-                  <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mt-1">
+                  <p className="text-2xl font-semibold text-gray-900 mt-1">
                     {modelMetrics.f1Score}
                   </p>
                 </div>
@@ -378,46 +378,46 @@ export default function AnalyticsPage() {
             </div>
           </div>
 
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
-            <div className="p-5 border-b border-slate-200 dark:border-slate-800">
-              <h2 className="font-semibold text-slate-900 dark:text-slate-100">
+          <div className="bg-white border border-gray-200 rounded-lg">
+            <div className="p-5 border-b border-gray-200">
+              <h2 className="font-semibold text-gray-900">
                 Sanctions screening
               </h2>
-              <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+              <p className="text-sm text-gray-500 mt-0.5">
                 OFAC screening metrics
               </p>
             </div>
             <div className="p-5">
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <p className="text-sm text-gray-500">
                     Precision@1
                   </p>
-                  <p className="text-2xl font-semibold text-emerald-600 dark:text-emerald-400 mt-1">
+                  <p className="text-2xl font-semibold text-emerald-600 mt-1">
                     {(sanctionsMetrics.precisionAt1 * 100).toFixed(1)}%
                   </p>
                 </div>
-                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <p className="text-sm text-gray-500">
                     Average latency
                   </p>
-                  <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mt-1">
+                  <p className="text-2xl font-semibold text-gray-900 mt-1">
                     {sanctionsMetrics.avgLatency}ms
                   </p>
                 </div>
-                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <p className="text-sm text-gray-500">
                     Total screened
                   </p>
-                  <p className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mt-1">
+                  <p className="text-2xl font-semibold text-gray-900 mt-1">
                     {sanctionsMetrics.totalScreened.toLocaleString()}
                   </p>
                 </div>
-                <div className="p-4 bg-slate-50 dark:bg-slate-800 rounded-lg">
-                  <p className="text-sm text-slate-500 dark:text-slate-400">
+                <div className="p-4 bg-gray-50 rounded-lg">
+                  <p className="text-sm text-gray-500">
                     Matches found
                   </p>
-                  <p className="text-2xl font-semibold text-red-600 dark:text-red-400 mt-1">
+                  <p className="text-2xl font-semibold text-red-600 mt-1">
                     {sanctionsMetrics.matchesFound}
                   </p>
                 </div>
@@ -427,39 +427,39 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Performance Card */}
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg">
-          <div className="p-5 border-b border-slate-200 dark:border-slate-800">
-            <h2 className="font-semibold text-slate-900 dark:text-slate-100">
+        <div className="bg-white border border-gray-200 rounded-lg">
+          <div className="p-5 border-b border-gray-200">
+            <h2 className="font-semibold text-gray-900">
               System health
             </h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">
+            <p className="text-sm text-gray-500 mt-0.5">
               Average over the last 24 hours
             </p>
           </div>
-          <div className="divide-y divide-slate-200 dark:divide-slate-800">
+          <div className="divide-y divide-gray-200">
             <div className="p-4 flex items-center justify-between">
-              <span className="text-sm text-slate-600 dark:text-slate-400">
+              <span className="text-sm text-gray-600">
                 API uptime
               </span>
-              <span className="flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-400">
+              <span className="flex items-center gap-2 text-sm font-medium text-emerald-600">
                 <CheckCircle2 className="h-4 w-4" />
                 100.0000%
               </span>
             </div>
             <div className="p-4 flex items-center justify-between">
-              <span className="text-sm text-slate-600 dark:text-slate-400">
+              <span className="text-sm text-gray-600">
                 Average latency
               </span>
-              <span className="flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-400">
+              <span className="flex items-center gap-2 text-sm font-medium text-emerald-600">
                 <CheckCircle2 className="h-4 w-4" />
                 32ms
               </span>
             </div>
             <div className="p-4 flex items-center justify-between">
-              <span className="text-sm text-slate-600 dark:text-slate-400">
+              <span className="text-sm text-gray-600">
                 Error rate
               </span>
-              <span className="flex items-center gap-2 text-sm font-medium text-emerald-600 dark:text-emerald-400">
+              <span className="flex items-center gap-2 text-sm font-medium text-emerald-600">
                 <CheckCircle2 className="h-4 w-4" />
                 0.02%
               </span>
