@@ -1,9 +1,20 @@
 "use client";
 
-import { History, X, AlertTriangle } from "lucide-react";
+import { History, X, AlertTriangle, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { ScoreResponse, TransactionRequest } from "@/types";
 
 export interface HistoryItem {
@@ -85,15 +96,40 @@ export function TransactionHistory({
             {history.length}
           </Badge>
         </CardTitle>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="h-7 px-2 text-xs text-gray-500 hover:text-red-600 hover:bg-red-50"
-          onClick={onClear}
-        >
-          <X className="h-3 w-3 mr-1" />
-          Clear
-        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="h-7 px-2 text-xs text-gray-500 hover:text-red-600 hover:bg-red-50"
+            >
+              <X className="h-3 w-3 mr-1" />
+              Clear
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="flex items-center gap-2">
+                <Trash2 className="h-5 w-5 text-red-500" />
+                Clear transaction history?
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                This will permanently remove all {history.length} transaction
+                {history.length === 1 ? "" : "s"} from your session history.
+                This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={onClear}
+                className="bg-red-600 text-white hover:bg-red-700 focus:ring-red-600"
+              >
+                Clear all
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </CardHeader>
       <CardContent className="p-0">
         <div className="max-h-[320px] overflow-y-auto">
