@@ -55,7 +55,7 @@ export function NavHeader() {
                   <Icon
                     className={cn(
                       "h-4 w-4",
-                      isActive ? "text-slate-900" : "text-gray-400"
+                      isActive ? "text-gray-900" : "text-gray-400"
                     )}
                   />
                   {item.label}
@@ -81,7 +81,7 @@ export function NavHeader() {
         </div>
 
         {/* Mobile Navigation */}
-        <nav className="md:hidden flex items-center gap-1 pb-3 overflow-x-auto -mx-2 px-2 scrollbar-hide">
+        <nav className="md:hidden flex items-center gap-1 pb-3 overflow-x-auto -mx-2 px-2">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
