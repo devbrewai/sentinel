@@ -1,7 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { AlertCircle, CheckCircle, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  AlertCircle,
+  ChevronDown,
+  ChevronUp,
+  CheckCircle2,
+  ShieldAlert,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
@@ -24,9 +30,9 @@ interface SanctionsCardProps {
 
 function MatchRankBadge({ rank }: { rank: number }) {
   const colors = {
-    1: "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200",
-    2: "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300",
-    3: "bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300",
+    1: "bg-amber-100 text-amber-800",
+    2: "bg-gray-100 text-gray-700",
+    3: "bg-orange-100 text-orange-700",
   };
   return (
     <span
@@ -46,17 +52,17 @@ function ScoreBar({ score }: { score: number }) {
       ? "bg-red-500"
       : percentage >= 80
       ? "bg-amber-500"
-      : "bg-slate-400";
+      : "bg-gray-400";
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex-1 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+      <div className="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
         <div
           className={`h-full ${color} transition-all duration-500`}
           style={{ width: `${percentage}%` }}
         />
       </div>
-      <span className="text-xs font-mono font-medium w-12 text-right">
+      <span className="text-xs font-mono font-medium w-12 text-right text-gray-600">
         {percentage.toFixed(1)}%
       </span>
     </div>
@@ -74,14 +80,14 @@ function MatchItem({
 }) {
   if (!isExpanded) {
     return (
-      <div className="flex items-center justify-between py-2 px-3 bg-slate-50 dark:bg-slate-800/50 rounded-md">
+      <div className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors">
         <div className="flex items-center gap-2">
           <MatchRankBadge rank={rank} />
-          <span className="text-sm font-medium truncate max-w-[180px]">
+          <span className="text-sm font-medium truncate max-w-[180px] text-gray-900">
             {match.match_name}
           </span>
         </div>
-        <span className="text-xs font-mono text-muted-foreground">
+        <span className="text-xs font-mono text-gray-500">
           {(match.score * 100).toFixed(1)}%
         </span>
       </div>
@@ -89,7 +95,7 @@ function MatchItem({
   }
 
   return (
-    <div className="text-sm space-y-3 border rounded-md p-3 bg-background">
+    <div className="text-sm space-y-3 border border-gray-200 rounded-md p-3 bg-white hover:bg-gray-50 transition-colors">
       <div className="flex items-center justify-between">
         <MatchRankBadge rank={rank} />
         {match.is_match && (
@@ -100,7 +106,7 @@ function MatchItem({
         {!match.is_match && match.decision === "review" && (
           <Badge
             variant="outline"
-            className="text-xs text-amber-600 border-amber-300 bg-amber-50 dark:bg-amber-950"
+            className="text-xs text-amber-600 border-amber-300 bg-amber-50"
           >
             REVIEW
           </Badge>
@@ -109,12 +115,12 @@ function MatchItem({
 
       <div className="space-y-2">
         <div>
-          <span className="text-xs text-muted-foreground block mb-1">
+          <span className="text-xs text-gray-500 block mb-1">
             Matched Entity
           </span>
           <span
             className={`font-medium ${
-              match.is_match ? "text-red-600 dark:text-red-400" : ""
+              match.is_match ? "text-red-600" : "text-gray-900"
             }`}
           >
             {match.match_name}
@@ -122,38 +128,38 @@ function MatchItem({
         </div>
 
         <div>
-          <span className="text-xs text-muted-foreground block mb-1">
+          <span className="text-xs text-gray-500 block mb-1">
             Similarity Score
           </span>
           <ScoreBar score={match.score} />
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 pt-2 border-t">
+      <div className="grid grid-cols-2 gap-3 pt-2 border-t border-gray-100">
         <div>
-          <span className="text-xs text-muted-foreground block">Program</span>
-          <span className="text-sm font-mono font-medium">
+          <span className="text-xs text-gray-500 block">Program</span>
+          <span className="text-sm font-mono font-medium text-gray-900">
             {match.program || "SDN"}
           </span>
         </div>
         <div>
-          <span className="text-xs text-muted-foreground block">UID</span>
-          <span className="text-sm font-mono font-medium">
+          <span className="text-xs text-gray-500 block">UID</span>
+          <span className="text-sm font-mono font-medium text-gray-900">
             {match.uid || "N/A"}
           </span>
         </div>
         {match.country && (
           <div>
-            <span className="text-xs text-muted-foreground block">Country</span>
-            <span className="text-sm font-mono font-medium">
+            <span className="text-xs text-gray-500 block">Country</span>
+            <span className="text-sm font-mono font-medium text-gray-900">
               {match.country}
             </span>
           </div>
         )}
         {match.source && (
           <div>
-            <span className="text-xs text-muted-foreground block">Source</span>
-            <span className="text-sm font-mono font-medium">
+            <span className="text-xs text-gray-500 block">Source</span>
+            <span className="text-sm font-mono font-medium text-gray-900">
               {match.source}
             </span>
           </div>
@@ -168,15 +174,17 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
 
   if (!matchData && !isMatch) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-base">
-            <CheckCircle className="h-5 w-5 text-green-500" />
+      <Card className="bg-white rounded-lg border border-gray-200 shadow-none h-full">
+        <CardHeader className="pb-3">
+          <CardTitle className="flex items-center gap-3 text-lg font-semibold text-gray-900">
+            <div className="p-1.5 bg-green-100 rounded-full">
+              <CheckCircle2 className="h-5 w-5 text-green-600" />
+            </div>
             Sanctions screening
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <p className="text-sm text-muted-foreground">
+        <CardContent className="flex items-center justify-center min-h-[200px]">
+          <p className="text-sm text-gray-500 py-8 text-center">
             No sanctions data available.
           </p>
         </CardContent>
@@ -190,53 +198,59 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
 
   return (
     <Card
-      className={
-        isMatch ? "border-red-200 dark:border-red-900 dark:bg-red-950/20" : ""
-      }
+      className={`bg-white rounded-lg border shadow-none h-full ${
+        isMatch ? "border-red-200" : "border-gray-200"
+      }`}
     >
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center justify-between text-base">
-          <span className="flex items-center gap-2">
+      <CardHeader className="pb-4 border-b border-gray-100">
+        <CardTitle className="flex items-center justify-between text-lg font-semibold text-gray-900">
+          <div className="flex items-center gap-3">
             {isMatch ? (
-              <AlertCircle className="h-5 w-5 text-red-500" />
+              <div className="p-1.5 bg-red-100 rounded-full">
+                <ShieldAlert className="h-5 w-5 text-red-600" />
+              </div>
             ) : (
-              <CheckCircle className="h-5 w-5 text-green-500" />
+              <div className="p-1.5 bg-green-100 rounded-full">
+                <CheckCircle2 className="h-5 w-5 text-green-600" />
+              </div>
             )}
             Sanctions screening
-          </span>
+          </div>
           {matches.length > 0 && (
-            <Badge variant="secondary" className="text-xs font-normal">
+            <Badge
+              variant="secondary"
+              className="text-xs font-normal bg-gray-100 text-gray-600 hover:bg-gray-200"
+            >
               {matches.length} match{matches.length !== 1 ? "es" : ""}
             </Badge>
           )}
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6 p-6">
         {isMatch ? (
-          <Alert
-            variant="destructive"
-            className="bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-900"
-          >
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle className="font-medium">
+          <Alert variant="destructive" className="bg-red-50 border-red-200">
+            <AlertCircle className="h-4 w-4 text-red-600" />
+            <AlertTitle className="font-medium text-red-900">
               Sanctions hit detected
             </AlertTitle>
-            <AlertDescription>
+            <AlertDescription className="text-red-800">
               This entity matches a record on the OFAC sanctions list.
             </AlertDescription>
           </Alert>
         ) : (
-          <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-950/50 px-3 py-2 rounded-md">
-            <CheckCircle className="h-4 w-4" />
-            <span>Clean - No high-confidence OFAC matches.</span>
+          <div className="flex items-center gap-3 text-sm text-green-700 bg-green-50 px-4 py-3 rounded-lg border border-green-100">
+            <CheckCircle2 className="h-5 w-5 text-green-600" />
+            <span className="font-medium">
+              Clean - No high-confidence OFAC matches.
+            </span>
           </div>
         )}
 
         {/* Query Info */}
         {matchData?.query && (
-          <div className="text-sm">
-            <span className="text-muted-foreground">Screened: </span>
-            <span className="font-medium">{matchData.query}</span>
+          <div className="text-sm bg-gray-50 p-3 rounded-md border border-gray-100">
+            <span className="text-gray-500">Screened: </span>
+            <span className="font-medium text-gray-900">{matchData.query}</span>
           </div>
         )}
 
@@ -249,7 +263,7 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
             <Button
               variant="ghost"
               size="sm"
-              className="w-full text-xs text-muted-foreground hover:text-foreground"
+              className="w-full text-xs text-gray-500 hover:text-gray-900 hover:bg-gray-50"
               onClick={() => setShowAllMatches(!showAllMatches)}
             >
               {showAllMatches ? (
@@ -278,33 +292,8 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
                 ))}
               </div>
             )}
-
-            {!showAllMatches && (
-              <div className="space-y-1">
-                {additionalMatches.map((match, idx) => (
-                  <MatchItem
-                    key={match.uid || idx}
-                    match={match}
-                    rank={idx + 2}
-                    isExpanded={false}
-                  />
-                ))}
-              </div>
-            )}
           </div>
         )}
-
-        {/* Applied Filters */}
-        {matchData?.applied_filters &&
-          Object.values(matchData.applied_filters).some((v) => v) && (
-            <div className="text-xs text-muted-foreground pt-2 border-t">
-              <span className="font-medium">Filters: </span>
-              {Object.entries(matchData.applied_filters)
-                .filter(([, v]) => v)
-                .map(([k, v]) => `${k}=${v}`)
-                .join(", ")}
-            </div>
-          )}
       </CardContent>
     </Card>
   );
