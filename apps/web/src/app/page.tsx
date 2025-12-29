@@ -85,6 +85,7 @@ export default function Dashboard() {
     setCurrentRequest(item.request);
     setSelectedHistoryId(item.id);
     setError(null);
+    setIsLoading(false);
   };
 
   const handleHistoryClear = () => {
