@@ -81,6 +81,8 @@ export default function Dashboard() {
   };
 
   const handleHistorySelect = (item: HistoryItem) => {
+    // Invalidate any pending request so it won't overwrite the selected history item
+    currentRequestIdRef.current = null;
     setResult(item.response);
     setCurrentRequest(item.request);
     setSelectedHistoryId(item.id);
