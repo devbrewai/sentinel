@@ -47,3 +47,34 @@ export interface ScoreResponse {
   velocity?: VelocityFeatures | null;
   latency_ms: number;
 }
+
+// Batch processing types
+export interface BatchTransactionItem {
+  transaction_id: string;
+  sender_name: string;
+  TransactionAmt: number;
+  card_id: string;
+  sender_country?: string;
+  ProductCD?: string;
+}
+
+export interface BatchResultItem {
+  transaction_id: string;
+  sender_name: string;
+  amount: number;
+  risk_score: number;
+  risk_level: "low" | "medium" | "high" | "critical";
+  decision: "approve" | "review" | "reject";
+  sanctions_match: boolean;
+  latency_ms: number;
+}
+
+export interface BatchRequest {
+  transactions: BatchTransactionItem[];
+}
+
+export interface BatchResponse {
+  results: BatchResultItem[];
+  total_processed: number;
+  total_latency_ms: number;
+}
