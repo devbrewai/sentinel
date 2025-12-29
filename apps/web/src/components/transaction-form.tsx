@@ -20,8 +20,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TransactionRequest } from "@/types";
+import { useState } from "react";
 
 const formSchema = z.object({
   TransactionAmt: z.coerce.number().min(0.01, "Amount must be greater than 0"),
@@ -31,7 +39,6 @@ const formSchema = z.object({
   ProductCD: z.string().optional(),
 });
 
-// Explicitly define the type to match what useForm expects
 type FormSchemaType = z.infer<typeof formSchema>;
 
 interface TransactionFormProps {
@@ -40,18 +47,21 @@ interface TransactionFormProps {
 }
 
 export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
+  const [activeTab, setActiveTab] = useState("safe");
+
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      TransactionAmt: 100.0,
-      card_id: "card_12345",
-      sender_name: "John Doe",
+      TransactionAmt: 45.5,
+      card_id: "card_valid_999",
+      sender_name: "Sarah Smith",
       sender_country: "US",
       ProductCD: "W",
     },
   });
 
-  const fillPreset = (preset: "safe" | "sanctions" | "risky") => {
+  const fillPreset = (preset: string) => {
+    setActiveTab(preset);
     if (preset === "safe") {
       form.reset({
         TransactionAmt: 45.5,
@@ -65,7 +75,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
         TransactionAmt: 1200.0,
         card_id: "card_reg_99",
         sender_name: "AEROCARIBBEAN AIRLINES",
-        sender_country: "Cuba", // Changed from CU to Cuba to match dataset
+        sender_country: "Cuba",
         ProductCD: "C",
       });
     } else if (preset === "risky") {
@@ -84,68 +94,53 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
       transaction_id: `txn_${Math.floor(Math.random() * 1000000)}`,
       ...values,
     };
-    // Inject medium-high risk features for sanctions case (elevated fraud risk)
+
+    // Logic for feature injection remains same
     if (values.TransactionAmt === 1200.0 && values.card_id === "card_reg_99") {
-      // Medium-high risk: sanctions entities often have unusual transaction patterns
-      payload["V258"] = 8.0; // Moderate fraud signal
-      payload["C1"] = 15.0; // Elevated count
-      payload["C14"] = 2.0; // Low but not zero
-      payload["V45"] = 12.0; // Moderate
-      payload["C13"] = 3.0; // Low value
+      payload["V258"] = 8.0;
+      payload["C1"] = 15.0;
+      payload["C14"] = 2.0;
+      payload["V45"] = 12.0;
+      payload["C13"] = 3.0;
     }
 
-    // Inject high-risk features if it's the risky case (detected by card_id or amount)
     if (
       values.TransactionAmt === 9500.0 &&
       values.card_id === "card_risk_007"
     ) {
-      // Values from notebook 99.6% fraud probability case (Sample Index 100)
-      payload["V258"] = 12.0; // SHAP +1.69
-      payload["C1"] = 22.0; // SHAP +1.08
-      payload["C14"] = 0.0; // SHAP +1.00 (low value = fraud signal)
-      payload["V45"] = 20.0; // SHAP +0.88
-      payload["V87"] = 22.0; // SHAP +0.55
-      payload["C13"] = 0.0; // SHAP +0.43 (low value = fraud signal)
-      payload["V83"] = 3.0; // SHAP +0.34
-      payload["V201"] = 19.0; // SHAP +0.27
+      payload["V258"] = 12.0;
+      payload["C1"] = 22.0;
+      payload["C14"] = 0.0;
+      payload["V45"] = 20.0;
+      payload["V87"] = 22.0;
+      payload["C13"] = 0.0;
+      payload["V83"] = 3.0;
+      payload["V201"] = 19.0;
     }
 
     onSubmit(payload);
   }
 
   return (
-    <Card className="w-full border-none shadow-none">
-      <CardHeader>
-        <CardTitle>Submit transaction</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className="flex gap-2 mb-6">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => fillPreset("safe")}
-          >
-            Safe
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => fillPreset("sanctions")}
-          >
-            Sanctions hit
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={() => fillPreset("risky")}
-          >
-            High risk
-          </Button>
-        </div>
+    <Card className="w-full bg-white rounded-lg shadow-none border border-gray-200">
+      <CardHeader className="p-6 pb-2">
+        <CardTitle className="text-lg font-semibold text-gray-900 mb-2">
+          Submit transaction
+        </CardTitle>
+        <CardDescription className="text-sm text-gray-600 mb-4">
+          Enter transaction details to screen
+        </CardDescription>
 
+        <Tabs value={activeTab} onValueChange={fillPreset} className="w-full">
+          <TabsList>
+            <TabsTrigger value="safe">Safe</TabsTrigger>
+            <TabsTrigger value="sanctions">Sanctions hit</TabsTrigger>
+            <TabsTrigger value="risky">High risk</TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </CardHeader>
+
+      <CardContent className="p-6 pt-4">
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(handleSubmit)}
@@ -156,11 +151,14 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
               name="TransactionAmt"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Amount</FormLabel>
+                  <FormLabel className="text-sm font-medium text-gray-700">
+                    Amount
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type="number"
                       step="0.01"
+                      className="h-10 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                       {...field}
                       value={field.value as number}
                     />
@@ -175,9 +173,15 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
               name="sender_name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Sender name</FormLabel>
+                  <FormLabel className="text-sm font-medium text-gray-700">
+                    Sender name
+                  </FormLabel>
                   <FormControl>
-                    <Input placeholder="Full name" {...field} />
+                    <Input
+                      placeholder="Full name"
+                      className="h-10 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -190,9 +194,15 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
                 name="card_id"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Card ID</FormLabel>
+                    <FormLabel className="text-sm font-medium text-gray-700">
+                      Card ID
+                    </FormLabel>
                     <FormControl>
-                      <Input placeholder="card_..." {...field} />
+                      <Input
+                        placeholder="card_..."
+                        className="h-10 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -204,10 +214,12 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
                 name="sender_country"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Country</FormLabel>
+                    <FormLabel className="text-sm font-medium text-gray-700">
+                      Country
+                    </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger>
+                        <SelectTrigger className="h-10 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                           <SelectValue placeholder="Select country" />
                         </SelectTrigger>
                       </FormControl>
@@ -233,13 +245,15 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
               name="ProductCD"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Product code</FormLabel>
+                  <FormLabel className="text-sm font-medium text-gray-700">
+                    Product code
+                  </FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="h-10 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
                         <SelectValue placeholder="Select product" />
                       </SelectTrigger>
                     </FormControl>
@@ -257,9 +271,8 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
 
             <Button
               type="submit"
-              className="w-full"
+              className="w-full h-11 bg-gray-900 hover:bg-gray-800 text-white rounded-lg font-medium text-sm transition-colors duration-200"
               disabled={isLoading}
-              variant="default"
             >
               {isLoading ? "Analyzing..." : "Analyze transaction"}
             </Button>
