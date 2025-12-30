@@ -107,7 +107,7 @@ function ContributionBar({ contribution }: { contribution: number }) {
 export function FeatureImportance({ features }: FeatureImportanceProps) {
   if (!features || features.length === 0) {
     return (
-      <Card className="bg-white rounded-lg border border-gray-200 shadow-none">
+      <Card>
         <CardHeader className="pb-3 border-b border-gray-100">
           <CardTitle className="text-lg font-semibold text-gray-900">
             Risk factors
@@ -123,13 +123,13 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
   }
 
   return (
-    <Card className="bg-white rounded-lg border border-gray-200 shadow-none">
+    <Card>
       <CardHeader className="pb-4 border-b border-gray-100">
         <div className="flex items-center justify-between">
           <CardTitle className="text-lg font-semibold text-gray-900">
             Top fraud risk factors
           </CardTitle>
-          <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">
+          <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-xs">
             SHAP analysis
           </span>
         </div>
@@ -189,7 +189,8 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
         <div className="p-4 bg-gray-50 border-t border-gray-100 rounded-b-lg">
           <p className="text-xs text-gray-500">
             SHAP values show each feature&apos;s contribution to the risk score.
-            Positive values increase fraud likelihood.
+            Positive values increase fraud likelihood. Negative values reduce
+            risk.
           </p>
         </div>
       </CardContent>
