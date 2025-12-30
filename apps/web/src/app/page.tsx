@@ -1,6 +1,15 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+
+import {
+  ShieldAlert,
+  CheckCircle2,
+  AlertTriangle,
+  RefreshCw,
+  Activity,
+} from "lucide-react";
+
 import { TransactionForm } from "@/components/transaction-form";
 import { RiskGauge } from "@/components/risk-gauge";
 import { SanctionsCard } from "@/components/sanctions-card";
@@ -16,13 +25,7 @@ import {
 import { scoreTransaction } from "@/lib/api";
 import { TransactionRequest, ScoreResponse } from "@/types";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import {
-  ShieldAlert,
-  CheckCircle2,
-  AlertTriangle,
-  RefreshCw,
-  Activity,
-} from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 const HISTORY_KEY = "fraudguard_history";
 const MAX_HISTORY = 20;
@@ -199,7 +202,7 @@ export default function Dashboard() {
           <div className="lg:col-span-2 space-y-6">
             <TransactionForm onSubmit={handleScore} isLoading={isLoading} />
 
-            {/* Transaction History (Restored) */}
+            {/* Transaction History */}
             <TransactionHistory
               history={history}
               onSelect={handleHistorySelect}
@@ -249,9 +252,12 @@ export default function Dashboard() {
                           {result.decision}
                         </span>
                         {result.latency_ms && (
-                          <span className="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full font-medium ml-2">
-                            {result.latency_ms.toFixed(0)}ms
-                          </span>
+                          <Badge
+                            variant="secondary"
+                            className="text-xs font-medium ml-2 px-2"
+                          >
+                            {result.latency_ms.toFixed(0)} ms
+                          </Badge>
                         )}
                       </div>
                     </div>
