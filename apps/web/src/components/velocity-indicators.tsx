@@ -31,7 +31,11 @@ export function VelocityIndicators({ velocity }: VelocityIndicatorsProps) {
     high: "text-red-600 bg-red-50",
   };
 
-  const StatusIcon = ({ status }: { status: "normal" | "elevated" | "high" }) => {
+  const StatusIcon = ({
+    status,
+  }: {
+    status: "normal" | "elevated" | "high";
+  }) => {
     if (status === "high") return <AlertTriangle className="h-3 w-3" />;
     if (status === "elevated") return <Clock className="h-3 w-3" />;
     return <CheckCircle className="h-3 w-3" />;
@@ -41,7 +45,7 @@ export function VelocityIndicators({ velocity }: VelocityIndicatorsProps) {
     <div className="flex items-center gap-3">
       {/* 1 Hour */}
       <div
-        className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium ${statusColors[hourlyStatus]}`}
+        className={`flex items-center gap-1.5 px-2 py-1 rounded-xs text-xs font-medium ${statusColors[hourlyStatus]}`}
       >
         <StatusIcon status={hourlyStatus} />
         <span>{velocity.transactions_1h} txn/1h</span>
@@ -49,7 +53,7 @@ export function VelocityIndicators({ velocity }: VelocityIndicatorsProps) {
 
       {/* 24 Hours */}
       <div
-        className={`flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-medium ${statusColors[dailyStatus]}`}
+        className={`flex items-center gap-1.5 px-2 py-1 rounded-xs text-xs font-medium ${statusColors[dailyStatus]}`}
       >
         <StatusIcon status={dailyStatus} />
         <span>{velocity.transactions_24h} txn/24h</span>
@@ -79,8 +83,8 @@ export function VelocityCard({ velocity }: VelocityIndicatorsProps) {
             hourlyStatus === "high"
               ? "text-red-600 bg-red-50 border-red-200"
               : hourlyStatus === "elevated"
-                ? "text-amber-600 bg-amber-50 border-amber-200"
-                : "text-green-600 bg-green-50 border-green-200"
+              ? "text-amber-600 bg-amber-50 border-amber-200"
+              : "text-green-600 bg-green-50 border-green-200"
           }
         >
           {velocity.transactions_1h}/hr
@@ -91,8 +95,8 @@ export function VelocityCard({ velocity }: VelocityIndicatorsProps) {
             dailyStatus === "high"
               ? "text-red-600 bg-red-50 border-red-200"
               : dailyStatus === "elevated"
-                ? "text-amber-600 bg-amber-50 border-amber-200"
-                : "text-green-600 bg-green-50 border-green-200"
+              ? "text-amber-600 bg-amber-50 border-amber-200"
+              : "text-green-600 bg-green-50 border-green-200"
           }
         >
           {velocity.transactions_24h}/day
