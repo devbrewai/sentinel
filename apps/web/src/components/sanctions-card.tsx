@@ -80,7 +80,7 @@ function MatchItem({
 }) {
   if (!isExpanded) {
     return (
-      <div className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-md hover:bg-gray-100 transition-colors">
+      <div className="flex items-center justify-between py-2 px-3 bg-gray-50 rounded-xs hover:bg-gray-100 transition-colors">
         <div className="flex items-center gap-2">
           <MatchRankBadge rank={rank} />
           <span className="text-sm font-medium truncate max-w-[180px] text-gray-900">
@@ -95,7 +95,7 @@ function MatchItem({
   }
 
   return (
-    <div className="text-sm space-y-3 border border-gray-200 rounded-md p-3 bg-white hover:bg-gray-50 transition-colors">
+    <div className="text-sm space-y-3 border border-gray-200 rounded-xs p-3 bg-white hover:bg-gray-50 transition-colors">
       <div className="flex items-center justify-between">
         <MatchRankBadge rank={rank} />
         {match.is_match && (
@@ -174,7 +174,7 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
 
   if (!matchData && !isMatch) {
     return (
-      <Card className="bg-white rounded-lg border border-gray-200 shadow-none h-full">
+      <Card className="h-full">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-3 text-lg font-semibold text-gray-900">
             <div className="p-1.5 bg-green-100 rounded-full">
@@ -198,9 +198,7 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
 
   return (
     <Card
-      className={`bg-white rounded-lg border shadow-none h-full ${
-        isMatch ? "border-red-200" : "border-gray-200"
-      }`}
+      className={`h-full ${isMatch ? "border-red-200" : "border-gray-200"}`}
     >
       <CardHeader className="pb-4 border-b border-gray-100">
         <CardTitle className="flex items-center justify-between text-lg font-semibold text-gray-900">
@@ -238,7 +236,7 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
             </AlertDescription>
           </Alert>
         ) : (
-          <div className="flex items-center gap-3 text-sm text-green-700 bg-green-50 px-4 py-3 rounded-lg border border-green-100">
+          <div className="flex items-center gap-3 text-sm text-green-700 bg-green-50 px-4 py-3 rounded-xs border border-green-100">
             <CheckCircle2 className="h-5 w-5 text-green-600" />
             <span className="font-medium">
               Clean - No high-confidence OFAC matches.
@@ -248,7 +246,7 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
 
         {/* Query Info */}
         {matchData?.query && (
-          <div className="text-sm bg-gray-50 p-3 rounded-md border border-gray-100">
+          <div className="text-sm bg-gray-50 p-3 rounded-xs border border-gray-100">
             <span className="text-gray-500">Screened: </span>
             <span className="font-medium text-gray-900">{matchData.query}</span>
           </div>
