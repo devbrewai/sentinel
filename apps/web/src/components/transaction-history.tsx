@@ -84,7 +84,7 @@ export function TransactionHistory({
   }
 
   return (
-    <Card className="bg-white border border-gray-200 shadow-none">
+    <Card>
       <CardHeader className="p-4 border-b border-gray-100 flex flex-row items-center justify-between space-y-0">
         <CardTitle className="text-sm font-semibold text-gray-900 flex items-center gap-2">
           <History className="h-4 w-4 text-gray-500" />
