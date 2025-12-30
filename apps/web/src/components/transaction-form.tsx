@@ -122,7 +122,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
   }
 
   return (
-    <Card className="w-full bg-white rounded-lg shadow-none border border-gray-200">
+    <Card className="w-full">
       <CardHeader className="p-6 pb-2">
         <CardTitle className="text-lg font-semibold text-gray-900 mb-2">
           Submit transaction
@@ -158,7 +158,6 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
                     <Input
                       type="number"
                       step="0.01"
-                      className="h-10 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
                       {...field}
                       value={field.value as number}
                     />
@@ -177,11 +176,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
                     Sender name
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="Full name"
-                      className="h-10 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                      {...field}
-                    />
+                    <Input placeholder="Full name" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -198,11 +193,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
                       Card ID
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="card_..."
-                        className="h-10 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                        {...field}
-                      />
+                      <Input placeholder="card_..." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -219,7 +210,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
                     </FormLabel>
                     <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
-                        <SelectTrigger className="h-10 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                        <SelectTrigger>
                           <SelectValue placeholder="Select country" />
                         </SelectTrigger>
                       </FormControl>
@@ -253,7 +244,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="h-10 rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500">
+                      <SelectTrigger className="h-10 rounded-xs">
                         <SelectValue placeholder="Select product" />
                       </SelectTrigger>
                     </FormControl>
@@ -271,7 +262,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
 
             <Button
               type="submit"
-              className="w-full h-11 bg-gray-900 hover:bg-gray-800 text-white rounded-lg font-medium text-sm transition-colors duration-200"
+              className="w-full h-11 bg-gray-900 hover:bg-gray-800 text-white font-medium text-sm transition-colors duration-200"
               disabled={isLoading}
             >
               {isLoading ? "Analyzing..." : "Analyze transaction"}
