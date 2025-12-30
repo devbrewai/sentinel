@@ -56,6 +56,16 @@ function getFeatureLabel(name: string): string {
   return name;
 }
 
+function getContributionIcon(contribution: number) {
+  if (contribution > 0.1) {
+    return <TrendingUp className="h-3.5 w-3.5 text-red-500" />;
+  }
+  if (contribution < -0.1) {
+    return <TrendingDown className="h-3.5 w-3.5 text-green-500" />;
+  }
+  return <Minus className="h-3.5 w-3.5 text-gray-400" />;
+}
+
 function formatValue(value: any): string {
   if (value === null || value === undefined) {
     return "N/A";
@@ -170,10 +180,11 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
                       {formatValue(feature.value)}
                     </span>
                     <span
-                      className={`flex items-center gap-0.5 text-xs font-bold w-12 justify-end ${
+                      className={`flex items-center gap-1 text-xs font-bold justify-end ${
                         isPositive ? "text-red-600" : "text-green-600"
                       }`}
                     >
+                      {getContributionIcon(feature.contribution)}
                       {isPositive ? "+" : ""}
                       {feature.contribution.toFixed(2)}
                     </span>
