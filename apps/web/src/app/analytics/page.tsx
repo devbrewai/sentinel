@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -15,59 +16,69 @@ import {
   Line,
 } from "recharts";
 import {
-  TrendingUp,
-  TrendingDown,
   Clock,
   ShieldCheck,
   ShieldAlert,
   Activity,
   CheckCircle2,
+  Loader2,
+  AlertCircle,
 } from "lucide-react";
-
-// Demo data for analytics showcase
-const dailyVolume = [
-  { day: "Mon", transactions: 1245, flagged: 23 },
-  { day: "Tue", transactions: 1389, flagged: 31 },
-  { day: "Wed", transactions: 1567, flagged: 28 },
-  { day: "Thu", transactions: 1234, flagged: 19 },
-  { day: "Fri", transactions: 1890, flagged: 42 },
-  { day: "Sat", transactions: 987, flagged: 15 },
-  { day: "Sun", transactions: 756, flagged: 11 },
-];
-
-const riskDistribution = [
-  { name: "Low", value: 7234, color: "#10b981" },
-  { name: "Medium", value: 1456, color: "#f59e0b" },
-  { name: "High", value: 312, color: "#f97316" },
-  { name: "Critical", value: 66, color: "#ef4444" },
-];
-
-const latencyTrend = [
-  { hour: "00:00", p50: 28, p95: 45 },
-  { hour: "04:00", p50: 25, p95: 42 },
-  { hour: "08:00", p50: 32, p95: 58 },
-  { hour: "12:00", p50: 35, p95: 62 },
-  { hour: "16:00", p50: 38, p95: 68 },
-  { hour: "20:00", p50: 30, p95: 52 },
-];
-
-const modelMetrics = {
-  rocAuc: 0.8861,
-  precision: 0.82,
-  recall: 0.79,
-  f1Score: 0.805,
-};
-
-const sanctionsMetrics = {
-  precisionAt1: 0.975,
-  avgLatency: 12.3,
-  totalScreened: 9068,
-  matchesFound: 23,
-};
-
-// TODO: Analytics are hardcoded for now, we need to fetch the data from the API
+import { getAnalytics } from "@/lib/api";
+import { AnalyticsResponse } from "@/types";
 
 export default function AnalyticsPage() {
+  const [analytics, setAnalytics] = useState<AnalyticsResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function fetchAnalytics() {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await getAnalytics();
+        setAnalytics(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to load analytics");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchAnalytics();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="py-8 px-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-center min-h-[400px]">
+          <div className="flex items-center gap-3 text-gray-500">
+            <Loader2 className="h-5 w-5 animate-spin" />
+            <span>Loading analytics...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="py-8 px-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-center min-h-[400px]">
+          <div className="flex items-center gap-3 text-red-500">
+            <AlertCircle className="h-5 w-5" />
+            <span>{error}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!analytics) {
+    return null;
+  }
+
+  const { summary, daily_volume, risk_distribution, latency_trend, model_metrics, sanctions_metrics } = analytics;
   return (
     <div className="py-8 px-6">
       <div className="max-w-7xl mx-auto space-y-8">
@@ -81,11 +92,11 @@ export default function AnalyticsPage() {
           </p>
         </div>
 
-        {/* Key Metrics */}
+        {/* Key metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
+          <div className="bg-white border border-gray-200 rounded-xs p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-gray-100 rounded-lg">
+              <div className="p-2 bg-gray-100 rounded-xs">
                 <Activity className="h-5 w-5 text-gray-600" />
               </div>
               <div>
@@ -93,71 +104,63 @@ export default function AnalyticsPage() {
                   Total screened
                 </p>
                 <p className="text-2xl font-semibold text-gray-900">
-                  9,068
+                  {summary.total_screened.toLocaleString()}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-1 mt-3 text-sm text-emerald-600">
-              <TrendingUp className="h-3.5 w-3.5" />
-              <span>+12.5% vs last week</span>
-            </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
+          <div className="bg-white border border-gray-200 rounded-xs p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-emerald-50 rounded-lg">
-                <Clock className="h-5 w-5 text-emerald-600" />
+              <div className="p-2 bg-gray-100 rounded-xs">
+                <Clock className="h-5 w-5 text-gray-600" />
               </div>
               <div>
                 <p className="text-sm text-gray-500">
                   Average latency
                 </p>
                 <p className="text-2xl font-semibold text-gray-900">
-                  32ms
+                  {summary.avg_latency_ms.toFixed(0)}ms
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-1 mt-3 text-sm text-emerald-600">
-              <TrendingDown className="h-3.5 w-3.5" />
-              <span>-8ms vs target</span>
-            </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
+          <div className="bg-white border border-gray-200 rounded-xs p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-red-50 rounded-lg">
-                <ShieldAlert className="h-5 w-5 text-red-600" />
+              <div className="p-2 bg-gray-100 rounded-xs">
+                <ShieldAlert className="h-5 w-5 text-gray-600" />
               </div>
               <div>
                 <p className="text-sm text-gray-500">
                   Fraud detected
                 </p>
                 <p className="text-2xl font-semibold text-gray-900">
-                  169
+                  {summary.fraud_detected.toLocaleString()}
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-1 mt-3 text-sm text-gray-500">
-              <span>1.86% detection rate</span>
+              <span>{summary.fraud_rate}% detection rate</span>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg p-5">
+          <div className="bg-white border border-gray-200 rounded-xs p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-50 rounded-lg">
-                <ShieldCheck className="h-5 w-5 text-amber-600" />
+              <div className="p-2 bg-gray-100 rounded-xs">
+                <ShieldCheck className="h-5 w-5 text-gray-600" />
               </div>
               <div>
                 <p className="text-sm text-gray-500">
                   Sanctions hits
                 </p>
                 <p className="text-2xl font-semibold text-gray-900">
-                  23
+                  {summary.sanctions_hits.toLocaleString()}
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-1 mt-3 text-sm text-gray-500">
-              <span>0.25% match rate</span>
+              <span>{summary.sanctions_rate}% match rate</span>
             </div>
           </div>
         </div>
@@ -165,7 +168,7 @@ export default function AnalyticsPage() {
         {/* Charts Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Daily Volume */}
-          <div className="bg-white border border-gray-200 rounded-lg">
+          <div className="bg-white border border-gray-200 rounded-xs">
             <div className="p-5 border-b border-gray-200">
               <h2 className="font-semibold text-gray-900">
                 Daily transaction volume
@@ -177,7 +180,7 @@ export default function AnalyticsPage() {
             <div className="p-5">
               <div className="h-[250px]">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={dailyVolume}>
+                  <BarChart data={daily_volume}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                     <XAxis
                       dataKey="day"
@@ -219,7 +222,7 @@ export default function AnalyticsPage() {
           </div>
 
           {/* Risk Distribution */}
-          <div className="bg-white border border-gray-200 rounded-lg">
+          <div className="bg-white border border-gray-200 rounded-xs">
             <div className="p-5 border-b border-gray-200">
               <h2 className="font-semibold text-gray-900">
                 Risk level distribution
@@ -233,7 +236,7 @@ export default function AnalyticsPage() {
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
-                      data={riskDistribution}
+                      data={risk_distribution}
                       cx="50%"
                       cy="50%"
                       innerRadius={60}
@@ -241,7 +244,7 @@ export default function AnalyticsPage() {
                       paddingAngle={2}
                       dataKey="value"
                     >
-                      {riskDistribution.map((entry, index) => (
+                      {risk_distribution.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={entry.color} />
                       ))}
                     </Pie>
@@ -257,7 +260,7 @@ export default function AnalyticsPage() {
                 </ResponsiveContainer>
               </div>
               <div className="flex justify-center gap-4 mt-4 text-sm text-gray-600 flex-wrap">
-                {riskDistribution.map((item) => (
+                {risk_distribution.map((item) => (
                   <span key={item.name} className="flex items-center gap-2">
                     <span
                       className="w-3 h-3 rounded"
@@ -272,7 +275,7 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Latency Trend */}
-        <div className="bg-white border border-gray-200 rounded-lg">
+        <div className="bg-white border border-gray-200 rounded-xs">
           <div className="p-5 border-b border-gray-200">
             <h2 className="font-semibold text-gray-900">
               Latency trend (24h)
@@ -284,7 +287,7 @@ export default function AnalyticsPage() {
           <div className="p-5">
             <div className="h-[200px]">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={latencyTrend}>
+                <LineChart data={latency_trend}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                   <XAxis
                     dataKey="hour"
@@ -331,7 +334,7 @@ export default function AnalyticsPage() {
 
         {/* Model Performance */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white border border-gray-200 rounded-lg">
+          <div className="bg-white border border-gray-200 rounded-xs">
             <div className="p-5 border-b border-gray-200">
               <h2 className="font-semibold text-gray-900">
                 Fraud model performance
@@ -342,43 +345,43 @@ export default function AnalyticsPage() {
             </div>
             <div className="p-5">
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-gray-50 rounded-xs">
                   <p className="text-sm text-gray-500">
                     ROC-AUC
                   </p>
                   <p className="text-2xl font-semibold text-gray-900 mt-1">
-                    {modelMetrics.rocAuc}
+                    {model_metrics.roc_auc}
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-gray-50 rounded-xs">
                   <p className="text-sm text-gray-500">
                     Precision
                   </p>
                   <p className="text-2xl font-semibold text-gray-900 mt-1">
-                    {(modelMetrics.precision * 100).toFixed(0)}%
+                    {(model_metrics.precision * 100).toFixed(0)}%
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-gray-50 rounded-xs">
                   <p className="text-sm text-gray-500">
                     Recall
                   </p>
                   <p className="text-2xl font-semibold text-gray-900 mt-1">
-                    {(modelMetrics.recall * 100).toFixed(0)}%
+                    {(model_metrics.recall * 100).toFixed(0)}%
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-gray-50 rounded-xs">
                   <p className="text-sm text-gray-500">
                     F1 Score
                   </p>
                   <p className="text-2xl font-semibold text-gray-900 mt-1">
-                    {modelMetrics.f1Score}
+                    {model_metrics.f1_score}
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-lg">
+          <div className="bg-white border border-gray-200 rounded-xs">
             <div className="p-5 border-b border-gray-200">
               <h2 className="font-semibold text-gray-900">
                 Sanctions screening
@@ -389,36 +392,36 @@ export default function AnalyticsPage() {
             </div>
             <div className="p-5">
               <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-gray-50 rounded-xs">
                   <p className="text-sm text-gray-500">
                     Precision@1
                   </p>
                   <p className="text-2xl font-semibold text-emerald-600 mt-1">
-                    {(sanctionsMetrics.precisionAt1 * 100).toFixed(1)}%
+                    {(sanctions_metrics.precision_at_1 * 100).toFixed(1)}%
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-gray-50 rounded-xs">
                   <p className="text-sm text-gray-500">
                     Average latency
                   </p>
                   <p className="text-2xl font-semibold text-gray-900 mt-1">
-                    {sanctionsMetrics.avgLatency}ms
+                    {sanctions_metrics.avg_latency_ms}ms
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-gray-50 rounded-xs">
                   <p className="text-sm text-gray-500">
                     Total screened
                   </p>
                   <p className="text-2xl font-semibold text-gray-900 mt-1">
-                    {sanctionsMetrics.totalScreened.toLocaleString()}
+                    {summary.total_screened.toLocaleString()}
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-lg">
+                <div className="p-4 bg-gray-50 rounded-xs">
                   <p className="text-sm text-gray-500">
                     Matches found
                   </p>
                   <p className="text-2xl font-semibold text-red-600 mt-1">
-                    {sanctionsMetrics.matchesFound}
+                    {summary.sanctions_hits}
                   </p>
                 </div>
               </div>
@@ -427,23 +430,23 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Performance Card */}
-        <div className="bg-white border border-gray-200 rounded-lg">
+        <div className="bg-white border border-gray-200 rounded-xs">
           <div className="p-5 border-b border-gray-200">
             <h2 className="font-semibold text-gray-900">
               System health
             </h2>
             <p className="text-sm text-gray-500 mt-0.5">
-              Average over the last 24 hours
+              Current system metrics
             </p>
           </div>
           <div className="divide-y divide-gray-200">
             <div className="p-4 flex items-center justify-between">
               <span className="text-sm text-gray-600">
-                API uptime
+                Total transactions
               </span>
               <span className="flex items-center gap-2 text-sm font-medium text-emerald-600">
                 <CheckCircle2 className="h-4 w-4" />
-                100.0000%
+                {summary.total_screened.toLocaleString()}
               </span>
             </div>
             <div className="p-4 flex items-center justify-between">
@@ -452,16 +455,16 @@ export default function AnalyticsPage() {
               </span>
               <span className="flex items-center gap-2 text-sm font-medium text-emerald-600">
                 <CheckCircle2 className="h-4 w-4" />
-                32ms
+                {summary.avg_latency_ms.toFixed(0)}ms
               </span>
             </div>
             <div className="p-4 flex items-center justify-between">
               <span className="text-sm text-gray-600">
-                Error rate
+                Fraud detection rate
               </span>
               <span className="flex items-center gap-2 text-sm font-medium text-emerald-600">
                 <CheckCircle2 className="h-4 w-4" />
-                0.02%
+                {summary.fraud_rate}%
               </span>
             </div>
           </div>

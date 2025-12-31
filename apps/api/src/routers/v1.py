@@ -9,6 +9,7 @@ from ..schemas.requests import (
     BatchRequest,
     BatchResponse,
     BatchResultItem,
+    AnalyticsResponse,
 )
 from ..services.fraud_model import fraud_model_service
 from ..services.sanctions import sanctions_service
@@ -186,3 +187,12 @@ async def batch_score_transactions(request: BatchRequest):
         total_processed=len(results),
         total_latency_ms=total_latency
     )
+
+
+@router.get("/analytics", response_model=AnalyticsResponse)
+async def get_analytics():
+    """
+    Get comprehensive analytics including transaction volume,
+    risk distribution, latency trends, and model performance metrics.
+    """
+    return await audit_service.get_analytics()

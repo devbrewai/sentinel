@@ -78,3 +78,53 @@ export interface BatchResponse {
   total_processed: number;
   total_latency_ms: number;
 }
+
+// Analytics types
+export interface AnalyticsSummary {
+  total_screened: number;
+  avg_latency_ms: number;
+  fraud_detected: number;
+  sanctions_hits: number;
+  fraud_rate: number;
+  sanctions_rate: number;
+}
+
+export interface DailyVolumeItem {
+  day: string;
+  transactions: number;
+  flagged: number;
+}
+
+export interface RiskDistributionItem {
+  name: string;
+  value: number;
+  color: string;
+  [key: string]: unknown;
+}
+
+export interface LatencyTrendItem {
+  hour: string;
+  p50: number;
+  p95: number;
+}
+
+export interface ModelMetrics {
+  roc_auc: number;
+  precision: number;
+  recall: number;
+  f1_score: number;
+}
+
+export interface SanctionsMetrics {
+  precision_at_1: number;
+  avg_latency_ms: number;
+}
+
+export interface AnalyticsResponse {
+  summary: AnalyticsSummary;
+  daily_volume: DailyVolumeItem[];
+  risk_distribution: RiskDistributionItem[];
+  latency_trend: LatencyTrendItem[];
+  model_metrics: ModelMetrics;
+  sanctions_metrics: SanctionsMetrics;
+}

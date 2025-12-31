@@ -3,6 +3,7 @@ import {
   ScoreResponse,
   BatchRequest,
   BatchResponse,
+  AnalyticsResponse,
 } from "@/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
@@ -67,6 +68,17 @@ export async function scoreBatchTransactions(
     },
     body: JSON.stringify(data),
   });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`API Error: ${response.status} ${errorText}`);
+  }
+
+  return await response.json();
+}
+
+export async function getAnalytics(): Promise<AnalyticsResponse> {
+  const response = await fetch(`${API_URL}/api/v1/analytics`);
 
   if (!response.ok) {
     const errorText = await response.text();
