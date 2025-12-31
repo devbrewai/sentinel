@@ -151,8 +151,8 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {/* Screened Card */}
           <div className="bg-white rounded-xs p-6 border border-gray-200 shadow-none flex flex-col">
-            <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center mb-4">
-              <RefreshCw className="h-5 w-5 text-blue-600" />
+            <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+              <RefreshCw className="h-5 w-5 text-gray-600" />
             </div>
             <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
               Screened
@@ -164,8 +164,8 @@ export default function Dashboard() {
 
           {/* Approved Card */}
           <div className="bg-white rounded-xs p-6 border border-gray-200 shadow-none flex flex-col">
-            <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center mb-4">
-              <CheckCircle2 className="h-5 w-5 text-green-600" />
+            <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+              <CheckCircle2 className="h-5 w-5 text-gray-600" />
             </div>
             <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
               Approved
@@ -177,8 +177,8 @@ export default function Dashboard() {
 
           {/* Flagged Card */}
           <div className="bg-white rounded-xs p-6 border border-gray-200 shadow-none flex flex-col">
-            <div className="h-10 w-10 rounded-full bg-red-100 flex items-center justify-center mb-4">
-              <AlertTriangle className="h-5 w-5 text-red-600" />
+            <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+              <AlertTriangle className="h-5 w-5 text-gray-600" />
             </div>
             <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
               Flagged
