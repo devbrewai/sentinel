@@ -242,7 +242,7 @@ export default function BatchPage() {
         {!results ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Upload Area */}
-            <div className="lg:col-span-2 bg-white border border-gray-200 rounded-lg">
+            <div className="lg:col-span-2 bg-white border border-gray-200 rounded-xs">
               <div className="p-5 border-b border-gray-200">
                 <h2 className="font-semibold text-gray-900">
                   Upload Transactions
@@ -256,7 +256,7 @@ export default function BatchPage() {
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
-                  className={`border-2 border-dashed rounded-lg p-10 text-center transition-colors ${
+                  className={`border-2 border-dashed rounded-xs p-10 text-center transition-colors ${
                     isDragging
                       ? "border-gray-400 bg-gray-50"
                       : "border-gray-200 hover:border-gray-300"
@@ -264,7 +264,7 @@ export default function BatchPage() {
                 >
                   {file ? (
                     <div className="space-y-4">
-                      <div className="w-12 h-12 mx-auto bg-emerald-50 rounded-lg flex items-center justify-center">
+                      <div className="w-12 h-12 mx-auto bg-emerald-50 rounded-xs flex items-center justify-center">
                         <FileSpreadsheet className="h-6 w-6 text-emerald-600" />
                       </div>
                       <div>
@@ -295,7 +295,7 @@ export default function BatchPage() {
                     </div>
                   ) : (
                     <div className="space-y-4">
-                      <div className="w-12 h-12 mx-auto bg-gray-100 rounded-lg flex items-center justify-center">
+                      <div className="w-12 h-12 mx-auto bg-gray-100 rounded-xs flex items-center justify-center">
                         <Upload className="h-6 w-6 text-gray-400" />
                       </div>
                       <div>
@@ -325,7 +325,7 @@ export default function BatchPage() {
             </div>
 
             {/* Format Info */}
-            <div className="bg-white border border-gray-200 rounded-lg">
+            <div className="bg-white border border-gray-200 rounded-xs">
               <div className="p-5 border-b border-gray-200">
                 <h2 className="font-semibold text-gray-900">CSV Format</h2>
               </div>
@@ -377,9 +377,9 @@ export default function BatchPage() {
           <>
             {/* Results Summary */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-white border border-gray-200 rounded-lg p-5">
+              <div className="bg-white border border-gray-200 rounded-xs p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-gray-100 rounded-lg">
+                  <div className="p-2 bg-gray-100 rounded-xs">
                     <ArrowRightLeft className="h-5 w-5 text-gray-600" />
                   </div>
                   <div>
@@ -390,9 +390,9 @@ export default function BatchPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white border border-gray-200 rounded-lg p-5">
+              <div className="bg-white border border-gray-200 rounded-xs p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-emerald-50 rounded-lg">
+                  <div className="p-2 bg-emerald-50 rounded-xs">
                     <CheckCircle2 className="h-5 w-5 text-emerald-600" />
                   </div>
                   <div>
@@ -403,9 +403,9 @@ export default function BatchPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white border border-gray-200 rounded-lg p-5">
+              <div className="bg-white border border-gray-200 rounded-xs p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-amber-50 rounded-lg">
+                  <div className="p-2 bg-amber-50 rounded-xs">
                     <Clock className="h-5 w-5 text-amber-600" />
                   </div>
                   <div>
@@ -416,9 +416,9 @@ export default function BatchPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white border border-gray-200 rounded-lg p-5">
+              <div className="bg-white border border-gray-200 rounded-xs p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-red-50 rounded-lg">
+                  <div className="p-2 bg-red-50 rounded-xs">
                     <AlertCircle className="h-5 w-5 text-red-600" />
                   </div>
                   <div>
@@ -432,7 +432,7 @@ export default function BatchPage() {
             </div>
 
             {/* Results Table */}
-            <div className="bg-white border border-gray-200 rounded-lg">
+            <div className="bg-white border border-gray-200 rounded-xs">
               <div className="p-5 border-b border-gray-200 flex items-center justify-between">
                 <div>
                   <h2 className="font-semibold text-gray-900">Results</h2>
