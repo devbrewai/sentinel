@@ -335,16 +335,16 @@ export default function BatchPage() {
                     Required columns:
                   </p>
                   <ul className="text-sm text-gray-600 space-y-1">
-                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-xs">
                       transaction_id
                     </li>
-                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-xs">
                       sender_name
                     </li>
-                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-xs">
                       TransactionAmt
                     </li>
-                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-xs">
                       card_id
                     </li>
                   </ul>
@@ -354,10 +354,10 @@ export default function BatchPage() {
                     Optional columns:
                   </p>
                   <ul className="text-sm text-gray-600 space-y-1">
-                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-xs">
                       sender_country
                     </li>
-                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-xs">
                       ProductCD
                     </li>
                   </ul>
