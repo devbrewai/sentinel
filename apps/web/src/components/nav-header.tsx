@@ -72,7 +72,7 @@ export function NavHeader() {
           {/* Logo */}
           <Link href="/" className="flex items-center group">
             <Image
-              src="/logo.svg"
+              src="/logos/logo.svg"
               alt="FraudGuard"
               width={100}
               height={100}
