@@ -96,7 +96,7 @@ export default function AnalyticsPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="bg-white border border-gray-200 rounded-xs p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-gray-100 rounded-xs">
+              <div className="p-2 bg-gray-100 rounded-full">
                 <Activity className="h-5 w-5 text-gray-600" />
               </div>
               <div>
@@ -112,7 +112,7 @@ export default function AnalyticsPage() {
 
           <div className="bg-white border border-gray-200 rounded-xs p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-gray-100 rounded-xs">
+              <div className="p-2 bg-gray-100 rounded-full">
                 <Clock className="h-5 w-5 text-gray-600" />
               </div>
               <div>
@@ -128,7 +128,7 @@ export default function AnalyticsPage() {
 
           <div className="bg-white border border-gray-200 rounded-xs p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-gray-100 rounded-xs">
+              <div className="p-2 bg-gray-100 rounded-full">
                 <ShieldAlert className="h-5 w-5 text-gray-600" />
               </div>
               <div>
@@ -147,7 +147,7 @@ export default function AnalyticsPage() {
 
           <div className="bg-white border border-gray-200 rounded-xs p-5">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-gray-100 rounded-xs">
+              <div className="p-2 bg-gray-100 rounded-full">
                 <ShieldCheck className="h-5 w-5 text-gray-600" />
               </div>
               <div>
@@ -165,9 +165,9 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        {/* Charts Row */}
+        {/* Charts row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Daily Volume */}
+          {/* Daily volume */}
           <div className="bg-white border border-gray-200 rounded-xs">
             <div className="p-5 border-b border-gray-200">
               <h2 className="font-semibold text-gray-900">
@@ -221,7 +221,7 @@ export default function AnalyticsPage() {
             </div>
           </div>
 
-          {/* Risk Distribution */}
+          {/* Risk cistribution */}
           <div className="bg-white border border-gray-200 rounded-xs">
             <div className="p-5 border-b border-gray-200">
               <h2 className="font-semibold text-gray-900">
@@ -274,7 +274,7 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        {/* Latency Trend */}
+        {/* Latency trend */}
         <div className="bg-white border border-gray-200 rounded-xs">
           <div className="p-5 border-b border-gray-200">
             <h2 className="font-semibold text-gray-900">
@@ -332,7 +332,7 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        {/* Model Performance */}
+        {/* Model performance */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="bg-white border border-gray-200 rounded-xs">
             <div className="p-5 border-b border-gray-200">
@@ -429,7 +429,7 @@ export default function AnalyticsPage() {
           </div>
         </div>
 
-        {/* Performance Card */}
+        {/* Performance card */}
         <div className="bg-white border border-gray-200 rounded-xs">
           <div className="p-5 border-b border-gray-200">
             <h2 className="font-semibold text-gray-900">
