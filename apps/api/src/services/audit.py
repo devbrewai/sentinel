@@ -12,7 +12,7 @@ class AuditLog(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     transaction_id = Column(String, index=True)
-    timestamp = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    timestamp = Column(DateTime(timezone=True), default=lambda: datetime.now(timezone.utc))
     input_payload = Column(JSON)
     risk_score = Column(Float)
     sanctions_match = Column(Boolean)
