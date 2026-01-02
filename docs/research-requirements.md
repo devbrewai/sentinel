@@ -1,6 +1,6 @@
 # Research Case Study Requirements
 
-**AI Fraud Detection & Sanctions Screening for Cross-Border Payments**
+**Sentinel: AI Fraud Detection & Sanctions Screening for Cross-Border Payments**
 
 ## Overview
 
@@ -125,7 +125,7 @@ The goal is to demonstrate practical ML engineering patterns, feature design, an
 ## Project Structure
 
 ```
-ai-fraud-detection-cross-border-payments/
+sentinel/
   ├── apps/
   │   ├── api/           # FastAPI scoring service
   │   └── web/           # Next.js demo UI

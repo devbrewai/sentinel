@@ -132,7 +132,7 @@ export function NavHeader() {
               </span>
             </div>
             <a
-              href="https://github.com/devbrewai/ai-fraud-detection-cross-border-payments"
+              href="https://github.com/devbrewai/sentinel"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-gray-900 transition-colors"

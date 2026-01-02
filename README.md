@@ -1,4 +1,4 @@
-# AI Fraud Detection & Sanctions Screening for Cross-Border Payments
+# Sentinel: AI Fraud Detection & Sanctions Screening for Cross-Border Payments
 
 ![AI Fraud Detection & Sanctions Screening for Cross-Border Payments](./public/og.png)
 
@@ -45,7 +45,7 @@ _This case study is in active development._
 ## Repo Structure
 
 ```
-ai-fraud-detection-cross-border-payments/
+sentinel/
   ├── apps/
   │   ├── api/           # FastAPI scoring service
   │   └── web/           # Next.js demo UI
@@ -64,8 +64,8 @@ ai-fraud-detection-cross-border-payments/
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/devbrewai/ai-fraud-detection-cross-border-payments.git
-cd ai-fraud-detection-cross-border-payments
+git clone https://github.com/devbrewai/sentinel.git
+cd sentinel
 ```
 
 ### 2. Setup environment

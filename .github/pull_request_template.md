@@ -1,4 +1,4 @@
-Before opening this Pull Request, please read the dedicated "Contributing" markdown file or your PR may be closed: https://github.com/devbrewai/ai-fraud-detection-cross-border-payments/blob/main/CONTRIBUTING.md
+Before opening this Pull Request, please read the dedicated "Contributing" markdown file or your PR may be closed: https://github.com/devbrewai/sentinel/blob/main/CONTRIBUTING.md
 
 If your PR conforms to our contribution guidelines, use this template to describe your changes.
 
