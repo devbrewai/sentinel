@@ -1,7 +1,5 @@
 # Sentinel: AI Fraud Detection & Sanctions Screening for Cross-Border Payments
 
-![Sentinel: AI Fraud Detection & Sanctions Screening for Cross-Border Payments](./public/og.png)
-
 An open-source research case study from [Devbrew](https://www.devbrew.ai) demonstrating AI fraud detection and sanctions screening (using OFAC lists) for cross-border payments.
 
 **[Read the full case study →](https://www.devbrew.ai/case-studies/sentinel)**
