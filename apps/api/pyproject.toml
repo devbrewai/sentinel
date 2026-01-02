@@ -1,5 +1,5 @@
 [project]
-name = "fraud-api"
+name = "sentinel-api"
 version = "0.1.0"
 description = "FastAPI service for real-time fraud detection and sanctions screening"
 requires-python = ">=3.11"

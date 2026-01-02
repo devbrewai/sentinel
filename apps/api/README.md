@@ -1,16 +1,16 @@
-# Fraud Detection API
+# Sentinel API
 
 FastAPI service for real-time fraud scoring and sanctions screening.
 
 ## Features
 
-- **Fraud Scoring:** LightGBM model inference on 400+ features
-- **Sanctions Screening:** Fuzzy matching against OFAC SDN/Consolidated lists (~40k names)
-- **Real-time Velocity Features:** Redis-backed transaction counters
-- **Audit Logging:** Async PostgreSQL logging for compliance
-- **Low Latency:** <30ms p95 end-to-end
+- **Fraud scoring:** LightGBM model inference on 400+ features
+- **Sanctions screening:** Fuzzy matching against OFAC SDN/Consolidated lists (~40k names)
+- **Real-time velocity features:** Redis-backed transaction counters
+- **Audit logging:** Async PostgreSQL logging for compliance
+- **Low latency:** <30ms p95 end-to-end
 
-## Quick Start
+## Quick start
 
 ### Prerequisites
 
@@ -18,14 +18,14 @@ FastAPI service for real-time fraud scoring and sanctions screening.
 - Docker & Docker Compose
 - Access to `packages/models/` artifacts (generated from notebooks)
 
-### 1. Start Infrastructure
+### 1. Start infrastructure
 
 ```bash
 cd apps/api
 docker-compose up -d redis db
 ```
 
-### 2. Configure Environment
+### 2. Configure environment
 
 Copy the example environment file:
 
@@ -71,24 +71,26 @@ cd apps/api
 docker-compose up --build
 ```
 
-### Configuration Note (Important)
+### Configuration note (important)
 
 The `docker-compose.yml` file is configured to **ignore your local `.env` file** for critical infrastructure connections (`DATABASE_URL`, `REDIS_URL`) to prevent conflicts between `localhost` (host machine) and internal container hostnames (`db`, `redis`).
 
-- **Local Dev:** Uses `.env` (connecting to `localhost`).
+- **Local dev:** Uses `.env` (connecting to `localhost`).
 - **Docker:** Uses hardcoded internal defaults in `docker-compose.yml`.
 
 **Troubleshooting:**
 If you see `ConnectionRefusedError` inside Docker, ensure you haven't modified `docker-compose.yml` to force usage of local environment variables that point to `localhost`.
 
-## API Endpoints
+## API endpoints
 
-| Method | Path            | Description         |
-| ------ | --------------- | ------------------- |
-| `GET`  | `/health`       | Health check        |
-| `POST` | `/api/v1/score` | Score a transaction |
+| Method | Path                | Description                   |
+| ------ | ------------------- | ----------------------------- |
+| `GET`  | `/health`           | Health check                  |
+| `POST` | `/api/v1/score`     | Score a transaction           |
+| `POST` | `/api/v1/batch`     | Score a batch of transactions |
+| `GET`  | `/api/v1/analytics` | Get comprehensive analytics   |
 
-### Example Request
+### Example request
 
 ```bash
 curl -X POST http://localhost:8000/api/v1/score \
@@ -103,7 +105,7 @@ curl -X POST http://localhost:8000/api/v1/score \
   }'
 ```
 
-### Example Response
+### Example response
 
 ```json
 {
@@ -116,7 +118,7 @@ curl -X POST http://localhost:8000/api/v1/score \
 }
 ```
 
-## Project Structure
+## Project structure
 
 ```
 apps/api/
@@ -141,13 +143,13 @@ apps/api/
 
 ## Testing
 
-### Run Unit Tests
+### Run unit tests
 
 ```bash
 python apps/api/tests/test_score.py
 ```
 
-### Verified Rejection Test
+### Verified rejection test
 
 To verify the full fraud/sanctions rejection logic, you can run this known positive match case:
 
@@ -164,7 +166,7 @@ curl -X POST http://localhost:8000/api/v1/score \
   }'
 ```
 
-**Expected Response:**
+**Expected response:**
 
 ```json
 {
@@ -182,14 +184,14 @@ curl -X POST http://localhost:8000/api/v1/score \
 | Model inference     | <50ms  | <10ms    |
 | Sanctions screening | <50ms  | ~25ms    |
 
-## Environment Variables
+## Environment variables
 
-| Variable                | Description                       | Default                       |
-| ----------------------- | --------------------------------- | ----------------------------- |
-| `REDIS_URL`             | Redis connection string           | `redis://localhost:6379/0`    |
-| `DATABASE_URL`          | PostgreSQL connection string      | Required                      |
-| `MODEL_PATH`            | Path to LightGBM model file       | Required                      |
-| `SCREENER_PATH`         | Path to sanctions screener pickle | Required                      |
-| `FEATURE_REGISTRY_PATH` | Path to feature registry JSON     | Required                      |
-| `API_V1_STR`            | API version prefix                | `/api/v1`                     |
-| `PROJECT_NAME`          | Project name for OpenAPI docs     | `Devbrew Fraud Detection API` |
+| Variable                | Description                       | Default                    |
+| ----------------------- | --------------------------------- | -------------------------- |
+| `REDIS_URL`             | Redis connection string           | `redis://localhost:6379/0` |
+| `DATABASE_URL`          | PostgreSQL connection string      | Required                   |
+| `MODEL_PATH`            | Path to LightGBM model file       | Required                   |
+| `SCREENER_PATH`         | Path to sanctions screener pickle | Required                   |
+| `FEATURE_REGISTRY_PATH` | Path to feature registry JSON     | Required                   |
+| `API_V1_STR`            | API version prefix                | `/api/v1`                  |
+| `PROJECT_NAME`          | Project name for OpenAPI docs     | `Sentinel API`             |
