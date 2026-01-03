@@ -19,6 +19,7 @@ services:
       # Pass through other variables
       - MODEL_PATH=${MODEL_PATH:-packages/models/fraud_baseline_v1.txt}
       - SCREENER_PATH=${SCREENER_PATH:-packages/models/sanctions_screener.pkl}
+      - EXPLAINER_PATH=${EXPLAINER_PATH:-packages/models/fraud_baseline_v1_explainer.pkl}
       - FEATURE_REGISTRY_PATH=${FEATURE_REGISTRY_PATH:-data_catalog/processed/feature_registry.json}
       - API_V1_STR=${API_V1_STR:-/api/v1}
       - PROJECT_NAME=${PROJECT_NAME:-Sentinel API}
