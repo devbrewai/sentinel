@@ -6,7 +6,7 @@ This project is maintained by [Devbrew](https://devbrew.ai/) as an **open-source
 
 Following these guidelines helps us respect everyone’s time. In return, we’ll do our best to review issues, assess changes, and help finalize pull requests.
 
-## What We’re Looking For
+## What we're looking for
 
 We currently prioritize contributions in these areas:
 
@@ -16,14 +16,14 @@ We currently prioritize contributions in these areas:
 
 If you want to propose a **new feature** or significant change, please open an issue first and discuss before starting work. Unsolicited large PRs may be closed if they don’t align with project goals.
 
-## Ground Rules
+## Ground rules
 
 - Be respectful and inclusive. We follow the [Contributor Covenant](https://www.contributor-covenant.org/).
 - Keep PRs focused. Multiple unrelated fixes should be submitted separately.
 - Any changes must not violate dataset licenses (e.g., **no redistribution of IEEE-CIS data or trained models**).
 - Ensure your code runs without breaking existing functionality. Add tests or notebook checks where relevant.
 
-## Your First Contribution
+## Your first contribution
 
 If you’re new, here are good ways to get started:
 
@@ -33,10 +33,10 @@ If you’re new, here are good ways to get started:
 
 Resources for first-time contributors:
 
-- [How to Contribute to Open Source on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github)
-- [First Timers Only](https://www.firsttimersonly.com/)
+- [How to contribute to open source on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github)
+- [First timers only](https://www.firsttimersonly.com/)
 
-## Development Workflow
+## Development workflow
 
 1. Fork the repository and create a topic branch (e.g., `fix/data-catalog` or `feat/shap-explainability`).
 2. Make your changes, keeping commits atomic and descriptive.
@@ -51,7 +51,7 @@ Resources for first-time contributors:
    - Make sure your branch is up-to-date with main and that you have resolved merge conflicts.
    - Mark the PR as Ready for review only when you believe it is in a merge-able state.
 
-## Bug Reports
+## Bug reports
 
 If you discover a bug:
 
@@ -63,7 +63,7 @@ If you discover a bug:
 
 **Security issues** (e.g., exposed credentials, vulnerable dependencies) should be reported via GitHub Issues or emailed to **hello@devbrew.ai**.
 
-## Feature Requests
+## Feature requests
 
 If you’d like to propose a new feature:
 
@@ -71,7 +71,7 @@ If you’d like to propose a new feature:
 - Explain the use case, why it’s needed, and how it might work.
 - Keep in mind this is a **research case study** - not all production-style features are in scope.
 
-## Code Review Process
+## Code review process
 
 - A maintainer will be assigned as reviewer.
 - Expect feedback and possibly requests for changes — nothing personal, we care about consistency and maintainability.
@@ -82,7 +82,7 @@ If you’d like to propose a new feature:
 All communication happens via GitHub Issues and Discussions.  
 Please be patient — maintainers review contributions as bandwidth allows.
 
-## Legal / Licensing
+## Legal / licensing
 
 - This project is licensed under **Apache 2.0**.
 - The **IEEE-CIS dataset** is licensed for non-commercial research use only. Do not commit or redistribute it.
@@ -90,11 +90,11 @@ Please be patient — maintainers review contributions as bandwidth allows.
 
 By contributing, you agree your contributions will be licensed under the Apache 2.0 License.
 
-## Git Commit Guidelines
+## Git commit guidelines
 
 We follow the **Angular commit message conventions**. This leads to more readable messages and a consistent history.
 
-### Commit Message Format
+### Commit message format
 
 Each commit message consists of a header, a body, and a footer:
 
@@ -112,7 +112,7 @@ Each commit message consists of a header, a body, and a footer:
   - subject: a short description
 - Lines should not exceed 100 characters.
 
-### Types
+### Types of commits
 
 Must be one of the following:
 
