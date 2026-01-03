@@ -62,7 +62,7 @@ curl http://localhost:8000/health
 
 ## Docker
 
-### Build and Run
+### Build and run
 
 Build and run the full stack (API + Redis + Postgres):
 
@@ -71,7 +71,7 @@ cd apps/api
 docker-compose up --build
 ```
 
-### Configuration note (important)
+### Configuration note
 
 The `docker-compose.yml` file is configured to **ignore your local `.env` file** for critical infrastructure connections (`DATABASE_URL`, `REDIS_URL`) to prevent conflicts between `localhost` (host machine) and internal container hostnames (`db`, `redis`).
 
