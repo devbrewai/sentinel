@@ -79,9 +79,8 @@ packages = ["packages"]
 dev-dependencies = []
 package = false  # This is an application, not a library
 
-# Uncomment when apps/ and packages/ have code:
-# [tool.uv.workspace]
-# members = ["apps/*", "packages/*"]
+[tool.uv.workspace]
+members = ["apps/api"]
 
 [tool.ruff]
 line-length = 100
