@@ -95,7 +95,8 @@ uv pip install -e .         # Install from pyproject.toml
 ### 3. Run API locally
 
 ```bash
-uvicorn apps.api.main:app --reload
+cd apps/api
+uvicorn src.main:app --reload
 ```
 
 ### 4. Run frontend
