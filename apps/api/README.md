@@ -29,7 +29,11 @@ docker-compose up -d redis db
 
 Copy the example environment file:
 
-cp .env.example .envThen edit `.env` with your local settings.
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` with your local settings.
 
 ### 3. Run the API
 
