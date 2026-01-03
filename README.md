@@ -95,9 +95,14 @@ uv pip install -e .         # Install from pyproject.toml
 ### 3. Run API locally
 
 ```bash
-cd apps/api
-uvicorn src.main:app --reload
+# Start infrastructure (Redis & Postgres)
+make docker-up
+
+# Run the API
+make run-api
 ```
+
+Run `make help` to see all available commands.
 
 ### 4. Run frontend
 
