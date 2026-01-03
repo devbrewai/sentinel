@@ -222,7 +222,7 @@ data_catalog/ofac/consolidated/*.xml
 data_catalog/processed/train_cleaned.parquet
 data_catalog/processed/train_features.parquet
 data_catalog/processed/splits/
-data_catalog/processed/feature_registry.json
+!data_catalog/processed/feature_registry.json
 data_catalog/processed/training_data_manifest.json
 data_catalog/processed/feature_engineering_metadata.json
 data_catalog/processed/dropped_columns.json
