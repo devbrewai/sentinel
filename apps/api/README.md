@@ -37,14 +37,13 @@ Then edit `.env` with your local settings.
 
 ### 3. Run the API
 
-From the **`apps/api` directory**:
+From the **project root**:
 
 ```bash
-cd apps/api
-uvicorn src.main:app --reload
+make run-api
 ```
 
-Or from the project root:
+Or manually:
 
 ```bash
 PYTHONPATH=apps/api uvicorn src.main:app --reload
@@ -76,6 +75,14 @@ The `docker-compose.yml` file is configured to **ignore your local `.env` file**
 
 **Troubleshooting:**
 If you see `ConnectionRefusedError` inside Docker, ensure you haven't modified `docker-compose.yml` to force usage of local environment variables that point to `localhost`.
+
+## API documentation
+
+Once the API is running, interactive documentation is available at:
+
+- **Swagger UI:** [http://localhost:8000/docs](http://localhost:8000/docs) - Interactive API explorer
+- **ReDoc:** [http://localhost:8000/redoc](http://localhost:8000/redoc) - Alternative documentation view
+- **OpenAPI JSON:** [http://localhost:8000/api/v1/openapi.json](http://localhost:8000/api/v1/openapi.json) - Raw schema
 
 ## API endpoints
 
