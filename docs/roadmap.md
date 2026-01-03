@@ -1,16 +1,16 @@
 # Research Roadmap
 
-**AI Fraud Detection & Sanctions Screening for Cross-Border Payments**
+**Sentinel: AI fraud detection & sanctions screening for cross-border payments**
 
 This roadmap outlines the phases, tasks, and success criteria for building this research case study from data preparation through final documentation.
 
-**Status Legend:** 🟢 Complete | 🟡 In Progress | ⚪ Not Started
+**Status legend:** 🟢 Complete | 🟡 In progress | ⚪ Not started
 
-**Documentation Structure:** This roadmap tracks project status only. For detailed technical findings, performance metrics, and design decisions, see the [findings/](findings/) directory.
+**Documentation structure:** This roadmap tracks project status only. For detailed technical findings, performance metrics, and design decisions, see the [findings/](findings/) directory.
 
-Last Updated: 2025-12-04
+Last updated: 2026-01-03
 
-## Phase 1: Data Preparation & Exploration
+## Phase 1: Data preparation & exploration
 
 **Status:** 🟢 Complete
 
@@ -32,7 +32,7 @@ Last Updated: 2025-12-04
 - [x] Merge and prepare final training dataset
 - [x] Save processed features to disk
 
-**Success Criteria:**
+**Success criteria:**
 
 - [x] All datasets loaded and validated
 - [x] Data quality issues documented
@@ -46,9 +46,9 @@ Last Updated: 2025-12-04
 - [x] Data quality validation suite
 - [x] Comprehensive findings documentation
 
-**Detailed Findings:** See [Phase 1 Findings](findings/data-exploration-notes.md) for technical insights, feature engineering decisions, and production considerations.
+**Detailed findings:** See [Phase 1 findings](findings/data-exploration-notes.md) for technical insights, feature engineering decisions, and production considerations.
 
-## Phase 2: Fraud Model Training
+## Phase 2: Fraud model training
 
 **Status:** 🟢 Complete
 
@@ -71,7 +71,7 @@ Last Updated: 2025-12-04
 - [x] Save model artifacts (baseline + evaluation + calibration + explainability)
 - [x] Document model performance and limitations
 
-**Success Criteria:**
+**Success criteria:**
 
 - [x] ROC-AUC ≥ 0.85 on test set (achieved 0.8861)
 - [x] PR-AUC ≥ 0.35 on test set (achieved 0.4743)
@@ -89,9 +89,9 @@ Last Updated: 2025-12-04
 - [x] Probability calibration (isotonic regression, ECE=0.0050, 96.8% improvement)
 - [x] SHAP explainability (TreeExplainer, 10K sample, <10ms inference overhead)
 
-**Detailed Findings:** See [Phase 2 Findings](findings/model-training-notes.md) for performance metrics, cost analysis, hyperparameter tuning investigation, probability calibration results, SHAP explainability analysis, and model selection rationale.
+**Detailed findings:** See [Phase 2 findings](findings/model-training-notes.md) for performance metrics, cost analysis, hyperparameter tuning investigation, probability calibration results, SHAP explainability analysis, and model selection rationale.
 
-## Phase 3: Sanctions Screening Module
+## Phase 3: Sanctions screening module
 
 **Status:** 🟢 Complete
 
@@ -116,7 +116,7 @@ Last Updated: 2025-12-04
 - [x] Implement Inference Wrapper (SanctionsScreener)
 - [x] Save final artifacts (Screener pickle, Metadata JSON)
 
-**Success Criteria:**
+**Success criteria:**
 
 - [x] Fuzzy matching working with confidence scores
 - [x] Country/program filters implemented (date filter not applicable)
@@ -126,7 +126,7 @@ Last Updated: 2025-12-04
 - [x] Matching accuracy Recall@top3 ≥ 98% (achieved: 98.0%)
 - [x] Production artifacts saved and versioned
 
-## Phase 4: API Service & Infrastructure
+## Phase 4: API service & infrastructure
 
 **Status:** 🟢 Complete
 
@@ -143,7 +143,7 @@ Last Updated: 2025-12-04
 - [x] Benchmark end-to-end latency
 - [x] Write API tests
 
-**Success Criteria:**
+**Success criteria:**
 
 - [x] API returns risk_score, top_features, sanctions_match
 - [x] End-to-end latency ≤ 200ms p95 (Achieved: ~30ms)
@@ -166,7 +166,7 @@ Last Updated: 2025-12-04
 - [x] Test end-to-end flow
 - [x] Deploy demo (Ready for Vercel)
 
-**Success Criteria:**
+**Success criteria:**
 
 - [x] Working demo UI with real-time scoring
 - [x] All visualizations functional
@@ -174,26 +174,34 @@ Last Updated: 2025-12-04
 
 ## Phase 6: Documentation & Case Study Summary
 
-**Status:** 🟡 In Progress
+**Status:** 🟢 Complete
 
 ### Tasks
 
-- [ ] Document methodology in notebooks
-- [ ] Write case study summary with findings
-- [ ] Document limitations and future work
-- [ ] Create architecture diagrams
-- [ ] Write deployment guide
-- [ ] Update README with final results
-- [ ] Verify all dataset attributions and licenses
+- [x] Document methodology in notebooks
+- [x] Write case study summary with findings
+- [x] Document limitations and future work
+- [x] Create architecture diagrams (documented in findings)
+- [x] Write deployment guide (AWS deployment guide)
+- [x] Update README with final results
+- [x] Verify all dataset attributions and licenses
 
 **Success Criteria:**
 
-- [ ] Complete documentation of approach
-- [ ] Case study summary published
-- [ ] Reproducible setup instructions
-- [ ] All compliance requirements met
+- [x] Complete documentation of approach
+- [x] Case study summary published
+- [x] Reproducible setup instructions
+- [x] All compliance requirements met
 
-## Overall Success Criteria
+**Deliverables:**
+
+- [x] Case study summary with metrics and findings
+- [x] Phase-by-phase technical findings documentation
+- [x] AWS deployment guide
+- [x] CLAUDE.md for AI-assisted development
+- [x] Makefile for common development tasks
+
+## Overall success criteria
 
 - [x] Fraud model ROC-AUC ≥ 0.85 (achieved 0.8861)
 - [x] Fraud model PR-AUC ≥ 0.35 (achieved 0.4743)
@@ -208,23 +216,27 @@ Last Updated: 2025-12-04
 - [x] Working demo with all components integrated
 - [x] IEEE-CIS license compliance verified
 
-## Next Steps
+## Project status
 
-**Current Focus:** Phase 6 (Documentation)
+**All phases complete**
 
-**Recent Completion:**
+This research case study has achieved all success criteria across all 6 phases:
 
-- **Phase 5: Demo UI** (Complete ✅)
-  - [x] Next.js dashboard built
-  - [x] Real-time API integration
-  - [x] Visualizations for Risk & Sanctions
-  - [x] Interactive transaction form
+- **Phase 1:** Data preparation with 429 engineered features
+- **Phase 2:** Fraud model exceeding all targets (ROC-AUC 0.8861, PR-AUC 0.4743)
+- **Phase 3:** Sanctions screening with 97.5% precision and <50ms latency
+- **Phase 4:** FastAPI service with ~30ms end-to-end latency
+- **Phase 5:** Production-grade Next.js UI with batch processing and analytics
+- **Phase 6:** Comprehensive documentation and case study summary
 
-**Immediate Actions:**
+**For detailed technical insights:** See [Phase 1 findings](findings/data-exploration-notes.md), [Phase 2 findings](findings/model-training-notes.md), [Phase 3 findings](findings/sanctions-screening-notes.md), and [Phase 4 findings](findings/api-implementation-notes.md).
 
-1. **Phase 6: Final Documentation** (~3-4 hours)
-   - [ ] Architecture diagrams
-   - [ ] Deployment guide
-   - [ ] Final README updates
+## Future enhancements (backlog)
 
-**For detailed progress and technical insights:** See [Phase 1 Findings](findings/data-exploration-notes.md), [Phase 2 Findings](findings/model-training-notes.md), [Phase 3 Findings](findings/sanctions-screening-notes.md), and [Phase 4 Findings](findings/api-implementation-notes.md).
+The following could be added in future iterations:
+
+- Geographic risk heatmap visualization
+- Real-time WebSocket updates for transaction monitoring
+- Dark mode toggle for the UI
+- Additional model architectures (neural networks, ensemble methods)
+- Integration with additional sanctions lists (EU, UN)
