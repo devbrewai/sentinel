@@ -1,5 +1,5 @@
 [project]
-name = "devbrew-payments-fraud-sanctions"
+name = "sentinel"
 version = "0.1.0"
 description = "Production-grade AI fraud detection and sanctions screening for cross-border payments"
 readme = "README.md"
