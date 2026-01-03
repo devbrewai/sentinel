@@ -11,6 +11,34 @@ interface ComplianceReportProps {
   response: ScoreResponse;
 }
 
+// Convert SVG to base64 PNG for PDF embedding
+async function svgToBase64Png(
+  svgPath: string,
+  width: number,
+  height: number
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.crossOrigin = "anonymous";
+
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        reject(new Error("Failed to get canvas context"));
+        return;
+      }
+      ctx.drawImage(img, 0, 0, width, height);
+      resolve(canvas.toDataURL("image/png"));
+    };
+
+    img.onerror = () => reject(new Error("Failed to load SVG"));
+    img.src = svgPath;
+  });
+}
+
 // Human-readable feature name mapping
 const FEATURE_LABELS: Record<string, string> = {
   TransactionAmt: "Transaction Amount",
@@ -43,10 +71,7 @@ function generateReportId(): string {
   return `RPT-${timestamp}-${random}`;
 }
 
-export function ComplianceReport({
-  request,
-  response,
-}: ComplianceReportProps) {
+export function ComplianceReport({ request, response }: ComplianceReportProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
 
@@ -62,29 +87,40 @@ export function ComplianceReport({
 
       let yPos = 20;
 
-      // Header
-      doc.setFontSize(20);
-      doc.setFont("helvetica", "bold");
-      doc.text("Sentinel AI", 20, yPos);
+      // Header with logo
+      try {
+        const logoBase64 = await svgToBase64Png("/logos/logo.svg", 220, 43);
+        // Scale logo to fit nicely (width ~55mm, height proportional)
+        const logoWidth = 55;
+        const logoHeight = (43 / 220) * logoWidth;
+        doc.addImage(logoBase64, "PNG", 20, yPos - 5, logoWidth, logoHeight);
+        yPos += logoHeight + 2;
+      } catch {
+        // Fallback to text if logo fails to load
+        doc.setFontSize(20);
+        doc.setFont("helvetica", "bold");
+        doc.text("Sentinel", 20, yPos);
+        yPos += 7;
+      }
 
       doc.setFontSize(10);
       doc.setFont("helvetica", "normal");
       doc.setTextColor(100);
-      doc.text("Compliance Screening Report", 20, yPos + 7);
+      doc.text("Compliance Screening Report", 20, yPos);
 
       // Report ID and timestamp on the right
       doc.setFontSize(9);
-      doc.text(`Report ID: ${reportId}`, pageWidth - 20, yPos, {
+      doc.text(`Report ID: ${reportId}`, pageWidth - 20, yPos - 7, {
         align: "right",
       });
       doc.text(
         `Generated: ${new Date(generatedAt).toLocaleString()}`,
         pageWidth - 20,
-        yPos + 5,
+        yPos - 2,
         { align: "right" }
       );
 
-      yPos += 20;
+      yPos += 10;
 
       // Horizontal line
       doc.setDrawColor(200);
@@ -203,11 +239,14 @@ export function ComplianceReport({
 
         response.top_features.slice(0, 5).forEach((feature, idx) => {
           const contribution = feature.contribution;
-          const direction = contribution > 0 ? "↑ increases" : "↓ decreases";
+          const direction =
+            contribution > 0 ? "(+) increases" : "(-) decreases";
           const absContrib = Math.abs(contribution).toFixed(2);
 
           doc.text(
-            `${idx + 1}. ${getFeatureLabel(feature.name)}: ${direction} risk by ${absContrib}`,
+            `${idx + 1}. ${getFeatureLabel(
+              feature.name
+            )}: ${direction} risk by ${absContrib}`,
             30,
             yPos
           );
@@ -244,7 +283,7 @@ export function ComplianceReport({
 
           doc.setFont("helvetica", "normal");
           response.sanctions_details.top_matches.forEach((match, idx) => {
-            const matchStatus = match.is_match ? "⚠ MATCH" : "○ No match";
+            const matchStatus = match.is_match ? "[!] MATCH" : "[x] No match";
             doc.text(
               `${idx + 1}. ${match.match_name} - Score: ${(
                 match.score * 100
@@ -286,18 +325,29 @@ export function ComplianceReport({
       doc.setFontSize(8);
       doc.setTextColor(120);
       doc.text(
-        "This report is generated automatically by Sentinel AI for compliance and audit purposes.",
+        "This report is generated automatically by Sentinel for compliance and audit purposes.",
         20,
         yPos
       );
       yPos += 4;
       doc.text(
-        "Screening includes fraud risk scoring via ML model and sanctions screening against OFAC SDN/Consolidated lists.",
+        "Screening includes fraud risk scoring (LightGBM + SHAP) and sanctions screening against OFAC SDN/Consolidated lists.",
+        20,
+        yPos
+      );
+      yPos += 4;
+      doc.text(
+        "For questions about this report, contact your compliance team.",
         20,
         yPos
       );
       yPos += 6;
-      doc.text(`Report ID: ${reportId}`, 20, yPos);
+      doc.setTextColor(80);
+      doc.text(
+        `Report ID: ${reportId} | Powered by Sentinel - devbrew.ai`,
+        20,
+        yPos
+      );
 
       // Save the PDF
       const filename = `compliance-report-${response.transaction_id}-${
@@ -341,4 +391,3 @@ export function ComplianceReport({
     </Button>
   );
 }
-
