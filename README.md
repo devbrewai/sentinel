@@ -1,8 +1,8 @@
-# Sentinel: AI Fraud Detection & Sanctions Screening for Cross-Border Payments
+# Sentinel: AI fraud detection & sanctions screening for cross-border payments
 
 An open-source research case study from [Devbrew](https://www.devbrew.ai) demonstrating AI fraud detection and sanctions screening (using OFAC lists) for cross-border payments.
 
-**[Read the full case study →](https://www.devbrew.ai/case-studies/sentinel)**
+**[Read case study summary →](https://www.devbrew.ai/case-studies/sentinel)**
 
 This reference pipeline combines public datasets (IEEE-CIS, PaySim, OFAC) with modern ML and API tooling to:
 
@@ -10,14 +10,14 @@ This reference pipeline combines public datasets (IEEE-CIS, PaySim, OFAC) with m
 - Screen transaction parties against the **OFAC Sanctions Lists** with fuzzy-matching techniques
 - Deliver explainable fraud risk scores in real time, with a latency target of **sub-200ms**
 
-**Planned deliverables:**
+**Deliverables:**
 
 - Notebooks for building and training fraud detection models and sanctions screeners
 - A FastAPI service for real-time model inference
 - A demo UI with fraud scores and explainability outputs
 - Documentation and reference architecture
 
-_This case study is in active development._
+_Live demo available at [sentinel.devbrew.ai](https://sentinel.devbrew.ai)._
 
 > [!WARNING] > **For research/educational use only**
 >
@@ -26,7 +26,7 @@ _This case study is in active development._
 
 **License:** Apache 2.0
 
-## Data Sources
+## Data sources
 
 - **Fraud detection**
   - [IEEE-CIS e-commerce fraud dataset](https://www.kaggle.com/c/ieee-fraud-detection) - research only (non-commercial license)
@@ -34,13 +34,13 @@ _This case study is in active development._
 - **Sanctions screening**
   - [OFAC SDN and Consolidated Lists](https://sanctionslist.ofac.treas.gov/Home) - public domain
 
-## Tech Stack
+## Tech stack
 
 - **Backend**: FastAPI, Python, LightGBM/XGBoost, Redis, PostgreSQL
 - **Frontend**: Next.js, Tailwind, Vercel
 - **Hosting**: Fly.io or Render (API), Vercel (UI) or any cloud service provider (e.g. AWS, GCP, Azure, DigitalOcean, Heroku, etc.)
 
-## Repo Structure
+## Repo structure
 
 ```
 sentinel/
@@ -114,17 +114,17 @@ npm run dev
 
 ## Demo
 
-- Video walkthrough: _planned_
-- Optional live demo endpoint (rate-limited): _planned_
+- Video walkthrough: [coming soon]
+- Live demo endpoint (rate-limited): [sentinel.devbrew.ai](https://sentinel.devbrew.ai)
 
 ## Documentation
 
-### Project Planning
+### Project planning
 
 - [Research Requirements](./docs/research-requirements.md) — detailed case study specifications
 - [Roadmap](./docs/roadmap.md) — project phases and success criteria
 
-### Technical Findings
+### Technical findings
 
 - [Phase 1: Data Exploration](./docs/findings/data-exploration-notes.md) — dataset analysis, feature engineering insights
 - [Phase 2: Model Training](./docs/findings/model-training-notes.md) — performance metrics, cost optimization, hyperparameter tuning
