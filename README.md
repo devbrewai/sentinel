@@ -2,7 +2,7 @@
 
 An open-source research case study from [Devbrew](https://www.devbrew.ai) demonstrating AI fraud detection and sanctions screening (using OFAC lists) for cross-border payments.
 
-**[Read case study →](https://www.devbrew.ai/case-studies/sentinel)**
+**[Read full case study →](https://www.devbrew.ai/case-studies/sentinel)**
 
 This reference pipeline combines public datasets (IEEE-CIS, PaySim, OFAC) with modern ML and API tooling to:
 
@@ -17,8 +17,6 @@ This reference pipeline combines public datasets (IEEE-CIS, PaySim, OFAC) with m
 - A demo UI with fraud scores and explainability outputs
 - Documentation and reference architecture
 
-_Live demo available at [sentinel.devbrew.ai](https://sentinel.devbrew.ai)._
-
 > [!WARNING]
 >
 > **For research/educational use only**
@@ -27,6 +25,14 @@ _Live demo available at [sentinel.devbrew.ai](https://sentinel.devbrew.ai)._
 > Production deployments require retraining on proprietary or licensed datasets.
 
 **License:** Apache 2.0
+
+## Demo
+
+**Live demo:** [sentinel.devbrew.ai](https://sentinel.devbrew.ai)
+
+**Video walkthrough:** [coming soon]
+
+**Demo note:** The live demo computes full SHAP explanations for every transaction to demonstrate model transparency. This adds ~1-1.5s overhead for explainability generation. The underlying API achieves <200ms inference when explainability is pre-computed or sampled (standard production pattern).
 
 ## Data sources
 
@@ -39,7 +45,7 @@ _Live demo available at [sentinel.devbrew.ai](https://sentinel.devbrew.ai)._
 ## Tech stack
 
 - **Backend**: FastAPI, Python, LightGBM/XGBoost, Redis, PostgreSQL
-- **Frontend**: Next.js, Tailwind, Vercel
+- **Frontend**: Next.js, Tailwind CSS, Recharts
 - **Hosting**: Render (API), Vercel (UI)
 
 ## Repo structure
@@ -114,11 +120,6 @@ npm install
 npm run dev
 ```
 
-## Demo
-
-- Video walkthrough: [coming soon]
-- Live demo endpoint (rate-limited): [sentinel.devbrew.ai](https://sentinel.devbrew.ai)
-
 ## Documentation
 
 ### Project planning
@@ -131,10 +132,7 @@ npm run dev
 - [Phase 1: Data exploration](./docs/findings/data-exploration-notes.md) — dataset analysis, feature engineering insights
 - [Phase 2: Model training](./docs/findings/model-training-notes.md) — performance metrics, cost optimization, hyperparameter tuning
 - [Phase 3: Sanctions screening](./docs/findings/sanctions-screening-notes.md) — fuzzy matching implementation, blocking strategies, and performance evaluation
-
-<!-- ### Results
-
-- [Case Study Summary]: _planned_ "pending final results validation" -->
+- [Phase 4: API implementation](./docs/findings/api-implementation-notes.md) — FastAPI service architecture and performance optimization
 
 ## Disclaimer
 
