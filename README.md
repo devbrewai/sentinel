@@ -2,7 +2,7 @@
 
 An open-source research case study from [Devbrew](https://www.devbrew.ai) demonstrating AI fraud detection and sanctions screening (using OFAC lists) for cross-border payments.
 
-**[Read case study summary →](https://www.devbrew.ai/case-studies/sentinel)**
+**[Read case study →](https://www.devbrew.ai/case-studies/sentinel)**
 
 This reference pipeline combines public datasets (IEEE-CIS, PaySim, OFAC) with modern ML and API tooling to:
 
@@ -19,7 +19,9 @@ This reference pipeline combines public datasets (IEEE-CIS, PaySim, OFAC) with m
 
 _Live demo available at [sentinel.devbrew.ai](https://sentinel.devbrew.ai)._
 
-> [!WARNING] > **For research/educational use only**
+> [!WARNING]
+>
+> **For research/educational use only**
 >
 > Models trained on IEEE-CIS data are restricted to **non-commercial use**.
 > Production deployments require retraining on proprietary or licensed datasets.
@@ -38,7 +40,7 @@ _Live demo available at [sentinel.devbrew.ai](https://sentinel.devbrew.ai)._
 
 - **Backend**: FastAPI, Python, LightGBM/XGBoost, Redis, PostgreSQL
 - **Frontend**: Next.js, Tailwind, Vercel
-- **Hosting**: Fly.io or Render (API), Vercel (UI) or any cloud service provider (e.g. AWS, GCP, Azure, DigitalOcean, Heroku, etc.)
+- **Hosting**: Render (API), Vercel (UI)
 
 ## Repo structure
 
@@ -121,14 +123,14 @@ npm run dev
 
 ### Project planning
 
-- [Research Requirements](./docs/research-requirements.md) — detailed case study specifications
+- [Research requirements](./docs/research-requirements.md) — detailed case study specifications
 - [Roadmap](./docs/roadmap.md) — project phases and success criteria
 
 ### Technical findings
 
-- [Phase 1: Data Exploration](./docs/findings/data-exploration-notes.md) — dataset analysis, feature engineering insights
-- [Phase 2: Model Training](./docs/findings/model-training-notes.md) — performance metrics, cost optimization, hyperparameter tuning
-- [Phase 3: Sanctions Screening](./docs/findings/sanctions-screening-notes.md) — fuzzy matching implementation, blocking strategies, and performance evaluation
+- [Phase 1: Data exploration](./docs/findings/data-exploration-notes.md) — dataset analysis, feature engineering insights
+- [Phase 2: Model training](./docs/findings/model-training-notes.md) — performance metrics, cost optimization, hyperparameter tuning
+- [Phase 3: Sanctions screening](./docs/findings/sanctions-screening-notes.md) — fuzzy matching implementation, blocking strategies, and performance evaluation
 
 <!-- ### Results
 
