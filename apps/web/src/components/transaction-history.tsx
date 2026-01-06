@@ -72,7 +72,7 @@ export function TransactionHistory({
 }: TransactionHistoryProps) {
   if (history.length === 0) {
     return (
-      <Card className="bg-white border border-gray-200 shadow-sm border-dashed">
+      <Card className="bg-white border border-gray-200 shadow-xs border-dashed">
         <CardContent className="py-8 text-center">
           <History className="h-8 w-8 mx-auto mb-2 text-gray-300" />
           <p className="text-sm text-gray-500">

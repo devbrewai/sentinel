@@ -244,7 +244,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger className="h-10 rounded-xs">
+                      <SelectTrigger className="h-10 rounded-sm">
                         <SelectValue placeholder="Select product" />
                       </SelectTrigger>
                     </FormControl>

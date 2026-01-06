@@ -50,7 +50,12 @@ function parseCSV(text: string): BatchTransactionItem[] {
   }
 
   // Validate required columns
-  const required = ["transaction_id", "sender_name", "transaction_amt", "card_id"];
+  const required = [
+    "transaction_id",
+    "sender_name",
+    "transaction_amt",
+    "card_id",
+  ];
   const missing = required.filter((f) => colMap[f] === undefined);
   if (missing.length > 0) {
     throw new Error(`Missing required columns: ${missing.join(", ")}`);
@@ -66,7 +71,9 @@ function parseCSV(text: string): BatchTransactionItem[] {
 
     const amt = parseFloat(values[colMap.transaction_amt]);
     if (isNaN(amt) || amt <= 0) {
-      throw new Error(`Invalid amount on row ${i + 1}: ${values[colMap.transaction_amt]}`);
+      throw new Error(
+        `Invalid amount on row ${i + 1}: ${values[colMap.transaction_amt]}`
+      );
     }
 
     transactions.push({
@@ -74,8 +81,12 @@ function parseCSV(text: string): BatchTransactionItem[] {
       sender_name: values[colMap.sender_name],
       TransactionAmt: amt,
       card_id: values[colMap.card_id],
-      sender_country: colMap.sender_country !== undefined ? values[colMap.sender_country] : undefined,
-      ProductCD: colMap.product_cd !== undefined ? values[colMap.product_cd] : undefined,
+      sender_country:
+        colMap.sender_country !== undefined
+          ? values[colMap.sender_country]
+          : undefined,
+      ProductCD:
+        colMap.product_cd !== undefined ? values[colMap.product_cd] : undefined,
     });
   }
 
@@ -84,7 +95,9 @@ function parseCSV(text: string): BatchTransactionItem[] {
   }
 
   if (transactions.length > 100) {
-    throw new Error("Maximum 100 transactions per batch. Please split your file.");
+    throw new Error(
+      "Maximum 100 transactions per batch. Please split your file."
+    );
   }
 
   return transactions;
@@ -242,7 +255,7 @@ export default function BatchPage() {
         {!results ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Upload Area */}
-            <div className="lg:col-span-2 bg-white border border-gray-200 rounded-xs">
+            <div className="lg:col-span-2 bg-white border border-gray-200 rounded-sm">
               <div className="p-5 border-b border-gray-200">
                 <h2 className="font-semibold text-gray-900">
                   Upload Transactions
@@ -256,7 +269,7 @@ export default function BatchPage() {
                   onDragOver={handleDragOver}
                   onDragLeave={handleDragLeave}
                   onDrop={handleDrop}
-                  className={`border-2 border-dashed rounded-xs p-10 text-center transition-colors ${
+                  className={`border-2 border-dashed rounded-sm p-10 text-center transition-colors ${
                     isDragging
                       ? "border-gray-400 bg-gray-50"
                       : "border-gray-200 hover:border-gray-300"
@@ -264,8 +277,8 @@ export default function BatchPage() {
                 >
                   {file ? (
                     <div className="space-y-4">
-                      <div className="w-12 h-12 mx-auto bg-emerald-50 rounded-xs flex items-center justify-center">
-                        <FileSpreadsheet className="h-6 w-6 text-emerald-600" />
+                      <div className="w-12 h-12 mx-auto bg-gray-100 rounded-sm flex items-center justify-center">
+                        <FileSpreadsheet className="h-6 w-6 text-gray-400" />
                       </div>
                       <div>
                         <p className="font-medium text-gray-900">{file.name}</p>
@@ -295,7 +308,7 @@ export default function BatchPage() {
                     </div>
                   ) : (
                     <div className="space-y-4">
-                      <div className="w-12 h-12 mx-auto bg-gray-100 rounded-xs flex items-center justify-center">
+                      <div className="w-12 h-12 mx-auto bg-gray-100 rounded-sm flex items-center justify-center">
                         <Upload className="h-6 w-6 text-gray-400" />
                       </div>
                       <div>
@@ -325,7 +338,7 @@ export default function BatchPage() {
             </div>
 
             {/* Format Info */}
-            <div className="bg-white border border-gray-200 rounded-xs">
+            <div className="bg-white border border-gray-200 rounded-sm">
               <div className="p-5 border-b border-gray-200">
                 <h2 className="font-semibold text-gray-900">CSV Format</h2>
               </div>
@@ -335,16 +348,16 @@ export default function BatchPage() {
                     Required columns:
                   </p>
                   <ul className="text-sm text-gray-600 space-y-1">
-                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-xs">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-sm">
                       transaction_id
                     </li>
-                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-xs">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-sm">
                       sender_name
                     </li>
-                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-xs">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-sm">
                       TransactionAmt
                     </li>
-                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-xs">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-sm">
                       card_id
                     </li>
                   </ul>
@@ -354,10 +367,10 @@ export default function BatchPage() {
                     Optional columns:
                   </p>
                   <ul className="text-sm text-gray-600 space-y-1">
-                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-xs">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-sm">
                       sender_country
                     </li>
-                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-xs">
+                    <li className="font-mono text-xs bg-gray-100 px-2 py-1 rounded-sm">
                       ProductCD
                     </li>
                   </ul>
@@ -377,10 +390,10 @@ export default function BatchPage() {
           <>
             {/* Results Summary */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="bg-white border border-gray-200 rounded-xs p-5">
+              <div className="bg-white border border-gray-200 rounded-sm p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-gray-100 rounded-xs">
-                    <ArrowRightLeft className="h-5 w-5 text-gray-600" />
+                  <div className="p-2 bg-gray-100 rounded-sm">
+                    <ArrowRightLeft className="h-5 w-5 text-gray-500" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Processed</p>
@@ -390,10 +403,10 @@ export default function BatchPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white border border-gray-200 rounded-xs p-5">
+              <div className="bg-white border border-gray-200 rounded-sm p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-emerald-50 rounded-xs">
-                    <CheckCircle2 className="h-5 w-5 text-emerald-600" />
+                  <div className="p-2 bg-gray-100 rounded-sm">
+                    <CheckCircle2 className="h-5 w-5 text-gray-500" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Approved</p>
@@ -403,10 +416,10 @@ export default function BatchPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white border border-gray-200 rounded-xs p-5">
+              <div className="bg-white border border-gray-200 rounded-sm p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-amber-50 rounded-xs">
-                    <Clock className="h-5 w-5 text-amber-600" />
+                  <div className="p-2 bg-gray-100 rounded-sm">
+                    <Clock className="h-5 w-5 text-gray-500" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Review</p>
@@ -416,10 +429,10 @@ export default function BatchPage() {
                   </div>
                 </div>
               </div>
-              <div className="bg-white border border-gray-200 rounded-xs p-5">
+              <div className="bg-white border border-gray-200 rounded-sm p-5">
                 <div className="flex items-center gap-3">
-                  <div className="p-2 bg-red-50 rounded-xs">
-                    <AlertCircle className="h-5 w-5 text-red-600" />
+                  <div className="p-2 bg-gray-100 rounded-sm">
+                    <AlertCircle className="h-5 w-5 text-gray-500" />
                   </div>
                   <div>
                     <p className="text-sm text-gray-500">Rejected</p>
@@ -432,7 +445,7 @@ export default function BatchPage() {
             </div>
 
             {/* Results Table */}
-            <div className="bg-white border border-gray-200 rounded-xs">
+            <div className="bg-white border border-gray-200 rounded-sm">
               <div className="p-5 border-b border-gray-200 flex items-center justify-between">
                 <div>
                   <h2 className="font-semibold text-gray-900">Results</h2>

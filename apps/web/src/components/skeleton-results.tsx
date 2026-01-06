@@ -10,7 +10,7 @@ export function SkeletonResults() {
   return (
     <div className="space-y-6">
       {/* Transaction Route Skeleton */}
-      <div className="flex items-center justify-between p-4 bg-white rounded-xs border border-gray-200">
+      <div className="flex items-center justify-between p-4 bg-white rounded-sm border border-gray-200">
         <div className="flex items-center gap-3">
           <Skeleton className="h-10 w-10 rounded-full" />
           <div className="space-y-2">
@@ -48,8 +48,8 @@ export function SkeletonResults() {
             <Skeleton className="h-5 w-40" />
           </CardHeader>
           <CardContent className="space-y-4">
-            <Skeleton className="h-16 w-full rounded-xs" />
-            <div className="space-y-3 p-3 border rounded-xs">
+            <Skeleton className="h-16 w-full rounded-sm" />
+            <div className="space-y-3 p-3 border rounded-sm">
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-3/4" />
               <Skeleton className="h-4 w-1/2" />
@@ -76,7 +76,7 @@ export function SkeletonResults() {
         <CardContent className="space-y-6">
           <div className="flex justify-between items-center">
             <Skeleton className="h-4 w-28" />
-            <Skeleton className="h-8 w-24 rounded-xs" />
+            <Skeleton className="h-8 w-24 rounded-sm" />
           </div>
           <Skeleton className="h-px w-full" />
           <div className="space-y-3">

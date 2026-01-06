@@ -90,7 +90,7 @@ export function NavHeader() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "relative flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors rounded-xs",
+                    "relative flex items-center gap-2 px-4 py-2 text-sm font-medium transition-colors rounded-sm",
                     isActive
                       ? "text-gray-900 bg-gray-50"
                       : "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
@@ -153,7 +153,7 @@ export function NavHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors rounded-xs",
+                  "flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors rounded-sm",
                   isActive
                     ? "bg-gray-100 text-gray-900"
                     : "text-gray-500 hover:text-gray-900"

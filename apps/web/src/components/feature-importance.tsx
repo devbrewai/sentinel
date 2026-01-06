@@ -139,7 +139,7 @@ export function FeatureImportance({ features }: FeatureImportanceProps) {
           <CardTitle className="text-lg font-semibold text-gray-900">
             Top fraud risk factors
           </CardTitle>
-          <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-xs">
+          <span className="text-xs font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded-sm">
             SHAP analysis
           </span>
         </div>

@@ -150,7 +150,7 @@ export default function Dashboard() {
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {/* Screened Card */}
-          <div className="bg-white rounded-xs p-6 border border-gray-200 shadow-none flex flex-col">
+          <div className="bg-white rounded-sm p-6 border border-gray-200 shadow-none flex flex-col">
             <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mb-4">
               <RefreshCw className="h-5 w-5 text-gray-600" />
             </div>
@@ -163,7 +163,7 @@ export default function Dashboard() {
           </div>
 
           {/* Approved Card */}
-          <div className="bg-white rounded-xs p-6 border border-gray-200 shadow-none flex flex-col">
+          <div className="bg-white rounded-sm p-6 border border-gray-200 shadow-none flex flex-col">
             <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mb-4">
               <CheckCircle2 className="h-5 w-5 text-gray-600" />
             </div>
@@ -176,7 +176,7 @@ export default function Dashboard() {
           </div>
 
           {/* Flagged Card */}
-          <div className="bg-white rounded-xs p-6 border border-gray-200 shadow-none flex flex-col">
+          <div className="bg-white rounded-sm p-6 border border-gray-200 shadow-none flex flex-col">
             <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mb-4">
               <AlertTriangle className="h-5 w-5 text-gray-600" />
             </div>
@@ -216,7 +216,7 @@ export default function Dashboard() {
             {isLoading ? (
               <SkeletonResults />
             ) : !result ? (
-              <div className="bg-white border border-gray-200 rounded-xs h-full min-h-[400px] flex items-center justify-center shadow-none">
+              <div className="bg-white border border-gray-200 rounded-sm h-full min-h-[400px] flex items-center justify-center shadow-none">
                 <div className="text-center">
                   <div className="h-16 w-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Activity className="h-8 w-8 text-gray-400" />
@@ -233,7 +233,7 @@ export default function Dashboard() {
             ) : (
               <>
                 {/* Decision Display Card */}
-                <div className="bg-white rounded-xs p-6 border border-gray-200 shadow-none">
+                <div className="bg-white rounded-sm p-6 border border-gray-200 shadow-none">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-2">
@@ -284,7 +284,7 @@ export default function Dashboard() {
                 {/* Fraud Risk & Sanctions Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Fraud Risk Card */}
-                  <div className="bg-white rounded-xs border border-gray-200 shadow-none p-6">
+                  <div className="bg-white rounded-sm border border-gray-200 shadow-none p-6">
                     <h3 className="text-lg font-semibold text-gray-900 mb-6">
                       Fraud risk
                     </h3>

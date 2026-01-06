@@ -45,7 +45,7 @@ export function VelocityIndicators({ velocity }: VelocityIndicatorsProps) {
     <div className="flex items-center gap-3">
       {/* 1 Hour */}
       <div
-        className={`flex items-center gap-1.5 px-2 py-1 rounded-xs text-xs font-medium ${statusColors[hourlyStatus]}`}
+        className={`flex items-center gap-1.5 px-2 py-1 rounded-sm text-xs font-medium ${statusColors[hourlyStatus]}`}
       >
         <StatusIcon status={hourlyStatus} />
         <span>{velocity.transactions_1h} txn/1h</span>
@@ -53,7 +53,7 @@ export function VelocityIndicators({ velocity }: VelocityIndicatorsProps) {
 
       {/* 24 Hours */}
       <div
-        className={`flex items-center gap-1.5 px-2 py-1 rounded-xs text-xs font-medium ${statusColors[dailyStatus]}`}
+        className={`flex items-center gap-1.5 px-2 py-1 rounded-sm text-xs font-medium ${statusColors[dailyStatus]}`}
       >
         <StatusIcon status={dailyStatus} />
         <span>{velocity.transactions_24h} txn/24h</span>
