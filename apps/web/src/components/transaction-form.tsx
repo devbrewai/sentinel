@@ -48,18 +48,29 @@ interface TransactionFormProps {
 }
 
 export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
-  const [activeTab, setActiveTab] = useState("safe");
+  const [activeTab, setActiveTab] = useState<string | null>(null);
 
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      TransactionAmt: 45.5,
-      card_id: "card_valid_999",
-      sender_name: "Sarah Smith",
-      sender_country: "US",
-      ProductCD: "W",
+      TransactionAmt: "" as unknown as number,
+      card_id: "",
+      sender_name: "",
+      sender_country: "",
+      ProductCD: "",
     },
   });
+
+  const clearForm = () => {
+    form.reset({
+      TransactionAmt: "" as unknown as number,
+      card_id: "",
+      sender_name: "",
+      sender_country: "",
+      ProductCD: "",
+    });
+    setActiveTab(null);
+  };
 
   const fillPreset = (preset: string) => {
     setActiveTab(preset);
@@ -132,7 +143,14 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
           Enter transaction details to screen
         </CardDescription>
 
-        <Tabs value={activeTab} onValueChange={fillPreset} className="w-full">
+        <p className="text-xs text-gray-500 mb-2">
+          Example test cases (optional)
+        </p>
+        <Tabs
+          value={activeTab ?? ""}
+          onValueChange={fillPreset}
+          className="w-full"
+        >
           <TabsList>
             <TabsTrigger value="safe">Safe</TabsTrigger>
             <TabsTrigger value="sanctions">Sanctions hit</TabsTrigger>
@@ -230,10 +248,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
                   <FormLabel className="text-sm font-medium text-gray-700">
                     Product code
                   </FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+                  <Select onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger className="h-10 rounded-sm">
                         <SelectValue placeholder="Select product" />
@@ -251,13 +266,24 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
               )}
             />
 
-            <Button
-              type="submit"
-              className="w-full h-11 bg-gray-900 hover:bg-gray-800 text-white font-medium text-sm transition-colors duration-200"
-              disabled={isLoading}
-            >
-              {isLoading ? "Analyzing..." : "Analyze transaction"}
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                type="submit"
+                className="flex-1 h-11 bg-gray-900 hover:bg-gray-800 text-white font-medium text-sm transition-colors duration-200"
+                disabled={isLoading}
+              >
+                {isLoading ? "Analyzing..." : "Analyze transaction"}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                className="h-11"
+                onClick={clearForm}
+                disabled={isLoading}
+              >
+                Clear
+              </Button>
+            </div>
           </form>
         </Form>
       </CardContent>
