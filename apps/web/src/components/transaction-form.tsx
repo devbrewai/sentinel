@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { CountryCombobox } from "@/components/ui/country-combobox";
 import {
   Card,
   CardContent,
@@ -75,7 +76,7 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
         TransactionAmt: 1200.0,
         card_id: "card_reg_99",
         sender_name: "AEROCARIBBEAN AIRLINES",
-        sender_country: "Cuba",
+        sender_country: "CU",
         ProductCD: "C",
       });
     } else if (preset === "risky") {
@@ -208,23 +209,13 @@ export function TransactionForm({ onSubmit, isLoading }: TransactionFormProps) {
                     <FormLabel className="text-sm font-medium text-gray-700">
                       Country
                     </FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select country" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="US">United States</SelectItem>
-                        <SelectItem value="CA">Canada</SelectItem>
-                        <SelectItem value="GB">United Kingdom</SelectItem>
-                        <SelectItem value="CU">Cuba (ISO)</SelectItem>
-                        <SelectItem value="Cuba">Cuba (Full)</SelectItem>
-                        <SelectItem value="MX">Mexico</SelectItem>
-                        <SelectItem value="CO">Colombia</SelectItem>
-                        <SelectItem value="XX">Unknown</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <FormControl>
+                      <CountryCombobox
+                        value={field.value}
+                        onValueChange={field.onChange}
+                        placeholder="Select country"
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
