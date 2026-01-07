@@ -185,7 +185,7 @@ export function SanctionsCard({ matchData, isMatch }: SanctionsCardProps) {
         </CardHeader>
         <CardContent className="flex items-center justify-center min-h-[200px]">
           <p className="text-sm text-gray-500 py-8 text-center">
-            No sanctions data available.
+            No sanctions match.
           </p>
         </CardContent>
       </Card>
