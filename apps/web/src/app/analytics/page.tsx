@@ -383,7 +383,7 @@ export default function AnalyticsPage() {
               <div className="grid grid-cols-2 gap-4">
                 <div className="p-4 bg-gray-50 rounded-sm">
                   <p className="text-sm text-gray-500">Precision@1</p>
-                  <p className="text-2xl font-semibold text-gray-600 mt-1">
+                  <p className="text-2xl font-semibold text-gray-900 mt-1">
                     {(sanctions_metrics.precision_at_1 * 100).toFixed(1)}%
                   </p>
                 </div>
@@ -401,7 +401,7 @@ export default function AnalyticsPage() {
                 </div>
                 <div className="p-4 bg-gray-50 rounded-sm">
                   <p className="text-sm text-gray-500">Matches found</p>
-                  <p className="text-2xl font-semibold text-gray-600 mt-1">
+                  <p className="text-2xl font-semibold text-gray-900 mt-1">
                     {summary.sanctions_hits}
                   </p>
                 </div>
