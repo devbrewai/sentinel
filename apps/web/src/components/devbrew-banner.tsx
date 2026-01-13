@@ -26,7 +26,7 @@ export function DevbrewBanner() {
     <div className="w-full bg-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between gap-4">
         <a
-          href="https://cal.com/joekariuki/devbrew"
+          href="https://cal.com/joekariuki/devbrew?utm_source=sentinel.devbrew.ai&utm_medium=demo&utm_campaign=sentinel&utm_content=banner_cta"
           target="_blank"
           rel="noopener noreferrer"
           className="flex-1 text-xs sm:text-sm font-medium text-white text-center hover:opacity-80 transition-opacity inline-flex items-center justify-center gap-1.5 text-balance"
