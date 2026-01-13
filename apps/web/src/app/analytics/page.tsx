@@ -89,95 +89,95 @@ export default function AnalyticsPage() {
     sanctions_metrics,
   } = analytics;
   return (
-    <div className="py-8 px-6">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="py-6 px-4 sm:py-8 sm:px-6">
+      <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8">
         {/* Page header */}
         <div>
-          <h1 className="text-2xl font-semibold text-gray-900">Analytics</h1>
-          <p className="text-gray-500 mt-1">
+          <h1 className="text-xl sm:text-2xl font-semibold text-gray-900">Analytics</h1>
+          <p className="text-gray-500 mt-1 text-sm sm:text-base">
             System performance metrics and model analytics
           </p>
         </div>
 
         {/* Key metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-white border border-gray-200 rounded-sm p-5">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-gray-100 rounded-full">
-                <Activity className="h-5 w-5 text-gray-500" />
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+          <div className="bg-white border border-gray-200 rounded-sm p-3 sm:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+              <div className="p-2 bg-gray-100 rounded-full w-fit">
+                <Activity className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
               </div>
-              <div>
-                <p className="text-sm text-gray-500">Total screened</p>
-                <p className="text-2xl font-semibold text-gray-900">
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm text-gray-500 truncate">Total screened</p>
+                <p className="text-lg sm:text-2xl font-semibold text-gray-900">
                   {summary.total_screened.toLocaleString()}
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-sm p-5">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-gray-100 rounded-full">
-                <Clock className="h-5 w-5 text-gray-500" />
+          <div className="bg-white border border-gray-200 rounded-sm p-3 sm:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+              <div className="p-2 bg-gray-100 rounded-full w-fit">
+                <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
               </div>
-              <div>
-                <p className="text-sm text-gray-500">Average latency</p>
-                <p className="text-2xl font-semibold text-gray-900">
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm text-gray-500 truncate">Average latency</p>
+                <p className="text-lg sm:text-2xl font-semibold text-gray-900">
                   {summary.avg_latency_ms.toFixed(0)}ms
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-sm p-5">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-gray-100 rounded-full">
-                <ShieldAlert className="h-5 w-5 text-gray-500" />
+          <div className="bg-white border border-gray-200 rounded-sm p-3 sm:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+              <div className="p-2 bg-gray-100 rounded-full w-fit">
+                <ShieldAlert className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
               </div>
-              <div>
-                <p className="text-sm text-gray-500">Fraud detected</p>
-                <p className="text-2xl font-semibold text-gray-900">
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm text-gray-500 truncate">Fraud detected</p>
+                <p className="text-lg sm:text-2xl font-semibold text-gray-900">
                   {summary.fraud_detected.toLocaleString()}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-1 mt-3 text-sm text-gray-500">
+            <div className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-500">
               <span>{summary.fraud_rate}% detection rate</span>
             </div>
           </div>
 
-          <div className="bg-white border border-gray-200 rounded-sm p-5">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-gray-100 rounded-full">
-                <ShieldCheck className="h-5 w-5 text-gray-500" />
+          <div className="bg-white border border-gray-200 rounded-sm p-3 sm:p-5">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
+              <div className="p-2 bg-gray-100 rounded-full w-fit">
+                <ShieldCheck className="h-4 w-4 sm:h-5 sm:w-5 text-gray-500" />
               </div>
-              <div>
-                <p className="text-sm text-gray-500">Sanctions hits</p>
-                <p className="text-2xl font-semibold text-gray-900">
+              <div className="min-w-0">
+                <p className="text-xs sm:text-sm text-gray-500 truncate">Sanctions hits</p>
+                <p className="text-lg sm:text-2xl font-semibold text-gray-900">
                   {summary.sanctions_hits.toLocaleString()}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-1 mt-3 text-sm text-gray-500">
+            <div className="mt-2 sm:mt-3 text-xs sm:text-sm text-gray-500">
               <span>{summary.sanctions_rate}% match rate</span>
             </div>
           </div>
         </div>
 
         {/* Charts row */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Daily volume */}
           <div className="bg-white border border-gray-200 rounded-sm">
-            <div className="p-5 border-b border-gray-200">
-              <h2 className="font-semibold text-gray-900">
+            <div className="p-4 sm:p-5 border-b border-gray-200">
+              <h2 className="font-semibold text-gray-900 text-sm sm:text-base">
                 Daily transaction volume
               </h2>
-              <p className="text-sm text-gray-500 mt-0.5">
+              <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
                 Transactions processed per day (last 7 days)
               </p>
             </div>
-            <div className="p-5">
-              <div className="h-[250px]">
+            <div className="p-3 sm:p-5">
+              <div className="h-[200px] sm:h-[250px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={daily_volume}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
@@ -207,13 +207,13 @@ export default function AnalyticsPage() {
                   </BarChart>
                 </ResponsiveContainer>
               </div>
-              <div className="flex justify-center gap-6 mt-4 text-sm text-gray-600">
+              <div className="flex justify-center gap-4 sm:gap-6 mt-3 sm:mt-4 text-xs sm:text-sm text-gray-600">
                 <span className="flex items-center gap-2">
-                  <span className="w-3 h-3 bg-emerald-500 rounded" />
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-emerald-500 rounded" />
                   Total
                 </span>
                 <span className="flex items-center gap-2">
-                  <span className="w-3 h-3 bg-red-500 rounded" />
+                  <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-red-500 rounded" />
                   Flagged
                 </span>
               </div>
@@ -222,16 +222,16 @@ export default function AnalyticsPage() {
 
           {/* Risk cistribution */}
           <div className="bg-white border border-gray-200 rounded-sm">
-            <div className="p-5 border-b border-gray-200">
-              <h2 className="font-semibold text-gray-900">
+            <div className="p-4 sm:p-5 border-b border-gray-200">
+              <h2 className="font-semibold text-gray-900 text-sm sm:text-base">
                 Risk level distribution
               </h2>
-              <p className="text-sm text-gray-500 mt-0.5">
+              <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
                 Breakdown of transactions by risk level
               </p>
             </div>
-            <div className="p-5">
-              <div className="h-[250px]">
+            <div className="p-3 sm:p-5">
+              <div className="h-[200px] sm:h-[250px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
                     <Pie
@@ -258,11 +258,11 @@ export default function AnalyticsPage() {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              <div className="flex justify-center gap-4 mt-4 text-sm text-gray-600 flex-wrap">
+              <div className="flex justify-center gap-3 sm:gap-4 mt-3 sm:mt-4 text-xs sm:text-sm text-gray-600 flex-wrap">
                 {risk_distribution.map((item) => (
-                  <span key={item.name} className="flex items-center gap-2">
+                  <span key={item.name} className="flex items-center gap-1.5 sm:gap-2">
                     <span
-                      className="w-3 h-3 rounded"
+                      className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded"
                       style={{ backgroundColor: item.color }}
                     />
                     {item.name}: {item.value.toLocaleString()}
@@ -275,14 +275,14 @@ export default function AnalyticsPage() {
 
         {/* Latency trend */}
         <div className="bg-white border border-gray-200 rounded-sm">
-          <div className="p-5 border-b border-gray-200">
-            <h2 className="font-semibold text-gray-900">Latency trend (24h)</h2>
-            <p className="text-sm text-gray-500 mt-0.5">
+          <div className="p-4 sm:p-5 border-b border-gray-200">
+            <h2 className="font-semibold text-gray-900 text-sm sm:text-base">Latency trend (24h)</h2>
+            <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
               P50 and P95 response times in milliseconds
             </p>
           </div>
-          <div className="p-5">
-            <div className="h-[200px]">
+          <div className="p-3 sm:p-5">
+            <div className="h-[180px] sm:h-[200px]">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={latency_trend}>
                   <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
@@ -316,13 +316,13 @@ export default function AnalyticsPage() {
                 </LineChart>
               </ResponsiveContainer>
             </div>
-            <div className="flex justify-center gap-6 mt-4 text-sm text-gray-600">
+            <div className="flex justify-center gap-4 sm:gap-6 mt-3 sm:mt-4 text-xs sm:text-sm text-gray-600">
               <span className="flex items-center gap-2">
-                <span className="w-3 h-3 bg-emerald-500 rounded" />
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-emerald-500 rounded" />
                 P50
               </span>
               <span className="flex items-center gap-2">
-                <span className="w-3 h-3 bg-orange-500 rounded" />
+                <span className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-orange-500 rounded" />
                 P95
               </span>
             </div>
@@ -330,39 +330,39 @@ export default function AnalyticsPage() {
         </div>
 
         {/* Model performance */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           <div className="bg-white border border-gray-200 rounded-sm">
-            <div className="p-5 border-b border-gray-200">
-              <h2 className="font-semibold text-gray-900">
+            <div className="p-4 sm:p-5 border-b border-gray-200">
+              <h2 className="font-semibold text-gray-900 text-sm sm:text-base">
                 Fraud model performance
               </h2>
-              <p className="text-sm text-gray-500 mt-0.5">
+              <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
                 LightGBM classifier metrics
               </p>
             </div>
-            <div className="p-5">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-gray-50 rounded-sm">
-                  <p className="text-sm text-gray-500">ROC-AUC</p>
-                  <p className="text-2xl font-semibold text-gray-900 mt-1">
+            <div className="p-3 sm:p-5">
+              <div className="grid grid-cols-2 gap-2 sm:gap-4">
+                <div className="p-3 sm:p-4 bg-gray-50 rounded-sm">
+                  <p className="text-xs sm:text-sm text-gray-500">ROC-AUC</p>
+                  <p className="text-lg sm:text-2xl font-semibold text-gray-900 mt-1">
                     {model_metrics.roc_auc}
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-sm">
-                  <p className="text-sm text-gray-500">Precision</p>
-                  <p className="text-2xl font-semibold text-gray-900 mt-1">
+                <div className="p-3 sm:p-4 bg-gray-50 rounded-sm">
+                  <p className="text-xs sm:text-sm text-gray-500">Precision</p>
+                  <p className="text-lg sm:text-2xl font-semibold text-gray-900 mt-1">
                     {(model_metrics.precision * 100).toFixed(0)}%
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-sm">
-                  <p className="text-sm text-gray-500">Recall</p>
-                  <p className="text-2xl font-semibold text-gray-900 mt-1">
+                <div className="p-3 sm:p-4 bg-gray-50 rounded-sm">
+                  <p className="text-xs sm:text-sm text-gray-500">Recall</p>
+                  <p className="text-lg sm:text-2xl font-semibold text-gray-900 mt-1">
                     {(model_metrics.recall * 100).toFixed(0)}%
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-sm">
-                  <p className="text-sm text-gray-500">F1 Score</p>
-                  <p className="text-2xl font-semibold text-gray-900 mt-1">
+                <div className="p-3 sm:p-4 bg-gray-50 rounded-sm">
+                  <p className="text-xs sm:text-sm text-gray-500">F1 Score</p>
+                  <p className="text-lg sm:text-2xl font-semibold text-gray-900 mt-1">
                     {model_metrics.f1_score}
                   </p>
                 </div>
@@ -371,37 +371,37 @@ export default function AnalyticsPage() {
           </div>
 
           <div className="bg-white border border-gray-200 rounded-sm">
-            <div className="p-5 border-b border-gray-200">
-              <h2 className="font-semibold text-gray-900">
+            <div className="p-4 sm:p-5 border-b border-gray-200">
+              <h2 className="font-semibold text-gray-900 text-sm sm:text-base">
                 Sanctions screening
               </h2>
-              <p className="text-sm text-gray-500 mt-0.5">
+              <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
                 OFAC screening metrics
               </p>
             </div>
-            <div className="p-5">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-gray-50 rounded-sm">
-                  <p className="text-sm text-gray-500">Precision@1</p>
-                  <p className="text-2xl font-semibold text-gray-900 mt-1">
+            <div className="p-3 sm:p-5">
+              <div className="grid grid-cols-2 gap-2 sm:gap-4">
+                <div className="p-3 sm:p-4 bg-gray-50 rounded-sm">
+                  <p className="text-xs sm:text-sm text-gray-500">Precision@1</p>
+                  <p className="text-lg sm:text-2xl font-semibold text-gray-900 mt-1">
                     {(sanctions_metrics.precision_at_1 * 100).toFixed(1)}%
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-sm">
-                  <p className="text-sm text-gray-500">Average latency</p>
-                  <p className="text-2xl font-semibold text-gray-900 mt-1">
+                <div className="p-3 sm:p-4 bg-gray-50 rounded-sm">
+                  <p className="text-xs sm:text-sm text-gray-500 truncate">Avg latency</p>
+                  <p className="text-lg sm:text-2xl font-semibold text-gray-900 mt-1">
                     {sanctions_metrics.avg_latency_ms}ms
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-sm">
-                  <p className="text-sm text-gray-500">Total screened</p>
-                  <p className="text-2xl font-semibold text-gray-900 mt-1">
+                <div className="p-3 sm:p-4 bg-gray-50 rounded-sm">
+                  <p className="text-xs sm:text-sm text-gray-500 truncate">Total screened</p>
+                  <p className="text-lg sm:text-2xl font-semibold text-gray-900 mt-1">
                     {summary.total_screened.toLocaleString()}
                   </p>
                 </div>
-                <div className="p-4 bg-gray-50 rounded-sm">
-                  <p className="text-sm text-gray-500">Matches found</p>
-                  <p className="text-2xl font-semibold text-gray-900 mt-1">
+                <div className="p-3 sm:p-4 bg-gray-50 rounded-sm">
+                  <p className="text-xs sm:text-sm text-gray-500 truncate">Matches found</p>
+                  <p className="text-lg sm:text-2xl font-semibold text-gray-900 mt-1">
                     {summary.sanctions_hits}
                   </p>
                 </div>
@@ -412,33 +412,33 @@ export default function AnalyticsPage() {
 
         {/* Performance card */}
         <div className="bg-white border border-gray-200 rounded-sm">
-          <div className="p-5 border-b border-gray-200">
-            <h2 className="font-semibold text-gray-900">System health</h2>
-            <p className="text-sm text-gray-500 mt-0.5">
+          <div className="p-4 sm:p-5 border-b border-gray-200">
+            <h2 className="font-semibold text-gray-900 text-sm sm:text-base">System health</h2>
+            <p className="text-xs sm:text-sm text-gray-500 mt-0.5">
               Current system metrics
             </p>
           </div>
           <div className="divide-y divide-gray-200">
-            <div className="p-4 flex items-center justify-between">
-              <span className="text-sm text-gray-600">Total transactions</span>
-              <span className="flex items-center gap-2 text-sm font-medium text-emerald-600">
-                <CheckCircle2 className="h-4 w-4" />
+            <div className="p-3 sm:p-4 flex items-center justify-between">
+              <span className="text-xs sm:text-sm text-gray-600">Total transactions</span>
+              <span className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-emerald-600">
+                <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 {summary.total_screened.toLocaleString()}
               </span>
             </div>
-            <div className="p-4 flex items-center justify-between">
-              <span className="text-sm text-gray-600">Average latency</span>
-              <span className="flex items-center gap-2 text-sm font-medium text-emerald-600">
-                <CheckCircle2 className="h-4 w-4" />
+            <div className="p-3 sm:p-4 flex items-center justify-between">
+              <span className="text-xs sm:text-sm text-gray-600">Average latency</span>
+              <span className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-emerald-600">
+                <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 {summary.avg_latency_ms.toFixed(0)}ms
               </span>
             </div>
-            <div className="p-4 flex items-center justify-between">
-              <span className="text-sm text-gray-600">
+            <div className="p-3 sm:p-4 flex items-center justify-between">
+              <span className="text-xs sm:text-sm text-gray-600">
                 Fraud detection rate
               </span>
-              <span className="flex items-center gap-2 text-sm font-medium text-emerald-600">
-                <CheckCircle2 className="h-4 w-4" />
+              <span className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-medium text-emerald-600">
+                <CheckCircle2 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
                 {summary.fraud_rate}%
               </span>
             </div>

@@ -67,16 +67,16 @@ export function NavHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex h-14 sm:h-16 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center group">
+          <Link href="/" className="flex items-center group flex-shrink-0">
             <Image
               src="/logos/logo.svg"
               alt="FraudGuard"
               width={100}
               height={100}
-              className="h-6 w-auto group-hover:opacity-80 transition-opacity"
+              className="h-5 sm:h-6 w-auto group-hover:opacity-80 transition-opacity"
             />
           </Link>
 
@@ -109,7 +109,7 @@ export function NavHeader() {
           </nav>
 
           {/* Right side */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
             <div className="hidden sm:flex items-center gap-2 text-sm px-3 py-1.5 rounded-full">
               <span className="flex h-2 w-2 relative">
                 {status !== "loading" && "pingColor" in currentStatus && (
@@ -144,7 +144,7 @@ export function NavHeader() {
         </div>
 
         {/* Mobile Navigation */}
-        <nav className="md:hidden flex items-center gap-1 pb-3 overflow-x-auto -mx-2 px-2">
+        <nav className="md:hidden flex items-center gap-1 pb-2 sm:pb-3 overflow-x-auto scrollbar-hide">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
@@ -153,7 +153,7 @@ export function NavHeader() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors rounded-sm",
+                  "flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-colors rounded-sm",
                   isActive
                     ? "bg-gray-100 text-gray-900"
                     : "text-gray-500 hover:text-gray-900"

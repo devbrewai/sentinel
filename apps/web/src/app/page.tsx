@@ -134,8 +134,8 @@ export default function Dashboard() {
   ).length;
 
   return (
-    <div className="py-8 px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto space-y-8">
+    <div className="py-6 px-4 sm:py-8 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8">
         {/* Page Header */}
         <div>
           <h1 className="text-2xl font-semibold text-gray-900">
@@ -148,42 +148,42 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="grid grid-cols-3 gap-3 sm:gap-6">
           {/* Screened Card */}
-          <div className="bg-white rounded-sm p-6 border border-gray-200 shadow-none flex flex-col">
-            <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-              <RefreshCw className="h-5 w-5 text-gray-600" />
+          <div className="bg-white rounded-sm p-3 sm:p-6 border border-gray-200 shadow-none flex flex-col">
+            <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gray-100 flex items-center justify-center mb-2 sm:mb-4">
+              <RefreshCw className="h-4 w-4 sm:h-5 sm:w-5 text-gray-600" />
             </div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
+            <p className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
               Screened
             </p>
-            <p className="text-3xl font-bold text-gray-900 mt-2">
+            <p className="text-xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">
               {totalScreened}
             </p>
           </div>
 
           {/* Approved Card */}
-          <div className="bg-white rounded-sm p-6 border border-gray-200 shadow-none flex flex-col">
-            <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-              <CheckCircle2 className="h-5 w-5 text-gray-600" />
+          <div className="bg-white rounded-sm p-3 sm:p-6 border border-gray-200 shadow-none flex flex-col">
+            <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gray-100 flex items-center justify-center mb-2 sm:mb-4">
+              <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-gray-600" />
             </div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
+            <p className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
               Approved
             </p>
-            <p className="text-3xl font-bold text-gray-900 mt-2">
+            <p className="text-xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">
               {approvedCount}
             </p>
           </div>
 
           {/* Flagged Card */}
-          <div className="bg-white rounded-sm p-6 border border-gray-200 shadow-none flex flex-col">
-            <div className="h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-              <AlertTriangle className="h-5 w-5 text-gray-600" />
+          <div className="bg-white rounded-sm p-3 sm:p-6 border border-gray-200 shadow-none flex flex-col">
+            <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gray-100 flex items-center justify-center mb-2 sm:mb-4">
+              <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-gray-600" />
             </div>
-            <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
+            <p className="text-[10px] sm:text-xs text-gray-500 uppercase tracking-wide font-medium mb-1">
               Flagged
             </p>
-            <p className="text-3xl font-bold text-gray-900 mt-2">
+            <p className="text-xl sm:text-3xl font-bold text-gray-900 mt-1 sm:mt-2">
               {flaggedCount}
             </p>
           </div>
@@ -233,8 +233,8 @@ export default function Dashboard() {
             ) : (
               <>
                 {/* Decision Display Card */}
-                <div className="bg-white rounded-sm p-6 border border-gray-200 shadow-none">
-                  <div className="flex items-center justify-between">
+                <div className="bg-white rounded-sm p-4 sm:p-6 border border-gray-200 shadow-none">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div>
                       <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-2">
                         Decision
@@ -261,7 +261,7 @@ export default function Dashboard() {
                         )}
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       {currentRequest && (
                         <ComplianceReport
                           request={currentRequest}
@@ -272,7 +272,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                   {result.velocity && (
-                    <div className="mt-4 pt-4 border-t border-gray-100">
+                    <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-100">
                       <p className="text-xs text-gray-500 uppercase tracking-wide font-medium mb-2">
                         Card velocity
                       </p>
@@ -282,17 +282,17 @@ export default function Dashboard() {
                 </div>
 
                 {/* Fraud Risk & Sanctions Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   {/* Fraud Risk Card */}
-                  <div className="bg-white rounded-sm border border-gray-200 shadow-none p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-6">
+                  <div className="bg-white rounded-sm border border-gray-200 shadow-none p-4 sm:p-6">
+                    <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4 sm:mb-6">
                       Fraud risk
                     </h3>
                     <RiskGauge
                       score={result.risk_score}
                       riskLevel={result.risk_level}
                     />
-                    <div className="text-center mt-6">
+                    <div className="text-center mt-4 sm:mt-6">
                       <span
                         className={`px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wide ${
                           result.risk_level === "low"
